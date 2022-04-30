@@ -1,0 +1,135 @@
+<html>
+  <head>
+    <title>Pixel Battle</title>
+    <link rel="shortcut icon" href="https://i.imgur.com/dgxDCnZ.png">
+    <meta name="viewport" content="width=device-width, initial-scale=0.3">
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div id="root">
+      <button type="button" id="pixel-menu-toggle">Показать меню</button>
+      <div class="LeftPanel" id="pixel-menu" style="display: none;">
+        <div class="ColorPalette">
+          <div class="DesktopHeader">Пиксели</div>
+          <div class="row">
+            <div class="col">
+              <div class="ColorPalette__list" id="user-colors">
+                <div
+                  id="#FFFFFF"
+                  class="ColorPalette__color white"
+                  onclick="changeColor('#FFFFFF')"
+                  style="background-color: #FFFFFF"
+                ></div>
+                <div
+                  id="#C2C2C2"
+                  class="ColorPalette__color"
+                  onclick="changeColor('#C2C2C2')"
+                  style="background-color: #C2C2C2"
+                ></div>
+                <div
+                  id="#000000"
+                  class="ColorPalette__color"
+                  onclick="changeColor('#000000')"
+                  style="background-color: #000000"
+                ></div>
+                <div
+                  id="#3AAFFF"
+                  class="ColorPalette__color"
+                  onclick="changeColor('#3AAFFF')"
+                  style="background-color: #3AAFFF"
+                ></div>
+                <div
+                  id="#074BF3"
+                  class="ColorPalette__color"
+                  onclick="changeColor('#074BF3')"
+                  style="background-color: #074BF3;"
+                ></div>
+                <div
+                  id="#FE2500"
+                  class="ColorPalette__color"
+                  onclick="changeColor('#FE2500')"
+                  style="background-color: #FE2500;"
+                ></div>
+                <div
+                  id="#FF218B"
+                  class="ColorPalette__color"
+                  onclick="changeColor('#FF218B')"
+                  style="background-color: #FF218B;"
+                ></div>
+                <div
+                  id="#FFCF4A"
+                  class="ColorPalette__color"
+                  onclick="changeColor('#FFCF4A')"
+                  style="background-color: #FFCF4A;"
+                ></div>
+                <div
+                  id="#FE8648"
+                  class="ColorPalette__color"
+                  onclick="changeColor('#FE8648')"
+                  style="background-color: #FE8648;"
+                ></div>
+                <div
+                  id="#5CBF0D"
+                  class="ColorPalette__color"
+                  onclick="changeColor('#5CBF0D')"
+                  style="background-color: #5CBF0D;"
+                ></div>
+              </div>
+            </div>
+            <div class="col">
+              <input type="text" id="user-color-input" placeholder="Сюда вставляй HEX-код">
+              <br><br><a href="https://htmlcolorcodes.com" target="_blank">Здесь ты можешь найти HEX-код твоего цвета.</a>
+              <br><br><button type="button" id="user-color-change">Сменить цвет</button>
+              Выбран цвет: <b id="user-color"></b>
+              <br><br><button type="button" id="user-color-reset">Сбросить все цвета</button>
+            </div>
+          </div>
+        </div>
+        <div class="ColorPalette" id="user-form-login" style="display: none;">
+          <div class="DesktopHeader">Авторизация</div>
+          <p>Для игры в Pixel Battle нужно авторизоваться.</p>
+          <a href="https://boticord.top/discord" target="_blank">Discord-сервер BotiCord.top</a>
+          <br><ul>
+            <li>После входа на сервер, зайдите в канал <b>#правила</b></li>
+            <li>Нажмите на кнопку "Верификация"</li>
+            <li>Пройдите в канал <b>#оффтоп-канал</b></li>
+            <li>Пропишите команду <b>-pixels</b></li>
+          </ul>
+          <hr><input type="text" id="user-token" placeholder="Сюда вставляй токен">
+          <br><br><button type="button" id="user-login">Авторизоваться</button>
+        </div>
+        <div class="ColorPalette" id="user-form-profile" style="display: none;">
+          <div class="DesktopHeader">Профиль</div>
+          <p>Вы вошли как <b id="user-id"></b></p>
+          <hr><input type="text" id="user-tag-input" placeholder="Сюда вставляй тэг" maxlength="8">
+          <br><br><button type="button" id="user-tag-submit">Сменить тэг команды</button>
+          <br><br><button type="button" id="user-logout">Выйти из аккаунта</button>
+        </div>
+        <div class="ColorPalette">
+          <div class="DesktopHeader">Где я?</div>
+          <p>
+            Привет! Ты попал на <a href="https://discord.gg/zJV4nVDUrG" target="_blank">Pixel Battle</a>!
+            <br>Если коротко - здесь нужно ставить пиксели и рисовать картинки.
+            <br>Картинки могут быть самые разные. Только не ракеты, договорились?
+            <br>Если ты готов сражаться за место в истории - до встречи на поле боя!
+            <br>Активен первый сезон
+          </p>
+        </div>
+        <div class="ColorPalette">
+          <div class="DesktopHeader">Самые активные теги</div>
+          <ul id="pixel-tags"></ul>
+        </div>
+      </div>
+      <div class="DesktopContainer">
+        <div class="OnlineCounter OnlineCounter--desktop" id="pixel-ended" style="display: none;">
+          Битва завершена
+        </div>
+        <div id="display">
+          <table class="paper" id="pbarea"></table>
+        </div>
+      </div>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>
