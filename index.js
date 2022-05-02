@@ -101,7 +101,7 @@ if (userColors) {
 
     colors.innerHTML += newColors.join("");
 }
-
+/*
 document.getElementById('user-tag-submit').onclick = (e) => {
     e.preventDefault();
     let tag = document.getElementById('user-tag-input');
@@ -115,6 +115,7 @@ document.getElementById('user-tag-submit').onclick = (e) => {
         alert('Тэг изменён!');
     }).catch(() => {});
 }
+*/
 
 const hexRegExp = /^#[0-9A-F]{6}$/i;
 document.getElementById('user-color-change').onclick = (e) => {
