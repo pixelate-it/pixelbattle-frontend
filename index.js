@@ -159,6 +159,10 @@ document.getElementById('user-logout').onclick = (e) => {
     window.location.reload();
 }
 
+fetch(`${hostname}/info`)
+.then(res => res.json())
+.then(data => document.getElementById('season').innerText = data.season.name)
+
 if (!localStorage.getItem('user-color')) localStorage.setItem('user-color', '#FFFFFF');
 document.getElementById('user-color').innerText = localStorage.getItem('user-color');
 let check = ['#FFFFFF', '#000000', '#074BF3'].includes(localStorage.getItem('user-color'));
