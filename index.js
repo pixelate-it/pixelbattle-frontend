@@ -161,7 +161,7 @@ document.getElementById('user-logout').onclick = (e) => {
 
 fetch(`${hostname}/info`)
 .then(res => res.json())
-.then(data => document.getElementById('season').innerText = data.season.name)
+.then(data => document.getElementById('information').innerText = `Текущий сезон: ${data.season.name}\nИгроков всего/онлайн: ${data.players.total}/${data.players.online}`);
 
 if (!localStorage.getItem('user-color')) localStorage.setItem('user-color', '#FFFFFF');
 document.getElementById('user-color').innerText = localStorage.getItem('user-color');
