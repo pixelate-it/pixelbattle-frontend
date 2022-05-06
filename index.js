@@ -33,7 +33,8 @@ const processedErrors = (type, args) => {
         "IncorrectPixel": "Нет такого пикселя.",
         "NotAuthorized": "Некорректная сессия!",
         "UserCooldown": `Подождите ${args[0]} секунд!`,
-        "Ended": "Битва завершена"
+        "Ended": "Битва завершена",
+        "TokenBanned": "Ваш токен забанен."
     };
 
     return types[type];
@@ -190,7 +191,7 @@ function changeColor(color) {
                 token: userToken
             })
         }).catch(() => {}).then(x => x.json()).catch(() => {}).then(x => {
-            if (x.error && x.reason) return alert(processedErrors(x.reason, [x.cooldown || 0]));
+            if(x.error && x.reason) return alert(processedErrors(x.reason, [x.cooldown || 0]));
         });
     });
 });
