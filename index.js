@@ -70,6 +70,15 @@ function updateTags() {
         });
 }
 
+function updateInfo() {
+    fetch(`${hostname}/info`)
+    .then(res => res.json())
+    .then(data => document.getElementById('information').innerHTML = `Текущий сезон: ${data.season.name}<br>Игроков онлайн: ${data.players.online}`); 
+}
+
+updateInfo();
+setInterval(() => { updateInfo() }, 30000);
+
 updateTags();
 setInterval(() => { updateTags(); }, 30000);
 
@@ -159,12 +168,6 @@ document.getElementById('user-logout').onclick = (e) => {
     localStorage.removeItem('user-token');
     window.location.reload();
 }
-
-setInterval(() => {
-   fetch(`${hostname}/info`)
-    .then(res => res.json())
-    .then(data => document.getElementById('information').innerHTML = `Текущий сезон: ${data.season.name}<br>Игроков онлайн: ${data.players.online}`); 
-}, 30000);
 
 if (!localStorage.getItem('user-color')) localStorage.setItem('user-color', '#FFFFFF');
 document.getElementById('user-color').innerText = localStorage.getItem('user-color');
