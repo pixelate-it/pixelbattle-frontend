@@ -160,9 +160,11 @@ document.getElementById('user-logout').onclick = (e) => {
     window.location.reload();
 }
 
-fetch(`${hostname}/info`)
-.then(res => res.json())
-.then(data => document.getElementById('information').innerHTML = `Текущий сезон: ${data.season.name}<br>Игроков онлайн: ${data.players.online + 1}`);
+setInterval(() => {
+   fetch(`${hostname}/info`)
+    .then(res => res.json())
+    .then(data => document.getElementById('information').innerHTML = `Текущий сезон: ${data.season.name}<br>Игроков онлайн: ${data.players.online}`); 
+}, 30000);
 
 if (!localStorage.getItem('user-color')) localStorage.setItem('user-color', '#FFFFFF');
 document.getElementById('user-color').innerText = localStorage.getItem('user-color');
