@@ -34,7 +34,7 @@ const processedErrors = (type, args) => {
         "NotAuthorized": "Некорректная сессия!",
         "UserCooldown": `Подождите ${args[0]} секунд!`,
         "Ended": "Битва завершена",
-        "TokenBanned": "Ваш токен забанен."
+        "TokenBanned": "Ваш токен заблокирован."
     };
 
     return types[type];
