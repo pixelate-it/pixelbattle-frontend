@@ -1,6 +1,6 @@
 const AREA_WIDTH = 160;
 const AREA_HEIGHT = 80;
-const hostname = "https://pix.carryhelper.ml";
+const hostname = "https://api.pixelbattle.fun";
 
 const table = document.getElementById('pbarea');
 
