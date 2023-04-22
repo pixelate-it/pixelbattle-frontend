@@ -172,7 +172,7 @@ document.getElementById('user-logout').onclick = (e) => {
     window.location.reload();
 }
 
-document.onloadedmetadata = (e) => {
+document.onload = (e) => {
     if(localStorage.getItem('user-token')) return;
 
     let loc = document.location;
