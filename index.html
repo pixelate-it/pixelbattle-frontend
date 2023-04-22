@@ -89,18 +89,18 @@
           <div class="DesktopHeader">Авторизация</div>
           <p>Для игры в Pixel Battle нужно авторизоваться.</p>
           <ul>
-            <li>Токен можно получить <b>в боте</b> на нашем <b><a href="https://discord.gg/zJV4nVDUrG" target="_blank">Discord-сервере</a></b></li>
+            <li>Вы будете перенаправлены на страницу авторизации через Discord</li>
           </ul>
-          <hr><button type="button" id="user-login" onclick="window.location.href  = 'https://discord.com/oauth2/authorize?client_id=970714810905936022&redirect_uri=https%3A%2F%2Fapi.pixelbattle.fun%2Flogin&response_type=code&scope=identify'">Авторизоваться</button>
+          <button type="button" id="user-login" onclick="window.location.href  = 'https://discord.com/oauth2/authorize?client_id=970714810905936022&redirect_uri=https%3A%2F%2Fapi.pixelbattle.fun%2Flogin&response_type=code&scope=identify'">Авторизоваться</button>
         </div>
         <div class="ColorPalette" id="user-form-profile" style="display: none;">
           <div class="DesktopHeader">Профиль</div>
           <p>Вы вошли как <b id="user-id"></b></p>
-          <hr><input type="text" id="user-tag-input" placeholder="Сюда вставляй тэг" maxlength="8">
+          <input type="text" id="user-tag-input" placeholder="Сюда вставляй тэг" maxlength="8">
           <br><br><button type="button" id="user-tag-submit">Сменить тэг команды</button>
           <br><br><button type="button" id="user-logout">Выйти из аккаунта</button>
         </div>
-        <div class="ColorPalette">
+        <hr><br><div class="ColorPalette">
           <div class="DesktopHeader">Где я?</div>
           <p>
             Привет! Ты попал на <b><a href="https://discord.gg/zJV4nVDUrG" target="_blank">Pixel Battle</a></b>!
