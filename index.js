@@ -158,18 +158,28 @@ document.getElementById('user-color-reset').onclick = (e) => {
     }
 }
 
-document.getElementById('user-login').onclick = (e) => {
+/*document.getElementById('user-login').onclick = (e) => {
     e.preventDefault();
     let token = document.getElementById('user-token');
     if (!token || !token.value) return alert('Где токен?');
     localStorage.setItem('user-token', token.value);
     window.location.reload();
-}
+}*/
 
 document.getElementById('user-logout').onclick = (e) => {
     e.preventDefault();
     localStorage.removeItem('user-token');
     window.location.reload();
+}
+
+document.onloadedmetadata = (e) => {
+    if(localStorage.getItem('user-token')) return;
+
+    let loc = document.location;
+    if(!loc.search) return;
+
+    localStorage.setItem('user-token', loc.search.slice(7));
+    document.location.replace(loc.origin);
 }
 
 if (!localStorage.getItem('user-color')) localStorage.setItem('user-color', '#FFFFFF');
