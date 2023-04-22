@@ -1,5 +1,5 @@
-const AREA_WIDTH = 180;
-const AREA_HEIGHT = 100;
+const AREA_WIDTH = 210;
+const AREA_HEIGHT = 102;
 const hostname = "https://api.pixelbattle.fun";
 
 const table = document.getElementById('pbarea');
