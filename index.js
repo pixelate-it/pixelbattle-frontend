@@ -172,16 +172,6 @@ document.getElementById('user-logout').onclick = (e) => {
     window.location.reload();
 }
 
-document.onload = (e) => {
-    if(localStorage.getItem('user-token')) return;
-
-    let loc = document.location;
-    if(!loc.search) return;
-
-    localStorage.setItem('user-token', loc.search.slice(7));
-    document.location.replace(loc.origin);
-}
-
 if (!localStorage.getItem('user-color')) localStorage.setItem('user-color', '#FFFFFF');
 document.getElementById('user-color').innerText = localStorage.getItem('user-color');
 let check = ['#FFFFFF', '#000000', '#074BF3'].includes(localStorage.getItem('user-color'));
@@ -213,6 +203,16 @@ function changeColor(color) {
         });
     });
 });
+
+window.addEventListener('loadstart', (e) => {
+    if(localStorage.getItem('user-token')) return;
+
+    let loc = document.location;
+    if(!loc.search) return;
+
+    localStorage.setItem('user-token', loc.search.slice(7));
+    document.location.replace(loc.origin);
+})
 
 const socketURL = new URL(hostname);
 socketURL.protocol = 'wss';
