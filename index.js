@@ -206,7 +206,6 @@ function changeColor(color) {
 
 document.addEventListener('DOMContentLoaded', (e) => {
     if(localStorage.getItem('user-token')) return;
-    console.log(localStorage.getItem('user-token'));
 
     let loc = document.location;
     if(!loc.search) return;
