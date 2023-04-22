@@ -45,7 +45,7 @@ document.getElementById(`user-form-${userToken ? 'profile' : 'login'}`).style = 
 if (userToken) {
     fetch(`${hostname}/user/getInfo`, {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: userToken })
     }).then(res => res.json()).then(x => {
         if (x.error && x.reason) return alert(processedErrors(x.reason));
@@ -189,7 +189,7 @@ function changeColor(color) {
 
         if(connected) fetch(`${hostname}/pixels/put`, {
             method: 'POST',
-            headers: { 'content-type': 'application/json' },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 id: Number(e.target.id.split("p_")[1] - 1),
                 color: localStorage.getItem('user-color'),
