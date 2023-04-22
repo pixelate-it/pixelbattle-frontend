@@ -73,7 +73,10 @@ function updateTags() {
 function updateInfo() {
     fetch(`${hostname}/info`)
     .then(res => res.json())
-    .then(data => document.getElementById('information').innerHTML = `Текущий сезон: ${data.season.name}<br>Игроков онлайн: ${data.players.online}`); 
+    .then(data => { 
+        document.getElementById('season').innerText = data.season.name;
+        document.getElementById('online').innerText = data.players.online;
+    }); 
 }
 
 updateInfo();
