@@ -31,9 +31,9 @@ const processedErrors = (type, args) => {
     let types = {
         "IncorrectColor": "Указан некорректный код цвета.",
         "IncorrectPixel": "Нет такого пикселя.",
-        "NotAuthorized": "Некорректная сессия!",
+        "NotAuthorized": "Некорректная сессия! Попробуйте авторизоваться снова.",
         "UserCooldown": `Подождите ${args[0]} секунд!`,
-        "Ended": "Битва завершена",
+        "Ended": "Битва завершена.",
         "TokenBanned": "Ваш токен заблокирован."
     };
 
@@ -49,7 +49,7 @@ if (userToken) {
         body: JSON.stringify({ token: userToken })
     }).then(res => res.json()).then(x => {
         if (x.error && x.reason) return alert(processedErrors(x.reason));
-        document.getElementById('user-id').innerText = x.userID;
+        document.getElementById('user-id').innerText = (x.username || x.userID);
         document.getElementById('user-tag-input').value = x.tag;
     }).catch(() => {});
 }
