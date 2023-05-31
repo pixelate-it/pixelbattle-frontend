@@ -49,7 +49,7 @@ if (userToken) {
         body: JSON.stringify({ token: userToken })
     }).then(res => res.json()).then(x => {
         if (x.error && x.reason) return alert(processedErrors(x.reason));
-        document.getElementById('user-id').innerText = ((x.username + ' (' + x.userID + ')') ?? x.userID);
+        document.getElementById('user-id').innerText = (x.username ?? '-') + ' (' + x.userID + ')';
         document.getElementById('user-tag-input').value = x.tag;
     }).catch(() => {});
 }
