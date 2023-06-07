@@ -196,7 +196,7 @@ function changeColor(color) {
     });
 });
 
-document.addEventListener('DOMContentLoaded', (e) => {
+window.addEventListener('load', () => {
     if(localStorage.getItem('user-token')) return;
 
     let loc = document.location;
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
     localStorage.setItem('user-token', loc.search.slice(7));
     document.location.replace(loc.origin);
-})
+});
 
 const socketURL = new URL(hostname);
 socketURL.protocol = 'wss';
