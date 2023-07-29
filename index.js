@@ -118,6 +118,7 @@ if (userColors) {
 document.getElementById('user-tag-submit').onclick = (e) => {
     e.preventDefault();
     let tag = document.getElementById('user-tag-input');
+    if(tag.value.length > 8) return alert('Тег может состоять только из 8 символов');
 
     fetch(`${hostname}/user/changeTag`, {
         method: 'POST',
