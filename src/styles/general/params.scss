@@ -1,0 +1,14 @@
+.param {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.param .name {
+    color: #dadada;
+    /* font-size: 14px; */
+}
+
+.param .value {
+    font-weight: 600;
+}

@@ -1,0 +1,82 @@
+.palette {
+    $size: 25px;
+    position: absolute;
+    padding: 10px;
+    gap: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: $transparent-dark;
+    border-radius: 10px;
+    inset: auto 0;
+    margin: 0 auto;
+    bottom: 10px;
+    box-sizing: border-box;
+    max-width: 100%;
+    width: max-content;
+    flex-wrap: wrap;
+
+
+    .color, .new-color, .remove-color {
+        width: $size;
+        height: $size;
+        border-radius: 50%;
+    }
+
+
+    .color {
+        &:checked {
+            outline: 2px solid $white;
+            outline-offset: 2px;
+        }
+
+        &:hover {
+            opacity: 0.9;
+        }
+    }
+
+    :where(.new-color, .remove-color)::after {
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        display: block;
+        text-align: center;
+        pointer-events: none;
+    }
+
+
+    .new-color {
+        outline: 2px solid $white;
+        position: relative;
+        color: $white;
+
+        &::after {
+            content: '+';
+            font-weight: 700;
+
+        }
+
+
+        input {
+            opacity: 0;
+            display: block;
+            width: $size;
+            height: $size;
+        }
+
+        
+    }
+
+    .remove-color {
+        display: block;
+        outline: 2px solid $red;
+        position: relative;
+
+        &::after {
+            content: '✖';
+            color: $red;
+        }
+    }
+}

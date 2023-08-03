@@ -1,0 +1,58 @@
+
+.tags {
+    background-color: $transparent-dark;
+    border-radius: 4px;
+    color: $white;
+
+    .content {
+        padding-top: 0;
+
+        .description {
+            margin-top: 10px;
+            line-height: 1.5;
+            color: $grey;
+        }
+
+        .list {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+            gap: 2px;
+        }
+    }
+}
+
+.tag {
+    --color: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+
+    &:first-child {
+        --color: #{$gold};
+    }
+
+    &:nth-child(2) {
+        --color: #{$silver};
+    }
+
+    &:nth-child(3) {
+        --color: #{$bronze};
+    }
+
+    .place {
+        display: inline-block;
+        padding: 0 5px;
+        border-radius: 2px;
+        background-color: var(--color);
+    }
+
+    .name {
+        margin-right: auto;
+    }
+}
+
+

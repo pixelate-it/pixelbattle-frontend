@@ -1,0 +1,33 @@
+canvas,
+body,
+input,
+p,
+h1,
+h2,
+h3,
+input,
+button,
+form {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+input, button {
+    appearance: none;
+    border: none;
+    background: none;
+    outline: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+

@@ -1,0 +1,41 @@
+.profile {
+    .user {
+        background-color: $transparent-dark;
+        color: $white;
+        border-radius: 4px;
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .new-tag {
+            display: flex;
+            gap: 10px;
+    
+            input {
+                flex: 1;
+                color: $white;
+    
+                &:placeholder-shown {
+                    border-bottom: none;
+    
+                    &::placeholder {
+                        opacity: 1;
+                        
+                    }
+                }
+    
+                &:focus {
+                    border-bottom: 1px solid $white;
+    
+                    &::placeholder {
+                        opacity: 0.5;
+                        font-weight: 400;
+                    }
+                }
+            }
+        }
+    }
+}

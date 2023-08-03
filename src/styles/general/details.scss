@@ -1,0 +1,36 @@
+details {
+    .title, .content {
+        padding: 10px;
+    }
+
+    .title {
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+
+        &::marker {
+            content: '';
+        }
+
+        &::after {
+            content: '▼';
+            font-size: 14px;
+        }
+    }
+
+    &[open] {
+        .title {
+            &::after {
+                content: '▲';
+            }
+        }
+    }
+
+    .content {
+        padding-top: 0;
+    }
+} 
