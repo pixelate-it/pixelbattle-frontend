@@ -41,6 +41,7 @@
                 display: block;
                 pointer-events: none;
                 mask: url('../assets/icons/xmark.svg') center / 12px no-repeat;
+                -webkit-mask: url('../assets/icons/xmark.svg') center / 12px no-repeat;
                 background-color: $white;
             }
         }
