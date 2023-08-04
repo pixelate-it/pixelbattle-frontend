@@ -2,7 +2,7 @@ import { Application, Point } from "pixi.js";
 import { Viewport } from "pixi-viewport";
 import { config } from "../config";
 import { Canvas } from "./canvas";
-import { getRandomBuffer } from "../lib/random";
+import { MyBuffer } from "../types/buffer";
 
 
 export class Game {
@@ -19,17 +19,15 @@ export class Game {
         this.viewport = new Viewport({
             screenWidth: window.innerWidth,
             screenHeight: window.innerHeight,
-            worldWidth: config.size.width,
+            worldWidth: config.size.x,
             events: this.app.renderer.events,
-            worldHeight: config.size.height,
+            worldHeight: config.size.y,
             disableOnContextMenu: true
         });
 
         this.canvas = new Canvas()
         
-        const image = getRandomBuffer(new Point(config.size.width, config.size.height))
-        this.canvas.loadImage(image)
-
+        this.canvas.loadImage(MyBuffer.getRandom(config.size))
         this.viewport.fit()
         
 

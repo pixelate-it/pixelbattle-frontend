@@ -24,4 +24,29 @@
         background-color: $transparent-dark;
         border: 1px solid $white;
     }
+
+    .cooldown {
+        position: relative;
+
+
+        .time {
+            color: $white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+        }
+
+        .progress-bar {
+            background-color: $transparent-dark;
+            border-radius: 7px;
+            height: 25px;
+            border: none;
+
+            &::-moz-progress-bar {
+                background: $white;
+            }
+        }
+    }
 }

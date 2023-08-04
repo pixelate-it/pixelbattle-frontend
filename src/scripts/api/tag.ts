@@ -20,7 +20,7 @@ export class TagsController {
     }
 
     public startUpdating() {
-        setInterval(this.update.bind(this), config.updateTime.tags);
+        setInterval(this.update.bind(this), config.time.update.tags);
     }
 
 

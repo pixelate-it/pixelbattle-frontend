@@ -1,5 +1,6 @@
 import { app } from "../app";
 import { config } from "../config";
+import { Cooldown } from "./cooldown";
 
 interface Info {
     season: {
@@ -13,14 +14,22 @@ interface Info {
 
 export class InfoController {
     public info: Info;
-    
+    private lastPlaceDate: Date = new Date();
+    private container = document.getElementById("info");
+    public cooldown: Cooldown = new Cooldown();
+    private _hasEnded: boolean;
+
     constructor() {
         this.update()
         this.startUpdating()
     }
 
     get hasEnded() {
-        return this.info.season.name === "season:blank" 
+        return this.info.season.name === "season:blank" ?? this._hasEnded
+    }
+
+    set hasEnded(value: boolean) {
+        this._hasEnded = value
     }
 
     public update() {
@@ -28,7 +37,7 @@ export class InfoController {
     }
 
     public startUpdating() {
-        setInterval(this.update.bind(this), config.updateTime.info)
+        setInterval(this.update.bind(this), config.time.update.info)
     }
 
     private async fetchInfo() {
@@ -36,22 +45,45 @@ export class InfoController {
     }
 
     private render() {
-        const infoContainer = document.getElementById("info");
+        this.container.innerHTML = ``;
 
-        infoContainer.innerHTML = `
-            <div class="season">${this.info.season.name}</div>
-            <div class="players">
-                ${this.info.players.online} / ${this.info.players.total} <span>онлайн</span>
-            </div>
-            ${
-                this.hasEnded
-                ? `<div class="ended">
-                    Игра закончена
-                </div>`
-                : ""
-            }
-            
-        `
+        this.renderSeason();
+        this.renderEndGame();
+        this.renderPlayersOnline();
+        this.renderCooldown();
     }
+
+    private renderSeason() {
+        if (!this.hasEnded) return
+
+        const info = document.createElement("div");
+        info.classList.add("season");
+        info.innerHTML = `${this.info.season.name}`;
+
+        this.container.appendChild(info);
+    }
+
+    private renderEndGame() {
+        const info = document.createElement("div");
+        info.classList.add("ended");
+
+        info.innerHTML = `Игра закончена`;
+
+        this.container.appendChild(info);
+    }
+
+    private renderPlayersOnline() {
+        const info = document.createElement("div");
+        info.classList.add("players");
+        info.innerHTML = `${this.info.players.online} / ${this.info.players.total} <span>онлайн</span>`;
+
+        this.container.appendChild(info);
+    }
+
+    private renderCooldown() {
+        this.container.appendChild(this.cooldown.render());
+    }
+
+    
 
 }

@@ -1,35 +1,40 @@
-import { Color } from "pixi.js";
+import { Color, Point } from "pixi.js";
+import { MyColor } from "./types/color";
 
 export const config = {
     colors: {
-        background: 0x555555,
-        outline: 0x333333,
+        background: new MyColor(0x555555),
         palette: [
-            new Color("#ff0000"),
-            new Color("#00ff00"),
-            new Color("#0000ff"),
-            new Color("#000000"),
-            new Color("#ffffff"),
+            new MyColor("#ff0000"),
+            new MyColor("#00ff00"),
+            new MyColor("#0000ff"),
+            new MyColor("#000000"),
+            new MyColor("#ffffff"),
         ],
-        selected: new Color("#ffffff"),
-        create: new Color("#000000"),
+        selected: new MyColor("#ffffff"), // Default selected color
+        create: new MyColor("#000000"), // Default color when creating new one
     },
-    updateTime: {
-        tags: 30000,
-        info: 30000
+    time: {
+        update: {
+            tags: 30000,
+            info: 30000,
+        },
+        ws: 5000, // Websocket reconnect time
+        cooldown: 5000,
+        animation: 10
     },
-    size: {
-        width: 160,
-        height: 80,
-    },
+    size: new Point(160, 80),
     discord: {
         clientId: "1135869746194157598",
         redirectUri: "http://localhost:9000",
-        scope: ["identify", "guilds.join"]
+        scope: ["identify", "guilds.join"] 
     },
-    outlineSize: 1.2,
+    hover: {
+        outlineSize: 0.1,
+        scale: 1.2
+    },
     url: {
-        api: "https://api.pixelbattle.fun",
+        api: "https://api.pixelbattle.fun", 
         client: "https://pixelbattle.fun",
         ws: "wss://api.pixelbattle.fun/pixels/socket"
     }

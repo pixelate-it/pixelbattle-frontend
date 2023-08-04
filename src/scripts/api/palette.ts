@@ -2,6 +2,7 @@ import { Color, ColorSource } from "pixi.js";
 import { app } from "../app";
 import { config } from "../config";
 import { getRandomId } from "../lib/random";
+import { MyColor } from "../types/color";
 
 interface PaletteButtons {
     create: HTMLDivElement;
@@ -9,7 +10,7 @@ interface PaletteButtons {
 }
 
 interface PaletteColor {
-    color: Color;
+    color: MyColor;
     id: string;
 }
 
@@ -68,7 +69,7 @@ export class PaletteController {
 
         this.colors = (JSON.parse(storedColors) as FlatPaletteColor[])
             .map(c => ({
-                color: new Color(c.color),
+                color: new MyColor(c.color),
                 id: c.id
             }));
 
@@ -84,7 +85,7 @@ export class PaletteController {
         localStorage.setItem("palette", JSON.stringify(flatColors));
     }
 
-    public addColor(color: Color) {
+    public addColor(color: MyColor) {
         const id = getRandomId()
         this.colors.push({
             color,
@@ -116,6 +117,8 @@ export class PaletteController {
         this.renderRemoveButton()
     }
 
+    
+
     public renderColor(color: PaletteColor) {
         const colorElement = document.createElement('input');
         const hexColor = color.color.toHex();
@@ -129,13 +132,7 @@ export class PaletteController {
         colorElement.classList.add('color');
 
 
-        colorElement.addEventListener('change', (e: InputEvent) => {
-            const target = e.target as HTMLInputElement
-
-            this.setSelectedColor(target.dataset.id);
-            this.buttons.remove.disabled = this.isDefaultColor(color)
-        });
-
+        colorElement.addEventListener('change', this.onChangeColor.bind(this));
         this.container.appendChild(colorElement);
     }
 
@@ -144,11 +141,7 @@ export class PaletteController {
         this.buttons.remove.classList.add('remove-color')
         this.buttons.remove.disabled = this.isDefaultColor(this.selectedColor)
 
-        this.buttons.remove.addEventListener('click', (e) => {
-            e.preventDefault()
-
-            this.removeColor(this.selectedColor.id);
-        })
+        this.buttons.remove.addEventListener('click', this.onRemoveColor.bind(this))
 
         this.container.appendChild(this.buttons.remove);
     }
@@ -157,11 +150,7 @@ export class PaletteController {
         const colorPicker = document.createElement('input');
         colorPicker.type = 'color';
         colorPicker.value = config.colors.create.toHex();
-        colorPicker.addEventListener('change', (e: InputEvent) => {
-            const target = e.target as HTMLInputElement
-
-            this.addColor(new Color(target.value));
-        })
+        colorPicker.addEventListener('change', this.onCreateColor.bind(this))
 
         const createButton = document.createElement('div');
         createButton.classList.add('new-color');
@@ -169,5 +158,31 @@ export class PaletteController {
 
         this.buttons.create = createButton
         this.container.appendChild(createButton);
+    }
+
+    private onCreateColor(e: InputEvent) {
+        const target = e.target as HTMLInputElement;
+        const newColor = new MyColor(target.value)
+        const color = this.colors.find(c => c.color.equals(newColor))
+
+        if (color) {
+            return this.setSelectedColor(color.id);
+        }
+
+        this.addColor(newColor);
+    }
+
+    private onChangeColor(e: InputEvent) {
+        const target = e.target as HTMLInputElement
+        const color = this.colors.find(c => c.id === target.dataset.id)
+
+        this.setSelectedColor(target.dataset.id);
+        this.buttons.remove.disabled = this.isDefaultColor(color)
+    }
+
+    private onRemoveColor(e: MouseEvent) {
+        e.preventDefault()
+
+        this.removeColor(this.selectedColor.id);
     }
 }

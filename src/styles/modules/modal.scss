@@ -21,5 +21,28 @@
         position: absolute;
         top: 10px;
         right: 10px;
+
+        button {
+            $size: 20px;
+            width: $size;
+            height: $size;
+            border-radius: 50%;
+            position: relative;
+
+            &:hover {
+                background-color: $transparent-dark;
+            }
+
+            &::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                margin: auto;
+                display: block;
+                pointer-events: none;
+                mask: url('../assets/icons/xmark.svg') center / 12px no-repeat;
+                background-color: $white;
+            }
+        }
     }
 }

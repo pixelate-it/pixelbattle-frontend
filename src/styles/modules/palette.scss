@@ -38,26 +38,31 @@
     }
 
     :where(.new-color, .remove-color)::after {
+        content: '';
         position: absolute;
         inset: 0;
         margin: auto;
         display: block;
-        text-align: center;
         pointer-events: none;
+        mask: url('../assets/icons/xmark.svg') center / 12px no-repeat;
+
+
     }
 
 
     .new-color {
         outline: 2px solid $white;
         position: relative;
-        color: $white;
+        overflow: hidden;
 
         &::after {
-            content: '+';
-            font-weight: 700;
-
+            background-color: $white;
+            transform: rotateZ(45deg);
         }
 
+        &:hover {
+            background-color: #ffffff33;
+        }
 
         input {
             opacity: 0;
@@ -65,8 +70,6 @@
             width: $size;
             height: $size;
         }
-
-        
     }
 
     .remove-color {
@@ -74,9 +77,12 @@
         outline: 2px solid $red;
         position: relative;
 
+        &:hover {
+            background-color: #ff000033;
+        }
+
         &::after {
-            content: '✖';
-            color: $red;
+            background-color: $red;
         }
     }
 }

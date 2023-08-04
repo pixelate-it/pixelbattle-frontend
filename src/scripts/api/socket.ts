@@ -1,7 +1,8 @@
 import { Color, ColorSource, Point } from "pixi.js";
 import { app } from "../app";
 import { config } from "../config";
-import { indexToPoint } from "../lib/coords";
+import { MyColor } from "../types/color";
+import { MyBuffer } from "../types/buffer";
 
 interface PlaceMessageData {
     op: "PLACE";
@@ -24,15 +25,18 @@ interface Pixel {
 
 export class WebSocketController {
     public ws: WebSocket;
-    public hasEnded = false;
 
     constructor() {
+        this.connect()
+    }
+
+    private connect() {
         this.ws = new WebSocket(config.url.ws)
 
-        this.ws.onmessage = this.onMessage
-        this.ws.onopen = this.onOpen
-        this.ws.onclose = this.onClose
-        this.ws.onerror = this.onError
+        this.ws.addEventListener("open", this.onOpen.bind(this))
+        this.ws.addEventListener("message", this.onMessage.bind(this))
+        this.ws.addEventListener("close", this.onClose.bind(this))
+        this.ws.addEventListener("error", this.onError.bind(this))
     }
 
     private async onMessage(event: MessageEvent<string | Blob>) {
@@ -42,26 +46,26 @@ export class WebSocketController {
 
         switch (data.op) {
             case 'PLACE':
-                app.game.canvas.setSquare(indexToPoint(data.id), new Color(data.color));
+                const point = app.game.canvas.buffer.indexToPoint(data.id);
+                const color = new MyColor(data.color)
+
+                app.game.canvas.setSquare(point, color);
                 break;
 
             case 'ENDED':
-                this.hasEnded = true
+                app.info.hasEnded = true
                 break;
         }
     }
 
     private onOpen(event: MessageEvent) {
         app.request.get<{ pixels: Pixel[] }>("/pixels/get").then(({ pixels }) => {
-            const buffer = new Uint8Array(config.size.width * config.size.height * 4)
+            const buffer = new MyBuffer(config.size);
 
             pixels.forEach((pixel, index) => {
-                const color = new Color(pixel.color.toLowerCase()).toUint8RgbArray();
+                const color = new MyColor(pixel.color.toLowerCase())
 
-                buffer[index * 4] = color[0];
-                buffer[index * 4 + 1] = color[1];
-                buffer[index * 4 + 2] = color[2];
-                buffer[index * 4 + 3] = 255;
+                buffer.setPixel(index, color);
             })
 
             app.game.canvas.loadImage(buffer);
@@ -69,10 +73,10 @@ export class WebSocketController {
     }
 
     private onClose(event: CloseEvent) {
-
+        setTimeout(this.connect.bind(this), config.time.ws)
     }
 
-    private onError(event: MessageEvent) {
-
+    private onError(event: Event) {
+        this.onClose(new CloseEvent("close", event))
     }
 }

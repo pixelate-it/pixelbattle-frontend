@@ -14,6 +14,6 @@ export const modals = {
     "BANNED": new Modal({
         title: "Вы забанены",
         type: "error",
-        description: "Пожалуйста, попробуйте снова",
+        description: "Если произошла ошибка, обратитесь к администратору",
     }),
-}
+} as const

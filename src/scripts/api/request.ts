@@ -22,7 +22,7 @@ export class RequestController {
 
     public showErrors(error: any) {
         if (error.reason === "Ended") return modals.ENDED.render()
-        if (error.reason === "Banned") return modals.BANNED.render()
+        if (error.reason === "TokenBanned") return modals.BANNED.render()
     }
 
     public get<T>(url: string) {
