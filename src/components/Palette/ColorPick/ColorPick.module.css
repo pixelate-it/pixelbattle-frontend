@@ -1,0 +1,13 @@
+.input {
+    appearance: none;
+    display: block;
+    width: var(--size);
+    height: var(--size);
+    cursor: pointer;
+    outline: 2px solid var(--white);
+    border-radius: 50%;
+}
+
+.input:checked {
+    outline: 2px solid var(--primary);
+}

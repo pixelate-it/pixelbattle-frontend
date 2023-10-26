@@ -1,0 +1,15 @@
+.color {
+    width: var(--size);
+    height: var(--size);
+    display: block;
+    appearance: none;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    padding: 10px;
+}
+
+.color:checked {
+    outline: 2px solid var(--white);
+    outline-offset: 2px;
+}
