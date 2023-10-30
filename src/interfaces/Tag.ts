@@ -1,5 +1,10 @@
 export interface ApiTags {
-    tags: [string, number][]
+    tags: ApiTag[];
+    pixels: {
+        all: number;
+        used: number;
+        unused: number;
+    }
 
 }
 
