@@ -1,17 +1,29 @@
+import { useContext } from "preact/hooks";
 import { FormatedTag } from "../../../interfaces/Tag";
 import styles from "./Tag.module.css";
+import { TagsContext } from "../../../managers/tags";
+import { InfoContext } from "../../../managers/info";
 
 interface TagProps {
-    tag: FormatedTag
+    tag: FormatedTag;
 }
 
 export function Tag({ tag }: TagProps) {
+    const tags = useContext(TagsContext)
+    const className = [styles.tag, tag.name === tags.selectedTag.value ? styles.selected : ""].join(" ")
+    const info = useContext(InfoContext)
+
+    function onClick() {
+
+        tags.select(tag.name)
+    }
+
     return (
-        <div className={styles.tag}>
+        <button className={className} onClick={onClick}>
             <p className={styles.place}>{tag.place + 1}</p>
             <p className={styles.name}>{tag.name}</p>
-            <p className={styles.score}>{tag.pixels}</p>
-        </div>
+            <p className={styles.score}>{tag.pixels === -1 ? "??" : tag.pixels}</p>
+        </button>
     )
 
 }

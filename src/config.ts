@@ -1,5 +1,5 @@
 import { Color, Point } from "pixi.js";
-import { MyColor } from "./types/color";
+import { MyColor } from "./types/MyColor";
 
 export const config = {
     colors: {
@@ -22,8 +22,10 @@ export const config = {
             info: 30000,
         },
         ws: 5000, // Websocket reconnect time
-        animation: 10
+        shake: 200,
+        notification: 3000
     },
+    shakeAmount: 0.1,
     discord: {
         clientId: "1135869746194157598",
         redirectUri: "http://localhost:9000",

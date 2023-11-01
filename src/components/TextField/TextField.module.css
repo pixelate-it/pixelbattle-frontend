@@ -1,3 +1,15 @@
 .input {
     font: inherit;
+    display: block;
+    background-color: var(--window-background-2);
+    padding: 8px 10px;
+    border-radius: 8px;
+}
+
+.input::placeholder {
+    color: var(--grey-text);
+}
+
+.input:focus {
+    outline: 2px solid var(--primary);
 }

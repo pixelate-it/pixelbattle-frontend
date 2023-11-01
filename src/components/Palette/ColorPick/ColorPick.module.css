@@ -1,3 +1,7 @@
+.wrapper {
+    position: relative;
+}
+
 .input {
     appearance: none;
     display: block;
@@ -10,4 +14,14 @@
 
 .input:checked {
     outline: 2px solid var(--primary);
+}
+
+.icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 15px;
+    height: 15px;
+    pointer-events: none;
 }

@@ -1,0 +1,18 @@
+.login {
+    align-self: flex-end;
+    display: flex;
+}
+
+.params {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: start;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
+}

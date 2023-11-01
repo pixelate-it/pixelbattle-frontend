@@ -3,6 +3,7 @@ import styles from "./Button.module.css"
 
 interface BaseButton {
     children: ComponentChildren;
+    type?: "primary" | "danger"
 }
 
 interface LinkButton {
@@ -16,16 +17,18 @@ interface ActionButton {
 type ButtonProps = BaseButton & (LinkButton | ActionButton);
 
 export function Button(props: ButtonProps) {
+    const className = [styles.button, styles[props.type ?? "primary"]].join(" ")
+
     if ("href" in props) {
         return (
-            <a href={props.href} className={styles.button}>
+            <a href={props.href} className={className}>
                 {props.children}
             </a>
         )
     }
 
     return (
-        <button className={styles.button} onClick={props.onClick}>
+        <button className={className} onClick={props.onClick}>
             {props.children}
         </button>
     )

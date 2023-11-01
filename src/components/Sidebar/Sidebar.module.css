@@ -5,5 +5,14 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    align-items: flex-end;
 
+}
+
+@media screen and (max-width: 600px) {
+    .sidebar {
+        position: static;
+        margin-right: 10px;
+        max-width: calc(100% - 20px);
+    }
 }

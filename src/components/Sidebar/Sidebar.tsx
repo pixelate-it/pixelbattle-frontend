@@ -1,16 +1,14 @@
 import { ComponentChildren } from "preact"
-import { TagList } from "../Tags/TagWindow/TagWindow"
+import { Tags } from "../Tags/Tags/Tags"
 import styles from "./Sidebar.module.css"
-import { WindowBox } from "../WindowBox/WindowBox"
+import { Profile } from "../Profile/Profile"
+import { NotificationList } from "../Notifications/NotificationList/NotificationList"
 
 
 export function Sidebar() {
     return <div className={styles.sidebar}>
-        <WindowBox title="Теги">
-            <TagList />
-        </WindowBox>
-        <WindowBox title="Профиль">
-            
-        </WindowBox>
+        <Tags />
+        <Profile />
+        <NotificationList />
     </div>
 }

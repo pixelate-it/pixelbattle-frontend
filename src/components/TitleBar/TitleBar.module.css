@@ -1,0 +1,39 @@
+.wrapper {
+    background-color: var(--window-background);
+    border-radius: 8px;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    /* transform: translateX(-50%); */
+}
+
+.content,
+.title {
+    padding: 12px;
+}
+
+.content {
+    padding-top: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.title {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 28px;
+}
+
+.title::marker {
+    content: '';
+}
+
+@media screen and (max-width: 600px) {
+    .wrapper {
+        position: static;
+        width: 100%;
+        border-radius: 0;
+    }
+}

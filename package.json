@@ -3,13 +3,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 9000",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
     "@pixi/utils": "^7.3.2",
     "@preact/signals": "^1.2.1",
+    "@types/node": "^20.8.10",
     "pixi-viewport": "^5.0.2",
     "pixi.js": "^7.3.2",
     "preact": "^10.13.1",

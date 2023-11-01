@@ -5,10 +5,13 @@
     align-items: center;
     padding: 4px 8px;
     gap: 10px;
+    width: 100%;
+    border-radius: 4px;
 }
 
 .place {
     --size: 25px;
+
     display: grid;
     place-items: center;
     width: var(--size);
@@ -48,4 +51,8 @@
 
 .score {
     color: var(--grey-text);
+}
+
+.selected {
+    background-color: rgba(255, 255, 255, 0.2);
 }

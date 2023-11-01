@@ -1,5 +1,5 @@
 import { Point } from "pixi.js";
-import { MyColor } from "./color";
+import { MyColor } from "./MyColor";
 
 export class MyBuffer {
     private _buffer: Uint8Array;

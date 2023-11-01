@@ -1,17 +1,17 @@
 import { Sprite, Texture, FederatedPointerEvent, Point } from "pixi.js";
-import { MyBuffer } from "../../types/buffer";
-import { MyColor } from "../../types/color";
-import { PlaceSignal } from "../../context/place";
-import { InfoSignal } from "../../context/info";
+import { MyColor } from "../../types/MyColor";
+import { PlaceManager } from "../../managers/place";
+import { InfoManager } from "../../managers/info";
+import { ColorPickerManager } from "../../managers/picker";
 
 
 export class PlaceView extends Sprite {
     get image() {
-        return PlaceSignal.image.value
+        return PlaceManager.image.value
     }
 
     get size() {
-        return InfoSignal.info.value.size
+        return InfoManager.info.value.size
     }
 
     constructor() {
@@ -35,74 +35,28 @@ export class PlaceView extends Sprite {
 
 
     private async onClick(event: FederatedPointerEvent) {
-        // if (this.isDragged) return;
-
-        // console.log("A")
-
         const position = event.getLocalPosition(this)
         const x = Math.floor(position.x)
         const y = Math.floor(position.y)
         const point = new Point(x, y)
-
-        // if (!app.auth.token) {
-        //     return modals.NOT_AUTH.render()
-        // }
-
-        if (false) return this.emit("cant-place", { reason: "Not logged" })
-
-
-        // if (app.info.hasEnded) 
-        //     return modals.ENDED.render()
-
-        if (false) return this.emit("cant-place", { reason: "Game ended" })
-
+        const color = this.image.getPixel(point)
 
 
         if (event.button === 0) {
-            // if (app.info.cooldown.isInProcess) return this.pointer.shake()
-            if (false) return this.emit("cant-place", { reason: "Cooldown" })
+            if (ColorPickerManager.isEnabled.value) {
+                return this.emit("will-color-pick", color)
+            }
 
             return this.emit("will-place", point)
         }
 
 
         if (event.button === 2) {
-            const color = this.image.getPixel(point)
 
-            
-            // const colorInPalette = app.palette.colors
-            //     .find(c => c.color.equals(color))     
-
-            // if (colorInPalette) {
-            //     return app.palette.setSelectedColor(colorInPalette.id)
-            // }
-
-            // return app.palette.addColor(color)
-
-            return this.emit("color-picked", color)
+            return this.emit("will-color-pick", color)
         }
 
     }
-
-
-
-    // private async placeOwnPixel(point: Point) {
-    //     try {
-    //         const color = getPaletteContext()
-                
- 
-
-    //         // await app.request.post("/pixels/put")({
-    //         //     id: this.buffer.pointToIndex(point),
-    //         //     color: color.toHex(),
-    //         // })
-    //         // this.setSquare(point, color)
-    //         // app.info.cooldown.start()
-
-
-    //         this.setSquare(point, color.selectedColor)
-    //     } catch {}
-    // }
 
     private onPointerMove(event: FederatedPointerEvent) {
         const position = event.getLocalPosition(this)
