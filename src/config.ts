@@ -1,18 +1,18 @@
 import { Color, Point } from "pixi.js";
-import { MyColor } from "./types/MyColor";
+import { AppColor } from "./types/AppColor";
 
 export const config = {
     colors: {
-        background: new MyColor("#282828"),
+        background: new AppColor("#282828"),
         palette: {
             colors: [
-                new MyColor("#ff0000"),
-                new MyColor("#00ff00"),
-                new MyColor("#0000ff"),
-                new MyColor("#000000"),
-                new MyColor("#ffffff"),
+                new AppColor("#ff0000"),
+                new AppColor("#00ff00"),
+                new AppColor("#0000ff"),
+                new AppColor("#000000"),
+                new AppColor("#ffffff"),
             ],
-            selected: new MyColor("#ffffff"), // Default selected color
+            selected: new AppColor("#ffffff"), // Default selected color
         }
 
     },

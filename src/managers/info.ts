@@ -1,7 +1,7 @@
 import { createContext } from "preact";
 import { computed, signal } from "@preact/signals";
 import { ApiInfo } from "../interfaces/Info";
-import { MyFetch } from "../types/MyFetch";
+import { MyFetch } from "../types/AppFetch";
 
 
 

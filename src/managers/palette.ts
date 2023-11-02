@@ -1,11 +1,11 @@
 import { Context, createContext } from "preact";
-import { MyColor } from "../types/MyColor";
+import { AppColor } from "../types/AppColor";
 import { Signal, signal } from "@preact/signals";
 import { config } from "../config";
 
 export const PaletteManager = {
     palette: signal(config.colors.palette),
-    setCurrentColor: (color: MyColor) => {
+    setCurrentColor: (color: AppColor) => {
         PaletteManager.palette.value = {
             ...PaletteManager.palette.value,
             selected: color
@@ -13,7 +13,7 @@ export const PaletteManager = {
 
         PaletteManager.save()
     },
-    removeColor(color: MyColor) {
+    removeColor(color: AppColor) {
         PaletteManager.palette.value = {
             selected: PaletteManager.palette.value.colors.at(-2) ?? PaletteManager.palette.value.selected,
             colors: PaletteManager.palette.value.colors.filter(c => !c.equals(color))
@@ -21,10 +21,10 @@ export const PaletteManager = {
 
         PaletteManager.save()
     },
-    isDefaultColor(color: MyColor) {
+    isDefaultColor(color: AppColor) {
         return config.colors.palette.colors.some(c => c.equals(color))
     },
-    addColor(color: MyColor) {
+    addColor(color: AppColor) {
         PaletteManager.palette.value = {
             ...PaletteManager.palette.value,
             colors: [...PaletteManager.palette.value.colors, color]
@@ -32,7 +32,7 @@ export const PaletteManager = {
 
         PaletteManager.save()
     },
-    addAndSelect(color: MyColor) {
+    addAndSelect(color: AppColor) {
         const isColorInPalette = PaletteManager.palette.value.colors.some(c => c.equals(color))
 
         if (!isColorInPalette) {
@@ -58,8 +58,8 @@ export const PaletteManager = {
         const flatPalette = JSON.parse(palette) as FlatPalette
 
         PaletteManager.palette.value = {
-            colors: flatPalette.colors.map(c => new MyColor(c)),
-            selected: new MyColor(flatPalette.selected)
+            colors: flatPalette.colors.map(c => new AppColor(c)),
+            selected: new AppColor(flatPalette.selected)
         }
     },
 

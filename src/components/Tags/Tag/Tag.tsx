@@ -3,6 +3,7 @@ import { FormatedTag } from "../../../interfaces/Tag";
 import styles from "./Tag.module.css";
 import { TagsContext } from "../../../managers/tags";
 import { InfoContext } from "../../../managers/info";
+import { ProfileContext } from "../../../managers/profile";
 
 interface TagProps {
     tag: FormatedTag;
@@ -11,9 +12,12 @@ interface TagProps {
 export function Tag({ tag }: TagProps) {
     const tags = useContext(TagsContext)
     const className = [styles.tag, tag.name === tags.selectedTag.value ? styles.selected : ""].join(" ")
-    const info = useContext(InfoContext)
+    const profile = useContext(ProfileContext)
 
     function onClick() {
+        if (!profile.isAuthenticated.value) {
+            return
+        }
 
         tags.select(tag.name)
     }

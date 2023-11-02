@@ -1,5 +1,5 @@
 import { Container, FederatedPointerEvent, Point } from "pixi.js";
-import { MyColor } from "../../types/MyColor";
+import { AppColor } from "../../types/AppColor";
 import {  PaletteManager } from "../../managers/palette";
 import { PlacePointer } from "./PlacePointer";
 import { PlaceView } from "./PlaceView";
@@ -10,7 +10,7 @@ import { Viewport } from "pixi-viewport";
 import { PlaceManager } from "../../managers/place";
 import { InfoManager } from "../../managers/info";
 import { ColorPickerManager } from "../../managers/picker";
-import { MyFetch } from "../../types/MyFetch";
+import { MyFetch } from "../../types/AppFetch";
 import { DragEvent } from "pixi-viewport/dist/types";
 import { NotificationList } from "../Notifications/NotificationList/NotificationList";
 import { NotificationsManager } from "../../managers/notifications";
@@ -123,7 +123,7 @@ export class PlaceContainer extends Container {
         this.pointer.out()
     }
 
-    public onWillColorPick(color: MyColor) {
+    public onWillColorPick(color: AppColor) {
         if (this.isDragged) {
             return 
         };

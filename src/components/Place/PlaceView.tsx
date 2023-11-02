@@ -1,5 +1,5 @@
 import { Sprite, Texture, FederatedPointerEvent, Point } from "pixi.js";
-import { MyColor } from "../../types/MyColor";
+import { AppColor } from "../../types/AppColor";
 import { PlaceManager } from "../../managers/place";
 import { InfoManager } from "../../managers/info";
 import { ColorPickerManager } from "../../managers/picker";
@@ -76,7 +76,7 @@ export class PlaceView extends Sprite {
         this.emit("out");
     }
 
-    public setSquare(pos: Point, color: MyColor) {
+    public setSquare(pos: Point, color: AppColor) {
         this.image.setPixel(pos, color)
         this.texture.update()
 

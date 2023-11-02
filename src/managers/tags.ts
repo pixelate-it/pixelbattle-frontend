@@ -1,7 +1,7 @@
 import { signal } from "@preact/signals"
 import { FormatedTag } from "../interfaces/Tag"
 import { createContext } from "preact"
-import { MyFetch } from "../types/MyFetch"
+import { MyFetch } from "../types/AppFetch"
 import { ProfileManager } from "./profile"
 
 export const TagsManager = {
@@ -10,11 +10,16 @@ export const TagsManager = {
     async fetch() {
         const response = await MyFetch.tags()
 
+
         TagsManager.tags.value = response.tags.map((tag, index) => ({
             name: tag[0],
             pixels: tag[1],
             place: index
         }))
+
+        if (!ProfileManager.isAuthenticated.value) {
+            return
+        }
         
 
         const hasUserSelectedTag = ProfileManager.user.value.tag !== null

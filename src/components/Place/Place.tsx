@@ -5,7 +5,7 @@ import { PlaceContext } from "../../managers/place";
 import { config } from "../../config";
 import { InfoContext } from "../../managers/info";
 import { PlaceContainer } from "./PlaceContainer";
-import { MyWebSocket } from "../../types/MyWebSocket";
+import { AppWebSocket } from "../../types/AppWebSocket";
 
 
 export function Place() {
@@ -56,7 +56,7 @@ export function Place() {
                 app.render()
             })
             .then(() => {
-                const ws = new MyWebSocket()
+                const ws = new AppWebSocket()
 
             })
     }

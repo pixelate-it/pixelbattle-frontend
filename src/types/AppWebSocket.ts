@@ -2,10 +2,10 @@ import { config } from "../config";
 import { InfoManager } from "../managers/info";
 import { PlaceManager } from "../managers/place";
 import { MessageData } from "../interfaces/Actions";
-import { MyColor } from "./MyColor";
+import { AppColor } from "./AppColor";
 
 
-export class MyWebSocket extends WebSocket {
+export class AppWebSocket extends WebSocket {
     constructor() {
         super(config.url.ws)
 
@@ -24,11 +24,9 @@ export class MyWebSocket extends WebSocket {
             ? await new Response(event.data).json()
             : JSON.parse(event.data);
 
-        console.log(data)
-
         switch (data.op) {
             case 'PLACE':
-                PlaceManager.image.value.setPixel(data.id, new MyColor(data.color))
+                PlaceManager.image.value.setPixel(data.id, new AppColor(data.color))
                 break;
 
             case 'ENDED':
@@ -38,7 +36,6 @@ export class MyWebSocket extends WebSocket {
     }
 
     private onOpen(event: Event) {
-        console.log("Connected")
     }
 
     private onClose(event: CloseEvent) {

@@ -1,7 +1,7 @@
 import { Context, createContext } from "preact";
-import { MyColor } from "../types/MyColor";
+import { AppColor } from "../types/AppColor";
 import { ReadonlySignal, Signal, computed, signal } from "@preact/signals";
-import { MyBuffer } from "../types/MyBuffer";
+import { AppBuffer } from "../types/AppImage";
 import { Point } from "pixi.js";
 import { config } from "../config";
 import { ApiPixels } from "../interfaces/Pixels";
@@ -16,7 +16,6 @@ export const CooldownManager = {
         CooldownManager.interval.value = setInterval(CooldownManager.update, InfoManager.info.peek().cooldown / 100)
     },
     update() {
-        console.log(CooldownManager.cooldown.value)
         if (CooldownManager.cooldown.value >= 100) {
             clearInterval(CooldownManager.interval.value)
             CooldownManager.cooldown.value = 0

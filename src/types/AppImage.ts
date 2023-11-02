@@ -1,7 +1,7 @@
 import { Point } from "pixi.js";
-import { MyColor } from "./MyColor";
+import { AppColor } from "./AppColor";
 
-export class MyBuffer {
+export class AppBuffer {
     private _buffer: Uint8Array;
     private _size: Point;
 
@@ -31,9 +31,9 @@ export class MyBuffer {
         return point.x + point.y * this._size.x;
     }
 
-    getPixel(point: Point): MyColor | undefined;
-    getPixel(index: number): MyColor | undefined;
-    public getPixel(pointOrIndex: Point | number): MyColor | undefined {
+    getPixel(point: Point): AppColor | undefined;
+    getPixel(index: number): AppColor | undefined;
+    public getPixel(pointOrIndex: Point | number): AppColor | undefined {
         if (typeof pointOrIndex === "number") {
             return this.getPixelByIndex(pointOrIndex);
         }
@@ -46,7 +46,7 @@ export class MyBuffer {
         const [r, g, b, a] = this._buffer.slice(index * 4, index * 4 + 4);
 
 
-        return new MyColor(new Uint8Array([r, g, b, a]));
+        return new AppColor(new Uint8Array([r, g, b, a]));
     }
 
     private getPixelByPoint(point: Point) {
@@ -54,9 +54,9 @@ export class MyBuffer {
     }
 
 
-    setPixel(point: Point, color: MyColor): void;
-    setPixel(index: number, color: MyColor): void;
-    public setPixel(pointOrIndex: Point | number, color: MyColor): void {
+    setPixel(point: Point, color: AppColor): void;
+    setPixel(index: number, color: AppColor): void;
+    public setPixel(pointOrIndex: Point | number, color: AppColor): void {
         if (typeof pointOrIndex === "number") {
             return this.setPixelByIndex(pointOrIndex, color);
         }
@@ -64,11 +64,11 @@ export class MyBuffer {
         return this.setPixelByPoint(pointOrIndex, color);
     }
 
-    private setPixelByPoint(point: Point, color: MyColor) {
+    private setPixelByPoint(point: Point, color: AppColor) {
         this.setPixelByIndex(point.x + point.y * this._size.x, color);
     }
 
-    private setPixelByIndex(index: number, color: MyColor) {
+    private setPixelByIndex(index: number, color: AppColor) {
         const startIndex = index * 4;
         const [r, g, b] = color.toUint8RgbArray();
 
@@ -79,11 +79,11 @@ export class MyBuffer {
     }
 
     static getRandom(size: Point) {
-        const buffer = new MyBuffer(size);
+        const buffer = new AppBuffer(size);
 
         for (let x = 0; x < size.x; x++) {
             for (let y = 0; y < size.y; y++) {
-                buffer.setPixel(new Point(x, y), MyColor.getRandom());
+                buffer.setPixel(new Point(x, y), AppColor.getRandom());
             }            
         }
 

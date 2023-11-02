@@ -2,7 +2,7 @@ import { Container, Point, Sprite } from "pixi.js";
 import { WHITE_TEXTURE } from "../../lib/WhiteTexture";
 import { PlaceManager } from "../../managers/place";
 import { config } from "../../config";
-import { MyColor } from "../../types/MyColor";
+import { AppColor } from "../../types/AppColor";
 
 function getRandomArbitrary(min: number, max: number) {
     return Math.random() * (max - min) + min;
@@ -64,7 +64,7 @@ export class PlacePointer extends Container {
         this.position.set(point.x + 0.5, point.y + 0.5)
         this.scale.set(config.hover.scale)
 
-        const color = PlaceManager.image.value.getPixel(point) ?? new MyColor("#ffffff")
+        const color = PlaceManager.image.value.getPixel(point) ?? new AppColor("#ffffff")
         this.background.tint = color 
         this.border.tint = color.getReadableColor()
     }

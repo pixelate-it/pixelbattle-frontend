@@ -1,6 +1,6 @@
 import { useContext } from "preact/hooks";
 import { PaletteContext } from "../../../managers/palette";
-import { MyColor } from "../../../types/MyColor";
+import { AppColor } from "../../../types/AppColor";
 import styles from "./ColorCreate.module.css"
 
 export function ColorCreate() {
@@ -12,8 +12,8 @@ export function ColorCreate() {
                 type="color"
                 name="create-color"
                 className={styles.input}
-                value={MyColor.getRandom().toHex()}
-                onInput={e => palette.addAndSelect(new MyColor(e.currentTarget.value))}/>
+                value={AppColor.getRandom().toHex()}
+                onInput={e => palette.addAndSelect(new AppColor(e.currentTarget.value))}/>
             <img 
                 width={15}
                 height={15}

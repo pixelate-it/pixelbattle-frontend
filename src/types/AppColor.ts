@@ -1,7 +1,7 @@
 import { Color, ColorSource } from "pixi.js";
 
 
-export class MyColor extends Color {
+export class AppColor extends Color {
     constructor(value: ColorSource) {
         super(value);
     }
@@ -16,10 +16,10 @@ export class MyColor extends Color {
         // https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color/3943023#3943023
         const isBlack = (red * 0.299 + green * 0.587 + blue * 0.114) > 186
     
-        return isBlack ? new MyColor('black') : new MyColor('white');
+        return isBlack ? new AppColor('black') : new AppColor('white');
     }
  
     static getRandom() {
-        return new MyColor(Math.floor(Math.random() * 0xffffff))
+        return new AppColor(Math.floor(Math.random() * 0xffffff))
     }
 }
