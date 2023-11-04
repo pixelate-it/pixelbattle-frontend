@@ -1,6 +1,5 @@
 {
-  "name": "example",
-  "private": true,
+  "name": "pixelbattle",
   "type": "module",
   "scripts": {
     "dev": "vite --port 9000",

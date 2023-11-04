@@ -26,6 +26,7 @@ export const config = {
         notification: 3000
     },
     shakeAmount: 0.1,
+    zoomLevel: 0.25,
     discord: {
         clientId: "1135869746194157598",
         redirectUri: "http://localhost:9000",

@@ -8,24 +8,16 @@ import { NotificationsManager } from "../managers/notifications"
 
 export class MyFetch {
     static async post<T extends {}>(url: string, body: any) {
-        try {
-            return fetch(config.url.api + url, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(body)
-            }).then(res => res.json() as Promise<T | ApiError>).then((res) => {
-                if ("error" in res && res.error) {
-                    MyFetch.processError(res)
-                }
+        return fetch(config.url.api + url, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body)
+        })
+        .then(res => res.json() as Promise<T | ApiError>)
+        .then(MyFetch.checkForErrors<T>)
 
-                return res
-            })
-        } catch (e) {
-
-            return {} as T
-        }
     }
 
     static processError(error: ApiError) {
@@ -35,11 +27,27 @@ export class MyFetch {
                 title: "Rate limit",
                 message: "Подождите пару секунд"
             })
+        } else {
+            NotificationsManager.addNotification({
+                type: "error",
+                title: "Произошла ошибка",
+                message: error.message
+            })
         }
     }
 
-    static async get<T>(url: string) {
-        return fetch(config.url.api + url).then(res => res.json() as Promise<T>)
+    static async get<T extends {}>(url: string) {
+        return fetch(config.url.api + url)
+            .then(res => res.json() as Promise<T | ApiError>)
+            .then(MyFetch.checkForErrors)
+    }
+
+    static checkForErrors<T extends {}>(res: T | ApiError): T | ApiError {
+        if ("error" in res && res.error) {
+            MyFetch.processError(res as ApiError)
+        }
+
+        return res
     }
 
     static async info(): Promise<ApiInfo> {
@@ -55,11 +63,32 @@ export class MyFetch {
         //         total: 10
         //     }
         // }
-        return MyFetch.get<ApiInfo>("/info")
+        return MyFetch.get<ApiInfo>("/info").then(res => {
+            if (!("error" in res)) return res;
+
+            return {
+                name: "Unknown",
+                cooldown: 0,
+                size: {
+                    width: 160,
+                    height: 80
+                },
+                players: {
+                    online: -1,
+                    total: -1
+                }
+            }
+        })
     }
 
     static async place(): Promise<ApiPixels> {
-        return MyFetch.get<ApiPixels>("/pixels/get")
+        return MyFetch.get<ApiPixels>("/pixels/get").then(res => {
+            if (!("error" in res)) return res;
+
+            return {
+                pixels: []
+            }
+        })
     }
 
     static async profile(token: string): Promise<ProfileInfo> {
@@ -101,7 +130,18 @@ export class MyFetch {
         //     }
         // }
 
-        return MyFetch.get<ApiTags>("/pixels/get/tag")
+        return MyFetch.get<ApiTags>("/pixels/get/tag").then(res => {
+            if (!("error" in res)) return res;
+
+            return {
+                tags: [],
+                pixels: {
+                    all: 0,
+                    used: 0,
+                    unused: 0
+                }
+            }
+        })
     }
 
     static async putPixel(pixel: ApiPixel) {

@@ -51,13 +51,12 @@ export function Place() {
     
                 viewport.moveCenter(placeCenter)
                 viewport.fit(true, image.image.value.size.x, image.image.value.size.y)
-                viewport.zoomPercent(-0.25, true)
+                viewport.zoomPercent(-config.zoomLevel, true)
     
                 app.render()
             })
             .then(() => {
                 const ws = new AppWebSocket()
-
             })
     }
 
