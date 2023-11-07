@@ -5,7 +5,6 @@ export interface ApiTags {
         used: number;
         unused: number;
     }
-
 }
 
 export type ApiTag = [string, number]

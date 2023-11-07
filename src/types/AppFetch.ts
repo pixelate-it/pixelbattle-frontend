@@ -1,10 +1,11 @@
 import { config } from "../config"
 import { ApiInfo } from "../interfaces/Info"
-import { ApiPixel, ApiPixels } from "../interfaces/Pixels"
+import { ApiPixel, PixelInfo } from "../interfaces/Pixels"
 import { ProfileInfo } from "../interfaces/Profile"
 import { ApiTags } from "../interfaces/Tag"
 import { ProfileManager } from "../managers/profile"
 import { NotificationsManager } from "../managers/notifications"
+import { Point } from "pixi.js"
 
 export class MyFetch {
     static async post<T extends {}>(url: string, body: any) {
@@ -17,7 +18,24 @@ export class MyFetch {
         })
         .then(res => res.json() as Promise<T | ApiError>)
         .then(MyFetch.checkForErrors<T>)
+    }
 
+    static async pixels() {
+        return fetch(config.url.api + "/pixels.bmp")
+            .then(res => res.arrayBuffer())
+    }
+
+
+    static async put<T extends {}>(url: string, body: any) {
+        return fetch(config.url.api + url, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body)
+        })
+        .then(res => res.json() as Promise<T | ApiError>)
+        .then(MyFetch.checkForErrors<T>)
     }
 
     static processError(error: ApiError) {
@@ -69,10 +87,7 @@ export class MyFetch {
             return {
                 name: "Unknown",
                 cooldown: 0,
-                size: {
-                    width: 160,
-                    height: 80
-                },
+                ended: false,
                 players: {
                     online: -1,
                     total: -1
@@ -81,28 +96,10 @@ export class MyFetch {
         })
     }
 
-    static async place(): Promise<ApiPixels> {
-        return MyFetch.get<ApiPixels>("/pixels/get").then(res => {
-            if (!("error" in res)) return res;
+    static async profile(): Promise<ProfileInfo> {
+        const id = ProfileManager.id.value
 
-            return {
-                pixels: []
-            }
-        })
-    }
-
-    static async profile(token: string): Promise<ProfileInfo> {
-        // return {
-        //     userID: "914240860101681163",
-        //     cooldown: 0,
-        //     banned: false,
-        //     username: "Elias",
-        //     tag: "",
-        // }
-
-        return MyFetch.post<ProfileInfo>("/user/getInfo", {
-            token
-        }).then(res => {
+        return MyFetch.get<ProfileInfo>(`/users/${id}`).then(res => {
             if (!("error" in res)) return res;
 
             return {
@@ -115,22 +112,20 @@ export class MyFetch {
         })
     }
 
+    static async getPixel(point: Point): Promise<PixelInfo> {
+        return MyFetch.get<PixelInfo>(`/pixels?x=${point.x}&y=${point.y}`).then(res => {
+            if (!("error" in res)) return res;
+
+            return {
+                author: null,
+                tag: null
+            }
+        })
+    }
+
     static async tags(): Promise<ApiTags> {
 
-
-        // return {
-        //     tags: [
-        //         ["tag1", 100],
-        //         ["tag2", 50],
-        //     ],
-        //     pixels: {
-        //         all: 200,
-        //         used: 100,
-        //         unused: 100
-        //     }
-        // }
-
-        return MyFetch.get<ApiTags>("/pixels/get/tag").then(res => {
+        return MyFetch.get<ApiTags>("/pixels/tag").then(res => {
             if (!("error" in res)) return res;
 
             return {
@@ -145,19 +140,16 @@ export class MyFetch {
     }
 
     static async putPixel(pixel: ApiPixel) {
-        return MyFetch.post("/pixels/put", {
+        return MyFetch.put("/pixels", {
             token: ProfileManager.token.value,
             ...pixel
         })
     }
 
     static async changeTag(tag: string): Promise<ApiResponse> {
-        // return {
-        //     error: false,
-        //     reason: "OK"
-        // }
+        const id = ProfileManager.id.value
 
-        return MyFetch.post<ApiResponse>("/user/changeTag", {
+        return MyFetch.post<ApiResponse>(`/users/${id}/tag`, {
             token: ProfileManager.token.value,
             tag
         }).then(res => {

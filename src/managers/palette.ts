@@ -1,6 +1,6 @@
-import { Context, createContext } from "preact";
+import { createContext } from "preact";
 import { AppColor } from "../types/AppColor";
-import { Signal, signal } from "@preact/signals";
+import { signal } from "@preact/signals";
 import { config } from "../config";
 
 export const PaletteManager = {

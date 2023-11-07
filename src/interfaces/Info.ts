@@ -1,10 +1,7 @@
 export interface ApiInfo {
     name: string;
+    ended: boolean;
     cooldown: number;
-    size: {
-        width: number;
-        height: number;
-    }
     players: {
         online: number;
         total: number;

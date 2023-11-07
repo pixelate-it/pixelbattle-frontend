@@ -1,6 +1,7 @@
 export interface PlaceMessageData {
     op: "PLACE";
-    id: number;
+    x: number;
+    y: number;
     color: string;
 }
 

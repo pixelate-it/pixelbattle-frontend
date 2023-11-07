@@ -10,7 +10,6 @@ export const TagsManager = {
     async fetch() {
         const response = await MyFetch.tags()
 
-
         TagsManager.tags.value = response.tags.map((tag, index) => ({
             name: tag[0],
             pixels: tag[1],
@@ -70,12 +69,12 @@ export const TagsManager = {
 
         TagsManager.selectedTag.value = name
 
-        MyFetch.changeTag(name).then(() => ProfileManager.fetchProfile())
+        MyFetch.changeTag(name).then(() => ProfileManager.fetch())
     },
     remove() {
         TagsManager.selectedTag.value = ""
         TagsManager.purgeFakeTags()
-        MyFetch.changeTag("").then(() => ProfileManager.fetchProfile())
+        MyFetch.changeTag("").then(() => ProfileManager.fetch())
     }
 }
 

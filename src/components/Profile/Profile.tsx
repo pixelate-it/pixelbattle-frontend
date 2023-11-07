@@ -12,18 +12,22 @@ export function Profile() {
         profile.load()
 
         if (profile.isAuthenticated.value) {
-            profile.fetchProfile()
+            profile.fetch()
 
             return 
         };
 
-        const token = new URLSearchParams(document.location.search).get("token")
+        const params = new URLSearchParams(document.location.search)
 
+        const token = params.get("token")
         if (!token) return;
 
-        profile.setToken(token)
+        const id = params.get("id")
+        if (!id) return;
+
+        profile.login(token, id)
         profile.save()
-        profile.fetchProfile()
+        profile.fetch()
         
 
         document.location.replace(document.location.pathname)

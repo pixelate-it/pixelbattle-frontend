@@ -3,7 +3,7 @@ import { ProfileContext, ProfileManager } from "../../managers/profile"
 
 export function Logout() {
     useEffect(() => {
-        ProfileManager.deleteToken()
+        ProfileManager.logout()
         
         window.location.replace("/")
     }, [])

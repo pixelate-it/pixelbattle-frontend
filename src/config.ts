@@ -37,8 +37,8 @@ export const config = {
         scale: 1.2
     },
     url: {
-        api: "https://api.pixelbattle.fun", 
+        api: "https://web-production-4a637.up.railway.app", 
         client: "https://pixelbattle.fun",
-        ws: "wss://api.pixelbattle.fun/pixels/socket"
+        ws: "wss://web-production-4a637.up.railway.app/pixels/socket"
     }
 }

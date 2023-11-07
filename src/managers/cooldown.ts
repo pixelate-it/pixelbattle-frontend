@@ -1,11 +1,6 @@
-import { Context, createContext } from "preact";
-import { AppColor } from "../types/AppColor";
-import { ReadonlySignal, Signal, computed, signal } from "@preact/signals";
-import { AppBuffer } from "../types/AppImage";
-import { Point } from "pixi.js";
-import { config } from "../config";
-import { ApiPixels } from "../interfaces/Pixels";
-import { InfoContext, InfoManager } from "./info";
+import { createContext } from "preact";
+import { Signal, computed, signal } from "@preact/signals";
+import { InfoManager } from "./info";
 
 
 export const CooldownManager = {

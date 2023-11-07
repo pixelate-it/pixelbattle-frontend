@@ -23,6 +23,11 @@ export class PlaceContainer extends Container {
     private place = new PlaceView();
     private isDragged = false;
 
+    // private pixelInfo = {
+    //     lastPoint: new Point(),
+    //     lastPointTime: 0
+    // }
+
     constructor(private viewport: Viewport) {
         super();
 
@@ -94,14 +99,15 @@ export class PlaceContainer extends Container {
         if (!ProfileManager.token.peek()) {
             return this.emit("cant-place", { reason: "Not logged" });
         };
-        if (InfoManager.gameEnded.value) {
+        if (InfoManager.info.value.ended) {
             return this.emit("cant-place", { reason: "Game ended" });
         };
 
 
         MyFetch.putPixel({
-            id: PlaceManager.image.value.pointToIndex(point),
             color: PaletteManager.palette.value.selected.toHex(),
+            x: point.x,
+            y: point.y
         })
 
         this.place.setSquare(point, PaletteManager.palette.value.selected);
@@ -116,6 +122,21 @@ export class PlaceContainer extends Container {
     public onHover(point: Point) {
         CoordinatesManager.setCoordinates(point)
         this.pointer.hover(point)
+        
+        // if (point.x === this.pixelInfo.lastPoint.x && point.y === this.pixelInfo.lastPoint.y) {
+        //     return
+        // };
+
+        // const timePassed = Date.now() - this.pixelInfo.lastPointTime
+
+        // if (timePassed > 1000) {
+        //     console.log("hover");
+            
+        // }
+
+        // this.pixelInfo.lastPoint = point;
+        // this.pixelInfo.lastPointTime = Date.now();
+
     }
 
     public onOut() {

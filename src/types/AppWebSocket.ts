@@ -3,6 +3,7 @@ import { InfoManager } from "../managers/info";
 import { PlaceManager } from "../managers/place";
 import { MessageData } from "../interfaces/Actions";
 import { AppColor } from "./AppColor";
+import { Point } from "pixi.js";
 
 
 export class AppWebSocket extends WebSocket {
@@ -26,7 +27,7 @@ export class AppWebSocket extends WebSocket {
 
         switch (data.op) {
             case 'PLACE':
-                PlaceManager.image.value.setPixel(data.id, new AppColor(data.color))
+                PlaceManager.image.value.setPixel(new Point(data.x, data.y), new AppColor(data.color))
                 break;
 
             case 'ENDED':

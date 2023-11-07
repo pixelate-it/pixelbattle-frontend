@@ -11,7 +11,7 @@ function getRandomArbitrary(min: number, max: number) {
 export class PlacePointer extends Container {
     public border: Sprite;
     public background: Sprite;
-    private isShaking: boolean = false
+    private isShaking: boolean = false;
 
     constructor() {
         super()

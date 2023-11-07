@@ -8,9 +8,8 @@ import { MyFetch } from "../types/AppFetch";
 
 export const InfoManager = {
     info: signal({} as ApiInfo),
-    gameEnded: computed(() => false),
     end() {
-        InfoManager.info.value.name = "season:blank"
+        InfoManager.info.value.ended = true
     },
     async fetch() {
         InfoManager.info.value = await MyFetch.info()
@@ -18,7 +17,6 @@ export const InfoManager = {
 }
 
 
-InfoManager.gameEnded = computed(() => (InfoManager.info.value.name === "season:blank"))
 
 export const InfoContext = createContext({} as typeof InfoManager)
 

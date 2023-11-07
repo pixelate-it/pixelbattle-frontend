@@ -23,6 +23,9 @@
 .coordinates {
     grid-area: Coordinates;
     justify-self: end;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .palette {

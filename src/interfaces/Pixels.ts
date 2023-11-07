@@ -1,8 +1,11 @@
-export interface ApiPixels {
-    pixels: ApiPixel[]
-}
 
 export interface ApiPixel {
-    id: number;
     color: string;
+    x: number;
+    y: number;
+}
+
+export interface PixelInfo {
+    author: string | null;
+    tag: string | null;
 }

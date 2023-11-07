@@ -11,7 +11,7 @@ export class PlaceView extends Sprite {
     }
 
     get size() {
-        return InfoManager.info.value.size
+        return PlaceManager.image.value.size
     }
 
     constructor() {
@@ -25,8 +25,8 @@ export class PlaceView extends Sprite {
         this.eventMode = "static"
         this.texture = Texture.fromBuffer(
             this.image.buffer, 
-            this.size.width, 
-            this.size.height)
+            this.size.x, 
+            this.size.y)
 
         this.on("pointermove", this.onPointerMove.bind(this));
         this.on("pointerout", this.onPointerOut.bind(this));

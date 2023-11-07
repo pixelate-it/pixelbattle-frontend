@@ -6,12 +6,15 @@ import { config } from "../../config";
 import { InfoContext } from "../../managers/info";
 import { PlaceContainer } from "./PlaceContainer";
 import { AppWebSocket } from "../../types/AppWebSocket";
+import { effect } from "@preact/signals";
+import { CoordinatesContext } from "../../managers/coordinates";
 
 
 export function Place() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const image = useContext(PlaceContext);
-    const info = useContext(InfoContext)
+    // const pixelInfp = useContext(CoordinatesContext);
+    // const info = useContext(InfoContext)
 
     function setup() {
         const app = new Application({
@@ -35,23 +38,21 @@ export function Place() {
 
         viewport.drag().pinch().wheel()
 
-        info
-            .fetch()
-            .then(() => image.create(new Point(info.info.peek().size.width, info.info.peek().size.height)))
-            .then(() => image.fetch())
+        image.fetch()
             .then(() => {
                 const placeView = new PlaceContainer(viewport)
 
                 viewport.addChild(placeView);
     
                 const placeCenter = new Point(
-                    info.info.value.size.width / 2,
-                    info.info.value.size.height / 2
+                    image.image.value.size.x / 2,
+                    image.image.value.size.y / 2
                 )
     
                 viewport.moveCenter(placeCenter)
                 viewport.fit(true, image.image.value.size.x, image.image.value.size.y)
                 viewport.zoomPercent(-config.zoomLevel, true)
+
     
                 app.render()
             })
@@ -59,6 +60,11 @@ export function Place() {
                 const ws = new AppWebSocket()
             })
     }
+
+    // effect(() => {
+    //     if (pixelInfp.info.value.author)
+    //         canvasRef.current?.setAttribute("title", pixelInfp.info.value.author)
+    // })
 
     useEffect(setup, [])
 
