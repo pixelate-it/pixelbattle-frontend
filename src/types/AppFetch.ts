@@ -4,7 +4,7 @@ import { ApiPixel, PixelInfo } from "../interfaces/Pixels"
 import { ProfileInfo } from "../interfaces/Profile"
 import { ApiTags } from "../interfaces/Tag"
 import { ProfileManager } from "../managers/profile"
-import { NotificationsManager } from "../managers/notifications"
+import { NotificationInfo, NotificationsManager } from "../managers/notifications"
 import { Point } from "pixi.js"
 
 export class MyFetch {
@@ -16,7 +16,7 @@ export class MyFetch {
             },
             body: JSON.stringify(body)
         })
-        .then(res => res.json() as Promise<T | ApiError>)
+        .then(res => res.json() as Promise<T | ApiErrorResponse>)
         .then(MyFetch.checkForErrors<T>)
     }
 
@@ -30,34 +30,40 @@ export class MyFetch {
             },
             body: JSON.stringify(body)
         })
-        .then(res => res.json() as Promise<T | ApiError>)
+        .then(res => res.json() as Promise<T | ApiErrorResponse>)
         .then(MyFetch.checkForErrors<T>)
     }
 
-    static processError(error: ApiError) {
-
-        if (error.statusCode === 429) {
-            NotificationsManager.addNotification({
+    static processError(error: ApiErrorResponse) {
+        const notificationMap: { [key in ApiErrorResponse["reasons"]]: Omit<NotificationInfo, "id"> } = {
+            "UserCooldown": {
+                type: "error",
+                title: "Кулдаун активен (С)",
+                message: "Подождите пару секунд"
+            },
+            "RateLimit": {
                 type: "error",
                 title: "Рейт лимит",
                 message: "Подождите пару секунд"
-            })
-        } else {
-            NotificationsManager.addNotification({
+            },
+            "TokenBanned": {
                 type: "error",
-                title: "Произошла ошибка",
-                message: error.message
-            })
+                title: "Аккаунт забанен (C)",
+                message: "Ваш аккаунт забанен"
+            },
         }
+
+
+        NotificationsManager.addNotification(notificationMap[error.reasons])
     }
 
     static async get<T extends {}>(url: string) {
         return fetch(config.url.api + url)
-            .then(res => res.json() as Promise<T | ApiError>)
+            .then(res => res.json() as Promise<T | ApiErrorResponse>)
             .then(MyFetch.checkForErrors<T>)
     }
 
-    static checkForErrors<T extends {} | ApiError>(res: T | ApiError){
+    static checkForErrors<T extends {} | ApiErrorResponse>(res: T | ApiErrorResponse){
         if ("error" in res && res.error) {
             MyFetch.processError(res)
 
@@ -89,7 +95,6 @@ export class MyFetch {
     }
 
     static async tags(): Promise<ApiTags> {
-
         return MyFetch.get<ApiTags>("/pixels/tag")
     }
 
@@ -112,11 +117,19 @@ export class MyFetch {
 
 interface ApiResponse {
     error: boolean;
-    reason: string;
+    reasons: string;
 }
 
-interface ApiError {
-    statusCode: number;
-    error: string;
-    message: string;
+interface ApiErrorResponse extends ApiResponse{
+    error: true;
 }
+
+// interface ApiGoodResponse extends ApiResponse {
+//     error: false;
+// }
+
+// interface ApiError {
+//     statusCode: number;
+//     error: string;
+//     message: string;
+// }

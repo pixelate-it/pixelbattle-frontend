@@ -13,8 +13,9 @@ import { ColorPickerManager } from "../../managers/picker";
 import { MyFetch } from "../../types/AppFetch";
 import { DragEvent } from "pixi-viewport/dist/types";
 import { NotificationList } from "../Notifications/NotificationList/NotificationList";
-import { NotificationsManager } from "../../managers/notifications";
+import { NotificationInfo, NotificationsManager } from "../../managers/notifications";
 
+type Reason = "Cooldown" | "Not logged" | "Game ended" | "Banned"
 
 
 
@@ -63,26 +64,30 @@ export class PlaceContainer extends Container {
         this.isDragged = false;
     }
 
-    public onCantPlace({ reason }: { reason: "Cooldown" | "Not logged" | "Game ended" }) {
-        if (reason === "Cooldown") {
-            NotificationsManager.addNotification({
+    public onCantPlace({ reason }: { reason: Reason}) {
+        const notificationMap: { [key in Reason]: Omit<NotificationInfo, "id"> } = {
+            "Banned": {
+                message: "Ваш аккаунт забанен",
+                title: "Аккаунт забанен",
+                type: "error",
+            },
+            "Cooldown": {
+                message: "Кулдаун активен",
                 title: "Кулдаун активен",
-                message: "Кулдаун еще активен",
                 type: "error",
-            })
-        } else if (reason === "Not logged") {
-            NotificationsManager.addNotification({
-                title: "Необходимо авторизоваться",
+            },
+            "Not logged": {
                 message: "Вы не вошли в дискорд аккаунт",
+                title: "Необходимо авторизоваться",
                 type: "error",
-            })
-        } else if (reason === "Game ended") {
-            NotificationsManager.addNotification({
+            },
+            "Game ended": {
+                message: "Игра окончена",
                 title: "Игра окончена",
-                message: "Подождите до начала следующей игры",
                 type: "error",
-            })
+            },
         }
+        NotificationsManager.addNotification(notificationMap[reason])
 
         this.pointer.startShake();
     }
@@ -101,6 +106,10 @@ export class PlaceContainer extends Container {
         };
         if (InfoManager.info.value.ended) {
             return this.emit("cant-place", { reason: "Game ended" });
+        };
+
+        if (ProfileManager.isBanned.value) {
+            return this.emit("cant-place", { reason: "Banned" });
         };
 
         const color = PlaceManager.image.value.getPixel(point);
