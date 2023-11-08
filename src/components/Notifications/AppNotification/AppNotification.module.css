@@ -31,19 +31,3 @@
     color: var(--primary);
     /* border: 2px solid var(--primary); */
 }
-
-/* .progress {
-    display: block;
-    background-color: transparent;
-    height: 3px;
-    width: 100%;
-    border-radius: 5px;
-    border: none;
-    bottom: 0;
-    position: absolute;
-    left: 0;
-}
-
-.progress::-moz-progress-bar {
-    background: var(--danger);
-} */

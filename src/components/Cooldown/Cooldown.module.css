@@ -12,6 +12,7 @@
     /* width: 100%; */
     border-radius: 5px;
     border: none;
+    overflow: hidden;
 }
 
 .label {
@@ -24,5 +25,14 @@
 }
 
 .progress::-moz-progress-bar {
+    background: var(--white);
+
+}
+
+.progress::-webkit-progress-bar {
+    background: var(--window-background);
+}
+
+.progress::-webkit-progress-value {
     background: var(--white);
 }

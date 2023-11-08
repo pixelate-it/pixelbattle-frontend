@@ -20,10 +20,6 @@ export class MyFetch {
         .then(MyFetch.checkForErrors<T>)
     }
 
-    static async pixels() {
-        return fetch(config.url.api + "/pixels.bmp")
-            .then(res => res.arrayBuffer())
-    }
 
 
     static async put<T extends {}>(url: string, body: any) {
@@ -39,10 +35,11 @@ export class MyFetch {
     }
 
     static processError(error: ApiError) {
+
         if (error.statusCode === 429) {
             NotificationsManager.addNotification({
                 type: "error",
-                title: "Rate limit",
+                title: "Рейт лимит",
                 message: "Подождите пару секунд"
             })
         } else {
@@ -57,90 +54,47 @@ export class MyFetch {
     static async get<T extends {}>(url: string) {
         return fetch(config.url.api + url)
             .then(res => res.json() as Promise<T | ApiError>)
-            .then(MyFetch.checkForErrors)
+            .then(MyFetch.checkForErrors<T>)
     }
 
-    static checkForErrors<T extends {}>(res: T | ApiError): T | ApiError {
+    static checkForErrors<T extends {} | ApiError>(res: T | ApiError){
         if ("error" in res && res.error) {
-            MyFetch.processError(res as ApiError)
+            MyFetch.processError(res)
+
+            return Promise.reject(res)
         }
 
-        return res
+        return res as T
     }
 
-    static async info(): Promise<ApiInfo> {
-        // return {
-        //     name: "season:blank",
-        //     cooldown: 0,
-        //     size: {
-        //         width: 160,
-        //         height: 80
-        //     },
-        //     players: {
-        //         online: 1,
-        //         total: 10
-        //     }
-        // }
-        return MyFetch.get<ApiInfo>("/info").then(res => {
-            if (!("error" in res)) return res;
+    static async pixels() {
+        return fetch(config.url.api + "/pixels.bmp")
+            .then(res => res.arrayBuffer())
+    }
 
-            return {
-                name: "Unknown",
-                cooldown: 0,
-                ended: false,
-                players: {
-                    online: -1,
-                    total: -1
-                }
-            }
-        })
+
+    static async info(): Promise<ApiInfo> {
+
+        return MyFetch.get<ApiInfo>("/info")
     }
 
     static async profile(): Promise<ProfileInfo> {
         const id = ProfileManager.id.value
 
-        return MyFetch.get<ProfileInfo>(`/users/${id}`).then(res => {
-            if (!("error" in res)) return res;
-
-            return {
-                userID: "-1",
-                cooldown: 0,
-                banned: false,
-                username: "???",
-                tag: "",
-            }
-        })
+        return MyFetch.get<ProfileInfo>(`/users/${id}`)
     }
 
     static async getPixel(point: Point): Promise<PixelInfo> {
-        return MyFetch.get<PixelInfo>(`/pixels?x=${point.x}&y=${point.y}`).then(res => {
-            if (!("error" in res)) return res;
-
-            return {
-                author: null,
-                tag: null
-            }
-        })
+        return MyFetch.get<PixelInfo>(`/pixels?x=${point.x}&y=${point.y}`)
     }
 
     static async tags(): Promise<ApiTags> {
 
-        return MyFetch.get<ApiTags>("/pixels/tag").then(res => {
-            if (!("error" in res)) return res;
-
-            return {
-                tags: [],
-                pixels: {
-                    all: 0,
-                    used: 0,
-                    unused: 0
-                }
-            }
-        })
+        return MyFetch.get<ApiTags>("/pixels/tag")
     }
 
     static async putPixel(pixel: ApiPixel) {
-        return MyFetch.put("/pixels", {
+        return MyFetch.put<ApiResponse>("/pixels", {
             token: ProfileManager.token.value,
             ...pixel
         })
@@ -152,13 +106,6 @@ export class MyFetch {
         return MyFetch.post<ApiResponse>(`/users/${id}/tag`, {
             token: ProfileManager.token.value,
             tag
-        }).then(res => {
-            if (!("message" in res)) return res;
-
-            return {
-                error: true,
-                reason: res.message
-            }
         })
     }
 }

@@ -11,8 +11,8 @@ export function Cooldown() {
     
     return (
         <div className={styles.wrapper}>
-            <progress className={styles.progress} value={cooldown.cooldown} max="100"></progress>
-            <p className={styles.label}>{cooldown.cooldown.value}%</p>
+            <progress className={styles.progress} value={cooldown.progress} max="100"></progress>
+            <p className={styles.label}>{cooldown.progress.value.toFixed(0)}%</p>
         </div>
     )
 }

@@ -10,6 +10,7 @@ export const ProfileManager = {
     id: signal(""),
     isAuthenticated: computed(() => false),
     isBanned: computed(() => false),
+    isMod: computed(() => false),
     load() {
         ProfileManager.token.value = localStorage.getItem("token") ?? ""
         ProfileManager.id.value = localStorage.getItem("id") ?? ""
@@ -19,7 +20,9 @@ export const ProfileManager = {
         localStorage.setItem("id", ProfileManager.id.value)
     },
     async fetch() {
-        ProfileManager.user.value = await MyFetch.profile()
+        ProfileManager.user.value = {
+            ...await MyFetch.profile(),
+        }
     },
     login(token: string, id: string) {
         ProfileManager.token.value = token
@@ -36,6 +39,7 @@ export const ProfileManager = {
 
 ProfileManager.isAuthenticated = computed(() => !!ProfileManager.token.value)
 ProfileManager.isBanned = computed(() => ProfileManager.user.value.banned)
+ProfileManager.isMod = computed(() => ProfileManager.user.value.isMod)
   
 export const ProfileContext = createContext({} as typeof ProfileManager)
 

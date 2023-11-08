@@ -11,7 +11,7 @@ export function NotificationList() {
         <div className={styles.notifications}>
             {
                 notifications.notifications.value.map((notification, index) =>
-                    <AppNotification key={index} notification={notification} />
+                    <AppNotification key={notification.id} notification={notification} />
                 )
             }
         </div>

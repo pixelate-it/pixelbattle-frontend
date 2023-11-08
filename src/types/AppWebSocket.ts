@@ -28,6 +28,7 @@ export class AppWebSocket extends WebSocket {
         switch (data.op) {
             case 'PLACE':
                 PlaceManager.image.value.setPixel(new Point(data.x, data.y), new AppColor(data.color))
+                PlaceManager.place.value.update()
                 break;
 
             case 'ENDED':

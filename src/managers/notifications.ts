@@ -5,23 +5,27 @@ export interface NotificationInfo {
     message: string;
     title: string;
     type: "error" | "success";
+    id: string;
 }
 
 
 export const NotificationsManager = {
     notifications: signal([] as NotificationInfo[]),
-    addNotification(notification: NotificationInfo) {
+    addNotification(notification: Omit<NotificationInfo, "id">) {
         if (NotificationsManager.notifications.value.length >= 5) {
             NotificationsManager.notifications.value = NotificationsManager.notifications.value.slice(1)
         }
 
         NotificationsManager.notifications.value = [
             ...NotificationsManager.notifications.value,
-            notification
+            {
+                ...notification,
+                id: Math.random().toString()
+            }
         ]
     },
-    removeNotification(notification: NotificationInfo) {
-        NotificationsManager.notifications.value = NotificationsManager.notifications.value.filter(n => n !== notification)
+    removeNotification(id: string) {
+        NotificationsManager.notifications.value = NotificationsManager.notifications.value.filter(n => n.id !== id)
     }
 }
 

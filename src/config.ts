@@ -23,7 +23,8 @@ export const config = {
         },
         ws: 5000, // Websocket reconnect time
         shake: 200,
-        notification: 3000
+        notification: 3000,
+        modCooldown: 5000
     },
     shakeAmount: 0.1,
     zoomLevel: 0.25,

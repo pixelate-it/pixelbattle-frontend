@@ -12,7 +12,7 @@ import { CoordinatesContext } from "../../managers/coordinates";
 
 export function Place() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const image = useContext(PlaceContext);
+    const place = useContext(PlaceContext);
     // const pixelInfp = useContext(CoordinatesContext);
     // const info = useContext(InfoContext)
 
@@ -38,27 +38,35 @@ export function Place() {
 
         viewport.drag().pinch().wheel()
 
-        image.fetch()
+        place.fetch()
             .then(() => {
                 const placeView = new PlaceContainer(viewport)
 
                 viewport.addChild(placeView);
     
                 const placeCenter = new Point(
-                    image.image.value.size.x / 2,
-                    image.image.value.size.y / 2
+                    place.image.value.size.x / 2,
+                    place.image.value.size.y / 2
                 )
     
                 viewport.moveCenter(placeCenter)
-                viewport.fit(true, image.image.value.size.x, image.image.value.size.y)
+                viewport.fit(true, place.image.value.size.x, place.image.value.size.y)
                 viewport.zoomPercent(-config.zoomLevel, true)
 
     
+                window.addEventListener('resize', () => {
+                    app.renderer.resize(window.innerWidth, window.innerHeight);
+                    viewport.resize(window.innerWidth, window.innerHeight);
+                })
+
+                const ws = new AppWebSocket();
+
+                place.place.value = placeView
+
                 app.render()
+
             })
-            .then(() => {
-                const ws = new AppWebSocket()
-            })
+            
     }
 
     // effect(() => {
@@ -67,6 +75,8 @@ export function Place() {
     // })
 
     useEffect(setup, [])
+
+
 
     return (
         <canvas ref={canvasRef}></canvas>

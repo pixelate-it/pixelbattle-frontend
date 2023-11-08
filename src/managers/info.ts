@@ -12,7 +12,14 @@ export const InfoManager = {
         InfoManager.info.value.ended = true
     },
     async fetch() {
-        InfoManager.info.value = await MyFetch.info()
+        const info = await MyFetch.info()
+
+        InfoManager.info.value = {
+            ...info,
+            cooldown: info.cooldown + 50
+        }
+
+        return info
     }
 }
 

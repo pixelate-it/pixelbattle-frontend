@@ -5,4 +5,5 @@ export interface ProfileInfo {
 	tag: string | null,
 	banned: boolean,
 	username: string
+    isMod: boolean;
 }

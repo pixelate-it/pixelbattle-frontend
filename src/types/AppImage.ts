@@ -53,7 +53,7 @@ export class AppImage {
         return this._buffer;
     }
 
-    public getPixel(point: Point): AppColor | undefined {
+    public getPixel(point: Point): AppColor {
         const index = (point.x + point.y * this._size.x)
         const [r, g, b, a] = this._buffer.slice(index * 4, index * 4 + 4);
 

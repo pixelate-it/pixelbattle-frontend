@@ -103,18 +103,24 @@ export class PlaceContainer extends Container {
             return this.emit("cant-place", { reason: "Game ended" });
         };
 
+        const color = PlaceManager.image.value.getPixel(point);
+
+        this.place.setSquare(point, PaletteManager.palette.value.selected);
 
         MyFetch.putPixel({
             color: PaletteManager.palette.value.selected.toHex(),
             x: point.x,
             y: point.y
+        }).catch((r) => {
+            this.place.setSquare(point, color);
         })
-
-        this.place.setSquare(point, PaletteManager.palette.value.selected);
     }
 
     public onPlace(point: Point) {
         this.pointer.hover(point);
+        // if (ProfileManager.isMod.value) {
+        //     return
+        // };
         CooldownManager.start()
     }
 
@@ -137,6 +143,10 @@ export class PlaceContainer extends Container {
         // this.pixelInfo.lastPoint = point;
         // this.pixelInfo.lastPointTime = Date.now();
 
+    }
+
+    public update() {
+        this.place.texture.update()
     }
 
     public onOut() {

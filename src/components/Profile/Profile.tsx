@@ -41,8 +41,9 @@ export function Profile() {
                         <Param value={profile.user.value.username} label="Имя" />
                         <Param value={profile.user.value.userID} label="Айди" />
                         
-                        {profile.user.value.tag && <Param value={profile.user.value.tag} label="Теги" />}
+                        {profile.user.value.tag && <Param value={profile.user.value.tag} label="Тег" />}
                         {profile.user.value.banned && <Param value={"Забанен"} label="Статус" />}
+                        {profile.user.value.isMod && <Param value={"Модератор"} label="Роль" />}
                     </div>
 
                     <Button href="/logout">Выйти</Button>
