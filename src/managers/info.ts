@@ -16,7 +16,7 @@ export const InfoManager = {
 
         InfoManager.info.value = {
             ...info,
-            cooldown: info.cooldown + 50
+            cooldown: info.cooldown
         }
 
         return info

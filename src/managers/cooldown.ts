@@ -17,7 +17,6 @@ export const CooldownManager = {
     update(time: number) {
         const currentTime = time - CooldownManager.startTime.value;
 
-
         const cooldownDuration = ProfileManager.isMod.value 
             ? config.time.modCooldown
             : InfoManager.info.value.cooldown
