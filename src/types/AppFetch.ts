@@ -35,26 +35,26 @@ export class MyFetch {
     }
 
     static processError(error: ApiErrorResponse) {
-        const notificationMap: { [key in ApiErrorResponse["reasons"]]: Omit<NotificationInfo, "id"> } = {
+        const notificationMap: { [key in ApiErrorResponse["reasons"]]: Omit<NotificationInfo, "id" | "type"> } = {
             "UserCooldown": {
-                type: "error",
                 title: "Кулдаун активен (С)",
                 message: "Подождите пару секунд"
             },
             "RateLimit": {
-                type: "error",
                 title: "Рейт лимит",
                 message: "Подождите пару секунд"
             },
             "TokenBanned": {
-                type: "error",
                 title: "Аккаунт забанен (C)",
                 message: "Ваш аккаунт забанен"
             },
         }
 
 
-        NotificationsManager.addNotification(notificationMap[error.reasons])
+        NotificationsManager.addNotification({
+            ...notificationMap[error.reasons],
+            type: "error"
+        })
     }
 
     static async get<T extends {}>(url: string) {

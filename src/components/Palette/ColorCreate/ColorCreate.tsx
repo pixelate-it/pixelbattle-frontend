@@ -13,7 +13,7 @@ export function ColorCreate() {
                 name="create-color"
                 className={styles.input}
                 value={AppColor.getRandom().toHex()}
-                onInput={e => palette.addAndSelect(new AppColor(e.currentTarget.value))}/>
+                onChange={e => palette.addAndSelect(new AppColor(e.currentTarget.value))}/>
             <img 
                 width={15}
                 height={15}
