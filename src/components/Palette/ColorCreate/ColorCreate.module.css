@@ -19,6 +19,8 @@
     border-radius: 50%;
     cursor: pointer;
     outline: 2px solid var(--white);
+    margin: 0;
+    padding: 0;
 }
 
 /* .input {
