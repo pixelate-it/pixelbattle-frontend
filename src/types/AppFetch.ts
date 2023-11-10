@@ -35,7 +35,7 @@ export class MyFetch {
     }
 
     static processError(error: ApiErrorResponse) {
-        const notificationMap: { [key in ApiErrorResponse["reasons"]]: Omit<NotificationInfo, "id" | "type"> } = {
+        const notificationMap: { [key in ApiErrorResponse["reason"]]: Omit<NotificationInfo, "id" | "type"> } = {
             "UserCooldown": {
                 title: "Кулдаун активен (С)",
                 message: "Подождите пару секунд"
@@ -51,8 +51,9 @@ export class MyFetch {
         }
 
 
+
         NotificationsManager.addNotification({
-            ...notificationMap[error.reasons],
+            ...notificationMap[error.reason],
             type: "error"
         })
     }
@@ -117,7 +118,7 @@ export class MyFetch {
 
 interface ApiResponse {
     error: boolean;
-    reasons: string;
+    reason: string;
 }
 
 interface ApiErrorResponse extends ApiResponse{
