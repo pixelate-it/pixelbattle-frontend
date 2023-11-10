@@ -1,12 +1,27 @@
 .wrapper {
-    width: var(--size);
+    /* width: var(--size);
     height: var(--size);
     outline: 2px solid var(--white);
-    border-radius: 50%;
+    border-radius: 50%; */
     position: relative;
 }
 
-.input {
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.button {
+    width: var(--size);
+    height: var(--size);
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: 2px solid var(--white);
+}
+
+/* .input {
     opacity: 0;
     display: block;
     width: 100%;
@@ -22,4 +37,4 @@
     width: 15px;
     height: 15px;
     pointer-events: none;
-}
+} */

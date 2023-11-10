@@ -14,7 +14,8 @@
     "pixi.js": "^7.3.2",
     "preact": "^10.13.1",
     "preact-iso": "^2.3.2",
-    "preact-render-to-string": "^6.2.2"
+    "preact-render-to-string": "^6.2.2",
+    "react-colorful": "^5.6.1"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.5.0",
