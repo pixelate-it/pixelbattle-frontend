@@ -1,0 +1,33 @@
+.notification {
+    display: flex;
+    gap: 10px;
+    background-color: var(--window-background);
+    padding: 10px;
+    border-radius: 8px;
+    flex-direction: column;
+    position: relative;
+}
+
+.title {
+    font-weight: 50;
+    font-size: 20px;
+}
+
+.message {
+    color: var(--grey-text);
+    display: none;
+}
+
+.notification:hover .message {
+    display: block;
+}
+
+.error .title {
+    color: var(--danger);
+    /* border: 2px solid var(--danger); */
+}
+
+.success .title {
+    color: var(--primary);
+    /* border: 2px solid var(--primary); */
+}

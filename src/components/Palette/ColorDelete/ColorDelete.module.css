@@ -1,0 +1,30 @@
+.button {
+    display: block;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+    position: relative;
+    outline: 2px solid var(--white);
+
+    appearance: none;
+
+    border: none;
+    background-color: transparent;
+}
+
+.icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotateZ(45deg);
+    width: 15px;
+    height: 15px;
+    pointer-events: none;
+}
+
+.button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}

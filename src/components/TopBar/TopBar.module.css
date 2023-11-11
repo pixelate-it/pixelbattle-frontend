@@ -1,0 +1,12 @@
+@media screen and (max-width: 600px) {
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        top: 0;
+        position: absolute;
+        left: 0;
+        right: 0;
+        align-items: flex-end;
+        gap: 20px;
+    }
+}

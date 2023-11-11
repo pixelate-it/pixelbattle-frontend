@@ -1,146 +1,30 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
     <title>Pixel Battle</title>
-    <meta property="og:title" content="Pixel Battle">
-    <meta property="og:description" content="PixelBattle - место, где можно порисовать на одном холсте вместе с другими игроками.">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Pixel Battle">
-    <meta property="og:locale" content="ru-RU">
-    <meta property="og:url" content="https://pixelbattle.fun/">
-    <meta property="og:image" content="https://i.imgur.com/dgxDCnZ.png">
-    <link rel="shortcut icon" href="https://i.imgur.com/dgxDCnZ.png">
-    <meta name="viewport" content="width=device-width, initial-scale=0.3">
-    <link rel="stylesheet" type="text/css" href="style.css">
-  </head>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y6ZNLR5CW6"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
 
-    gtag('config', 'G-Y6ZNLR5CW6');
-  </script>
-  <body>
-    <div id="root">
-      <button type="button" id="pixel-menu-toggle">Показать меню</button>
-      <div class="LeftPanel" id="pixel-menu" style="display: none;">
-        <div class="ColorPalette">
-          <div class="DesktopHeader">Пиксели</div>
-          <div class="row">
-            <div class="col">
-              <div class="ColorPalette__list" id="user-colors">
-                <div
-                  id="#FFFFFF"
-                  class="ColorPalette__color white"
-                  onclick="changeColor('#FFFFFF')"
-                  style="background-color: #FFFFFF"
-                ></div>
-                <div
-                  id="#C2C2C2"
-                  class="ColorPalette__color"
-                  onclick="changeColor('#C2C2C2')"
-                  style="background-color: #C2C2C2"
-                ></div>
-                <div
-                  id="#000000"
-                  class="ColorPalette__color"
-                  onclick="changeColor('#000000')"
-                  style="background-color: #000000"
-                ></div>
-                <div
-                  id="#3AAFFF"
-                  class="ColorPalette__color"
-                  onclick="changeColor('#3AAFFF')"
-                  style="background-color: #3AAFFF"
-                ></div>
-                <div
-                  id="#074BF3"
-                  class="ColorPalette__color"
-                  onclick="changeColor('#074BF3')"
-                  style="background-color: #074BF3;"
-                ></div>
-                <div
-                  id="#FE2500"
-                  class="ColorPalette__color"
-                  onclick="changeColor('#FE2500')"
-                  style="background-color: #FE2500;"
-                ></div>
-                <div
-                  id="#FF218B"
-                  class="ColorPalette__color"
-                  onclick="changeColor('#FF218B')"
-                  style="background-color: #FF218B;"
-                ></div>
-                <div
-                  id="#FFCF4A"
-                  class="ColorPalette__color"
-                  onclick="changeColor('#FFCF4A')"
-                  style="background-color: #FFCF4A;"
-                ></div>
-                <div
-                  id="#FE8648"
-                  class="ColorPalette__color"
-                  onclick="changeColor('#FE8648')"
-                  style="background-color: #FE8648;"
-                ></div>
-                <div
-                  id="#5CBF0D"
-                  class="ColorPalette__color"
-                  onclick="changeColor('#5CBF0D')"
-                  style="background-color: #5CBF0D;"
-                ></div>
-              </div>
-            </div>
-            <div class="col">
-              <input type="text" id="user-color-input" placeholder="Сюда вставляй HEX-код">
-              <br><br><a href="https://htmlcolorcodes.com" target="_blank">Здесь ты можешь найти HEX-код твоего цвета.</a>
-              <br><br><button type="button" id="user-color-change">Сменить цвет</button>
-              Выбран цвет: <b id="user-color"></b>
-              <br><br><button type="button" id="user-color-reset">Сбросить все цвета</button>
-            </div>
-          </div>
-        </div>
-        <div class="ColorPalette" id="user-form-login" style="display: none;">
-          <div class="DesktopHeader">Авторизация</div>
-          <p>Для игры в Pixel Battle нужно авторизоваться.</p>
-          <ul>
-            <li>Вы будете перенаправлены на страницу авторизации через Discord</li>
-            <li>После авторизации вы автоматически зайдёте на <b><a href="https://discord.gg/zJV4nVDUrG" target="_blank">наш сервер</a></b></li>
-          </ul>
-          <button type="button" id="user-login" onclick="window.location.href = 'https://discord.com/api/oauth2/authorize?client_id=970714810905936022&redirect_uri=https%3A%2F%2Fapi.pixelbattle.fun%2Flogin&response_type=code&scope=identify%20guilds.join'">Авторизоваться</button>
-        </div>
-        <div class="ColorPalette" id="user-form-profile" style="display: none;">
-          <div class="DesktopHeader">Профиль</div>
-          <p>Вы вошли как <b id="user-id"></b></p>
-          <input type="text" id="user-tag-input" placeholder="Сюда вставляй тэг" maxlength="8">
-          <br><br><button type="button" id="user-tag-submit">Сменить тэг команды</button>
-          <br><br><button type="button" id="user-logout">Выйти из аккаунта</button>
-        </div>
-        <hr><br><div class="ColorPalette">
-          <div class="DesktopHeader">Где я?</div>
-          <p>
-            Привет! Ты попал на <b><a href="https://discord.gg/zJV4nVDUrG" target="_blank">Pixel Battle</a></b>!
-            <br>Если коротко - здесь нужно ставить пиксели и рисовать картинки.
-            <br>Картинки могут быть самые разные.
-            <br>Если ты готов сражаться за место в истории - до встречи на поле боя!
-          </p>
-          <p id="information">Текущий сезон: <b id="season"></b><br>Игроков онлайн: <b id="online"></b></p>
-        </div>
-        <div class="ColorPalette">
-          <div class="DesktopHeader">Самые активные теги:</div>
-          <ul id="pixel-tags"></ul>
-        </div>
-      </div>
-      <div class="DesktopContainer">
-        <div class="OnlineCounter OnlineCounter--desktop" id="pixel-ended" style="display: none;">
-          Битва завершена
-        </div>
-        <div id="display">
-          <table class="paper" id="pbarea"></table>
-        </div>
-      </div>
-    </div>
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#154CB7" />
+    <meta name="description" content="r/place clone">
+    <meta name="keywords" content="place, pixels, r/place, пиксель баттл, реддит плейс, r/place clone, place clone">
+    <meta name="language" content="RU">
+    <meta name="author" content="elias">
+    <meta name="url" content="http://pixelbattle.fun">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script src="index.js"></script>
-  </body>
+    <link rel="icon" href="/images/meta/favicon.svg">
+
+    <meta property="og:url" content="http://pixelbattle.fun" />
+    <meta property="og:site_name" content="PixelBattle" />
+    <meta property="og:image" content="/images/meta/banner.png" />
+    <meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="module" src="/src/index.tsx"></script>
+</body>
+
 </html>
