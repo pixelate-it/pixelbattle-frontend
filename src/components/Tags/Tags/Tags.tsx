@@ -36,10 +36,14 @@ export function Tags() {
     return (
         <WindowBox title="Теги">
             <div className={styles.tags}>
-                {tags.tags.value.map((tag, index) =>
-                    <Tag
-                        key={tag.name}
-                        tag={tag} />)}
+                {
+                    tags.tags.value.length === 0
+                        ? <p className={styles.empty}>Нет тегов</p>
+                        : tags.tags.value.map((tag, index) =>
+                            <Tag
+                                key={tag.name}
+                                tag={tag} />)
+                }
                 {
                     (profile.isAuthenticated.value)
                         ? isTagCreateOpened.value

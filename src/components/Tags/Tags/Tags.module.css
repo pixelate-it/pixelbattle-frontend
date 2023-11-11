@@ -5,3 +5,7 @@
     align-items: center;
     max-width: 100%;
 }
+
+.empty {
+    color: var(--grey-text);
+}

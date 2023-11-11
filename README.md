@@ -1,15 +1,15 @@
 <div align="center" >
-<a href="http://pixelbattle.com">
+<a href="https://pixelbattle.fun">
 <img 
-    alt="refine logo" 
+    alt="PixelBattle logo" 
     src="./docs/images/logotype.png">
 </a>
 
 <br>
 
-![example workflow](https://github.com/EliasDevis/pixelbattle-frontend/actions/workflows/main.yml/badge.svg)
+![example workflow](https://github.com/mirdukkkkk/pixelbattle-frontend/actions/workflows/main.yml/badge.svg)
 
-<a href="http://pixelbattle.com">Game</a> |
+<a href="https://pixelbattle.fun">Game</a> |
 <a href="https://discord.gg/XBPyGUv3DT">Discord</a> |
 <a href="https://help.pixelbattle.fun/">Help</a> |
 <a href="https://help.pixelbattle.fun/schedule">Schedule</a>
