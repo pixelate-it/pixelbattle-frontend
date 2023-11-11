@@ -30,7 +30,7 @@ export const config = {
     zoomLevel: 0.25,
     discord: {
         clientId: "970714810905936022",
-        redirectUri: "https://pixelbattle.fun/",
+        redirectUri: "https://pixelbattle.fun",
         scope: ["identify", "guilds.join"] 
     },
     hover: {
@@ -38,7 +38,7 @@ export const config = {
         scale: 1.2
     },
     url: {
-        api: "https://api.pixelbattle.fun/", 
+        api: "https://api.pixelbattle.fun", 
         client: "https://pixelbattle.fun",
         ws: "wss://api.pixelbattle.fun/pixels/socket"
     }
