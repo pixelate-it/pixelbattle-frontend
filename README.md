@@ -1,1 +1,1 @@
-# pixelbattle-frontend old
+# pixelbattle-frontend v2
