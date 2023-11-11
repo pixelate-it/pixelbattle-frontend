@@ -29,8 +29,8 @@ export const config = {
     shakeAmount: 0.1,
     zoomLevel: 0.25,
     discord: {
-        clientId: "1135869746194157598",
-        redirectUri: "http://localhost:9000",
+        clientId: "970714810905936022",
+        redirectUri: "https://pixelbattle.fun/",
         scope: ["identify", "guilds.join"] 
     },
     hover: {
@@ -38,8 +38,8 @@ export const config = {
         scale: 1.2
     },
     url: {
-        api: "https://web-production-4a637.up.railway.app", 
+        api: "https://api.pixelbattle.fun/", 
         client: "https://pixelbattle.fun",
-        ws: "wss://web-production-4a637.up.railway.app/pixels/socket"
+        ws: "wss://api.pixelbattle.fun/pixels/socket"
     }
 }
