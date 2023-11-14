@@ -14,6 +14,8 @@ import { MyFetch } from "../../types/AppFetch";
 import { DragEvent } from "pixi-viewport/dist/types";
 import { NotificationList } from "../Notifications/NotificationList/NotificationList";
 import { NotificationInfo, NotificationsManager } from "../../managers/notifications";
+import { ClientNotificationMap } from "../../lib/notificationMap";
+import { Ref, RefObject } from "preact";
 
 type Reason = "Cooldown" | "Not logged" | "Game ended" | "Banned"
 
@@ -24,14 +26,13 @@ export class PlaceContainer extends Container {
     private place = new PlaceView();
     private isDragged = false;
 
-    // private pixelInfo = {
-    //     lastPoint: new Point(),
-    //     lastPointTime: 0
-    // }
+    private pixelInfo = {
+        lastPoint: new Point(),
+        lastPointTime: 0
+    }
 
-    constructor(private viewport: Viewport) {
+    constructor(private viewport: Viewport, private canvasRef: RefObject<HTMLCanvasElement>        ) {
         super();
-
 
         this.setup();
     }
@@ -54,40 +55,29 @@ export class PlaceContainer extends Container {
     }
 
     public onDragStart(event: DragEvent) {
-        // this.cursor = "grabbing"
-        // this.pointer.cursor = "pointer"
+        if (this.canvasRef.current)
+            this.canvasRef.current.style.cursor = "grabbing";
+
         this.isDragged = true;
     }
 
     public onDragEnd(event: DragEvent) {
+        console.log(this.canvasRef)
+
+        if (this.canvasRef.current)
+            this.canvasRef.current.style.cursor = "crosshair";
+
+
+
         this.cursor = "default"
         this.isDragged = false;
     }
 
     public onCantPlace({ reason }: { reason: Reason}) {
-        const notificationMap: { [key in Reason]: Omit<NotificationInfo, "id"> } = {
-            "Banned": {
-                message: "Ваш аккаунт забанен",
-                title: "Аккаунт забанен",
-                type: "error",
-            },
-            "Cooldown": {
-                message: "Кулдаун активен",
-                title: "Кулдаун активен",
-                type: "error",
-            },
-            "Not logged": {
-                message: "Вы не вошли в дискорд аккаунт",
-                title: "Необходимо авторизоваться",
-                type: "error",
-            },
-            "Game ended": {
-                message: "Игра окончена",
-                title: "Игра окончена",
-                type: "error",
-            },
-        }
-        NotificationsManager.addNotification(notificationMap[reason])
+        NotificationsManager.addNotification({
+            ...ClientNotificationMap[reason],
+            type: "error"
+        })
 
         this.pointer.startShake();
     }

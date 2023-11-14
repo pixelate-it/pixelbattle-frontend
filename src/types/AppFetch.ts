@@ -6,6 +6,8 @@ import { ApiTags } from "../interfaces/Tag"
 import { ProfileManager } from "../managers/profile"
 import { NotificationInfo, NotificationsManager } from "../managers/notifications"
 import { Point } from "pixi.js"
+import { ApiErrorResponse, ApiResponse } from "../interfaces/ApiResponse"
+import { ServerNotificationMap } from "../lib/notificationMap"
 
 export class MyFetch {
     static async post<T extends {}>(url: string, body: any) {
@@ -35,25 +37,8 @@ export class MyFetch {
     }
 
     static processError(error: ApiErrorResponse) {
-        const notificationMap: { [key in ApiErrorResponse["reason"]]: Omit<NotificationInfo, "id" | "type"> } = {
-            "UserCooldown": {
-                title: "Кулдаун активен (С)",
-                message: "Подождите пару секунд"
-            },
-            "RateLimit": {
-                title: "Рейт лимит",
-                message: "Подождите пару секунд"
-            },
-            "TokenBanned": {
-                title: "Аккаунт забанен (C)",
-                message: "Ваш аккаунт забанен"
-            },
-        }
-
-
-
         NotificationsManager.addNotification({
-            ...notificationMap[error.reason],
+            ...ServerNotificationMap[error.reason] ?? ServerNotificationMap.Unknown,
             type: "error"
         })
     }
@@ -114,15 +99,6 @@ export class MyFetch {
             tag
         })
     }
-}
-
-interface ApiResponse {
-    error: boolean;
-    reason: string;
-}
-
-interface ApiErrorResponse extends ApiResponse{
-    error: true;
 }
 
 // interface ApiGoodResponse extends ApiResponse {
