@@ -9,7 +9,7 @@ import { PlaceContainer } from "../components/Place/PlaceContainer";
 
 export const PlaceManager = {
     image: signal({} as AppImage),
-    place: signal({} as PlaceContainer),
+    container: signal({} as PlaceContainer),
     async fetch() {
         const image = await MyFetch.pixels()
 

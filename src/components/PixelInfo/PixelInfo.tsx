@@ -5,12 +5,24 @@ import styles from "./PixelInfo.module.css";
 export function PixelInfo() {
     const coords = useContext(CoordinatesContext);
 
-    if (!coords.info.value) return null;
+    if (coords.info.value === null) return null;
 
-    return (<div className={styles.wrapper}>
-        <p className={styles.info}>
-            <strong>{coords.info.value.author}</strong>
-            {coords.info.value.tag && <span>#{coords.info.value.tag}</span>}
-        </p>
-    </div>)
+    if (coords.info.value === "loading") {
+        return (
+            <div className={styles.wrapper}>
+                Загрузка...
+            </div>
+        )
+    }
+
+    const author = coords.info.value.author ?? "Без автора";
+
+    return (
+        <div className={styles.wrapper}>
+            <p className={styles.info}>
+                <strong className={styles.author}>{author}</strong>
+                {coords.info.value.tag && <span className={styles.tag}>{coords.info.value.tag}</span>}
+            </p>
+        </div>
+    )
 }

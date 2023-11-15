@@ -1,4 +1,5 @@
 import styles from "./Param.module.css";
+
 interface ParamProps {
     label: string;
     value: string;

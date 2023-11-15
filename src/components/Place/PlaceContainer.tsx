@@ -1,6 +1,6 @@
 import { Container, FederatedPointerEvent, Point } from "pixi.js";
 import { AppColor } from "../../types/AppColor";
-import {  PaletteManager } from "../../managers/palette";
+import { PaletteManager } from "../../managers/palette";
 import { PlacePointer } from "./PlacePointer";
 import { PlaceView } from "./PlaceView";
 import { CooldownManager } from "../../managers/cooldown";
@@ -16,6 +16,7 @@ import { NotificationList } from "../Notifications/NotificationList/Notification
 import { NotificationInfo, NotificationsManager } from "../../managers/notifications";
 import { ClientNotificationMap } from "../../lib/notificationMap";
 import { Ref, RefObject } from "preact";
+import { PixelInfo } from "../../interfaces/Pixels";
 
 type Reason = "Cooldown" | "Not logged" | "Game ended" | "Banned"
 
@@ -28,10 +29,11 @@ export class PlaceContainer extends Container {
 
     private pixelInfo = {
         lastPoint: new Point(),
-        lastPointTime: 0
+        lastPointTime: 0,
+        timeoutId: 0,
     }
 
-    constructor(private viewport: Viewport, private canvasRef: RefObject<HTMLCanvasElement>        ) {
+    constructor(private viewport: Viewport, private canvasRef: RefObject<HTMLCanvasElement>) {
         super();
 
         this.setup();
@@ -49,8 +51,8 @@ export class PlaceContainer extends Container {
         this.place.on("will-color-pick", this.onWillColorPick.bind(this));
         this.place.on("hover", this.onHover.bind(this));
         this.place.on("out", this.onOut.bind(this));
-        this.addChild(this.place);
 
+        this.addChild(this.place);
         this.addChild(this.pointer);
     }
 
@@ -62,7 +64,6 @@ export class PlaceContainer extends Container {
     }
 
     public onDragEnd(event: DragEvent) {
-        console.log(this.canvasRef)
 
         if (this.canvasRef.current)
             this.canvasRef.current.style.cursor = "crosshair";
@@ -73,7 +74,7 @@ export class PlaceContainer extends Container {
         this.isDragged = false;
     }
 
-    public onCantPlace({ reason }: { reason: Reason}) {
+    public onCantPlace({ reason }: { reason: Reason }) {
         NotificationsManager.addNotification({
             ...ClientNotificationMap[reason],
             type: "error"
@@ -84,7 +85,7 @@ export class PlaceContainer extends Container {
 
     public onWillPlace(point: Point) {
         if (this.isDragged) {
-            return 
+            return
         };
 
         if (CooldownManager.hasCooldown.peek()) {
@@ -127,21 +128,23 @@ export class PlaceContainer extends Container {
     public onHover(point: Point) {
         CoordinatesManager.setCoordinates(point)
         this.pointer.hover(point)
-        
-        // if (point.x === this.pixelInfo.lastPoint.x && point.y === this.pixelInfo.lastPoint.y) {
-        //     return
-        // };
 
-        // const timePassed = Date.now() - this.pixelInfo.lastPointTime
+        if (this.pixelInfo.lastPoint.equals(point)) {
+            if (this.pixelInfo.timeoutId === -1) {
+                CoordinatesManager.info.value = "loading"
+                this.pixelInfo.timeoutId = window.setTimeout(() => {
+                    CoordinatesManager.fetchInfo()
+                }, 1000)
+            }
 
-        // if (timePassed > 1000) {
-        //     console.log("hover");
-            
-        // }
 
-        // this.pixelInfo.lastPoint = point;
-        // this.pixelInfo.lastPointTime = Date.now();
+            return
+        }
 
+        window.clearTimeout(this.pixelInfo.timeoutId);
+        this.pixelInfo.timeoutId = -1;
+        this.pixelInfo.lastPoint = point.clone();
+        CoordinatesManager.info.value = null;
     }
 
     public update() {
@@ -155,7 +158,7 @@ export class PlaceContainer extends Container {
 
     public onWillColorPick(color: AppColor) {
         if (this.isDragged) {
-            return 
+            return
         };
 
         ColorPickerManager.isEnabled.value = false

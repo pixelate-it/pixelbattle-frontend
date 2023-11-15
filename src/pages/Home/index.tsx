@@ -4,16 +4,14 @@ import { PaletteContext, PaletteManager } from '../../managers/palette';
 import { PaletteGroup } from '../../components/Palette/PaletteGroup/PaletteGroup';
 import { InfoContext, InfoManager } from '../../managers/info';
 import { Palette } from '../../components/Palette/Palette/Palette';
-import { Sidebar } from '../../components/Sidebar/Sidebar';
 import { ProfileContext, ProfileManager } from '../../managers/profile';
-import { TitleBar } from '../../components/TitleBar/TitleBar';
 import { Cooldown } from '../../components/Cooldown/Cooldown';
 import { CooldownContext, CooldownManager } from '../../managers/cooldown';
-import { BottomBar } from '../../components/BottomBar/BottomBar';
+import { BottomBar } from '../../components/Bar/BottomBar/BottomBar';
 import { CoordinatesContext, CoordinatesManager } from '../../managers/coordinates';
 import { TagsContext, TagsManager } from '../../managers/tags';
 import { ColorPickerContext, ColorPickerManager } from '../../managers/picker';
-import { TopBar } from '../../components/TopBar/TopBar';
+import { TopBar } from '../../components/Bar/TopBar/TopBar';
 import { NotificationsContext, NotificationsManager } from '../../managers/notifications';
 
 export function Home() {

@@ -1,6 +1,6 @@
 import { useContext } from "preact/hooks"
 import { TagsContext } from "../../../managers/tags"
-import { Button } from "../../Button/Button"
+import { Button } from "../../General/Button/Button"
 import { isTagCreateOpened } from "../OpenTagSignal"
 import styles from "./ClosedTagCreate.module.css"
 

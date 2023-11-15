@@ -27,9 +27,9 @@
 1. PixelBattle uses vite, so you can preview it with `npm run preview`
 2. To set token and id, either go to `localhost/?token={YOUR_TOKEN}&id={YOUR_ID}` or manually set it in localstorage and reload
 
-## Features compared to previous client
+## Features 
 * Color picker
-* Super fast
+* Quick
 * Better mobile support
 * Better usage of canvas
 * Improved interface 

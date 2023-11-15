@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "preact/hooks";
-import { Param } from "../Param/Param";
+import { Param } from "../../General/Param/Param";
 import styles from "./TitleBar.module.css";
-import { InfoContext } from "../../managers/info";
-import { PlaceContext } from "../../managers/place";
+import { InfoContext } from "../../../managers/info";
+import { PlaceContext } from "../../../managers/place";
 import { effect, useSignal } from "@preact/signals";
-import { config } from "../../config";
+import { config } from "../../../config";
 
 export function TitleBar() {
     const info = useContext(InfoContext)

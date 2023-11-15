@@ -1,0 +1,11 @@
+.wrapper {
+    background-color: var(--window-background);
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+
+.tag::before {
+    content: '#';
+    color: var(--grey-text);
+    margin-inline: 5px;
+}

@@ -1,8 +1,8 @@
 import { useContext, useEffect, useLayoutEffect } from "preact/hooks";
 import { ProfileContext } from "../../managers/profile";
-import { Button } from "../Button/Button";
+import { Button } from "../General/Button/Button";
 import styles from "./Profile.module.css";
-import { Param } from "../Param/Param";
+import { Param } from "../General/Param/Param";
 import { WindowBox } from "../WindowBox/WindowBox";
 
 export function Profile() {

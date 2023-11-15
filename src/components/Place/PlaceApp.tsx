@@ -12,7 +12,6 @@ export class PlaceApp {
     public canvasRef: RefObject<HTMLCanvasElement>;
     public container?: PlaceContainer;
 
-
     constructor(canvasRef: RefObject<HTMLCanvasElement>) {
         const worldSize = 1000; // Idk what is this
 
@@ -64,7 +63,7 @@ export class PlaceApp {
 
         this.viewport.addChild(this.container);
 
-        place.place.value = this.container
+        place.container.value = this.container
         const ws = new AppWebSocket();
         this.canvasRef.current!.style.cursor = "crosshair";
 
