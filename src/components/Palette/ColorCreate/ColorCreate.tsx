@@ -4,11 +4,11 @@ import { AppColor } from "../../../types/AppColor";
 import styles from "./ColorCreate.module.css"
 import { HexAlphaColorPicker, HexColorInput, HexColorPicker } from "react-colorful";
 import "./ColorPicker.css"
-import { Button } from "../../Button/Button";
+import { Button } from "../../General/Button/Button";
 
 export function ColorCreate() {
     const palette = useContext(PaletteContext);
-    const [color, setColor] = useState("#aabbcc");
+    const [color, setColor] = useState(palette.palette.value.selected.toHex());
     const [open, setOpen] = useState(false);
 
     function onSelect() {

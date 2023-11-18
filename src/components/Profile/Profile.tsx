@@ -1,8 +1,8 @@
 import { useContext, useEffect, useLayoutEffect } from "preact/hooks";
 import { ProfileContext } from "../../managers/profile";
-import { Button } from "../Button/Button";
+import { Button } from "../General/Button/Button";
 import styles from "./Profile.module.css";
-import { Param } from "../Param/Param";
+import { Param } from "../General/Param/Param";
 import { WindowBox } from "../WindowBox/WindowBox";
 
 export function Profile() {
@@ -33,17 +33,27 @@ export function Profile() {
         document.location.replace(document.location.pathname)
     }, [])
 
+
+    const params = {
+        "Имя": profile.user.value.username,
+        "Айди": profile.user.value.userID,
+        "Тег": profile.user.value.tag,
+        "Статус": profile.user.value.banned ? "Забанен" : null,
+        "Роль": profile.user.value.isMod ? "Модератор" : null
+    }
+
+
     return (
         profile.isAuthenticated.value
             ? (<WindowBox title="Профиль">
                 <div class={styles.wrapper}>
                     <div className={styles.params}>
-                        <Param value={profile.user.value.username} label="Имя" />
-                        <Param value={profile.user.value.userID} label="Айди" />
-                        
-                        {profile.user.value.tag && <Param value={profile.user.value.tag} label="Тег" />}
-                        {profile.user.value.banned && <Param value={"Забанен"} label="Статус" />}
-                        {profile.user.value.isMod && <Param value={"Модератор"} label="Роль" />}
+                        {Object.entries(params).map(([label, value]) => {
+                            if (!value) return null;
+
+                            return <Param value={value} label={label} />
+                            
+                        })}
                     </div>
 
                     <Button href="/logout">Выйти</Button>

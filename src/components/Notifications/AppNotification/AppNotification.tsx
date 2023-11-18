@@ -11,7 +11,7 @@ export function AppNotification({ notification }: { notification: NotificationIn
     useEffect(() => {
         setTime(setTimeout(() => {
             NotificationsManager.removeNotification(notification.id)
-        }, config.time.notification))
+        }, config.time.notificationRemoved))
     }, [])
 
     return (

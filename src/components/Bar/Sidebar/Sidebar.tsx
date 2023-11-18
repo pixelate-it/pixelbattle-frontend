@@ -1,8 +1,8 @@
 import { ComponentChildren } from "preact"
-import { Tags } from "../Tags/Tags/Tags"
+import { Tags } from "../../Tags/Tags/Tags"
 import styles from "./Sidebar.module.css"
-import { Profile } from "../Profile/Profile"
-import { NotificationList } from "../Notifications/NotificationList/NotificationList"
+import { Profile } from "../../Profile/Profile"
+import { NotificationList } from "../../Notifications/NotificationList/NotificationList"
 
 
 export function Sidebar() {

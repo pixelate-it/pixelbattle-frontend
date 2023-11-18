@@ -1,5 +1,5 @@
 import { createContext } from "preact";
-import { computed, signal } from "@preact/signals";
+import { Signal, computed, signal } from "@preact/signals";
 import { Point } from "pixi.js";
 import { ApiPixel, PixelInfo } from "../interfaces/Pixels";
 import { MyFetch } from "../types/AppFetch";
@@ -9,7 +9,7 @@ import { MyFetch } from "../types/AppFetch";
 export const CoordinatesManager = {
     coordinates: signal(new Point(-1, -1)),
     areCoordinatesSet: computed(() => false),
-    info: signal({} as PixelInfo),
+    info: signal(null as PixelInfo | null | "loading"),
     async fetchInfo() {
         CoordinatesManager.info.value = await MyFetch.getPixel(CoordinatesManager.coordinates.value)
     },

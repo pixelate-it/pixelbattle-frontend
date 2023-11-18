@@ -14,7 +14,6 @@ export const config = {
             ],
             selected: new AppColor("#ffffff"), // Default selected color
         }
-
     },
     time: {
         update: {
@@ -23,11 +22,16 @@ export const config = {
         },
         ws: 5000, // Websocket reconnect time
         shake: 200,
-        notification: 3000,
-        modCooldown: 50
+        notificationRemoved: 3000,
+        modCooldown: 50,
+        pixelInfo: 500,
     },
     shakeAmount: 0.1,
-    zoomLevel: 0.25,
+    zoom: {
+        defaultLevel: 0.25,
+        maxLevel: 3,
+        minLevelPx: 5
+    },
     discord: {
         clientId: "970714810905936022",
         redirectUri: "https://api.pixelbattle.fun/login",

@@ -4,6 +4,7 @@ import { AppColor } from "./AppColor";
 export class AppImage {
     private _buffer: Uint8Array;
     private _size: Point;
+    private pixelDataSize = 4;
 
     get size() {
         return this._size;
@@ -18,30 +19,23 @@ export class AppImage {
         const dataView = new DataView(buffer);
         const width = dataView.getUint32(18, true)
         const height = dataView.getUint32(22, true);
-        const pixelDataSize = 4;
 
 
         const pixelDataOffset = dataView.getUint32(10, true);
         const numPixels = width * height;
-        const pixelData = new Uint8Array(numPixels * pixelDataSize);
+        const pixelData = new Uint8Array(numPixels * this.pixelDataSize);
 
         for (let row = height - 1; row >= 0; row--) {
             for (let col = 0; col < width; col++) {
-                const imageByteOffset = pixelDataOffset + (row * width + col) * pixelDataSize;
-                const alpha = dataView.getUint8(imageByteOffset + 3);
-                const red = dataView.getUint8(imageByteOffset + 2);
-                const green = dataView.getUint8(imageByteOffset + 1);
-                const blue = dataView.getUint8(imageByteOffset + 0);
-
+                const imageByteOffset = pixelDataOffset + (row * width + col) * this.pixelDataSize;
                 const offset = (height - 1 - row) * width + col;
 
-                pixelData[offset * 4 + 0] = red;
-                pixelData[offset * 4 + 1] = green;
-                pixelData[offset * 4 + 2] = blue;
-                pixelData[offset * 4 + 3] = alpha;
+                pixelData[offset * this.pixelDataSize + 0] = dataView.getUint8(imageByteOffset + 2);
+                pixelData[offset * this.pixelDataSize + 1] = dataView.getUint8(imageByteOffset + 1);
+                pixelData[offset * this.pixelDataSize + 2] = dataView.getUint8(imageByteOffset + 0);
+                pixelData[offset * this.pixelDataSize + 3] = dataView.getUint8(imageByteOffset + 3);
             }
         }
-
 
 
         this._size = new Point(width, height);
@@ -55,14 +49,14 @@ export class AppImage {
 
     public getPixel(point: Point): AppColor {
         const index = (point.x + point.y * this._size.x)
-        const [r, g, b, a] = this._buffer.slice(index * 4, index * 4 + 4);
+        const [r, g, b, a] = this._buffer.slice(index * this.pixelDataSize, index * this.pixelDataSize + 4);
 
         return new AppColor(new Uint8Array([r, g, b, a]));
     }
 
 
     public setPixel(point: Point, color: AppColor): void {
-        const startIndex = (point.x + point.y * this._size.x) * 4;
+        const startIndex = (point.x + point.y * this._size.x) * this.pixelDataSize;
         const [r, g, b] = color.toUint8RgbArray();
 
         this._buffer[startIndex] = r;

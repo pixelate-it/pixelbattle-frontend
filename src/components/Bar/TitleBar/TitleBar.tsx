@@ -1,17 +1,20 @@
-import { useContext, useEffect } from "preact/hooks";
-import { Param } from "../Param/Param";
+import { useContext, useEffect, useState } from "preact/hooks";
+import { Param } from "../../General/Param/Param";
 import styles from "./TitleBar.module.css";
-import { InfoContext } from "../../managers/info";
-import { PlaceContext } from "../../managers/place";
+import { InfoContext } from "../../../managers/info";
+import { PlaceContext } from "../../../managers/place";
 import { effect, useSignal } from "@preact/signals";
+import { config } from "../../../config";
 
 export function TitleBar() {
     const info = useContext(InfoContext)
     const place = useContext(PlaceContext)
-    
+    const [infoIntervalId, setInfoIntervalId] = useState<NodeJS.Timeout>()
 
     useEffect(() => {
         info.fetch();
+
+        setInfoIntervalId(setInterval(info.fetch, config.time.update.info))
     }, [])
 
 

@@ -8,6 +8,7 @@
     flex-wrap: wrap;
     gap: 20px;
     align-items: start;
+    max-width: 400px;
 }
 
 .wrapper {
