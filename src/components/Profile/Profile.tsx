@@ -1,4 +1,4 @@
-import { useContext, useEffect, useLayoutEffect } from "preact/hooks";
+import { useContext, useEffect } from "preact/hooks";
 import { ProfileContext } from "../../managers/profile";
 import { Button } from "../General/Button/Button";
 import styles from "./Profile.module.css";
@@ -13,6 +13,7 @@ export function Profile() {
 
         if (profile.isAuthenticated.value) {
             profile.fetch()
+            window.history.replaceState({}, document.title, document.location.pathname)
 
             return 
         };
@@ -29,8 +30,7 @@ export function Profile() {
         profile.save()
         profile.fetch()
         
-
-        document.location.replace(document.location.pathname)
+        window.history.replaceState({}, document.title, document.location.pathname)
     }, [])
 
 
