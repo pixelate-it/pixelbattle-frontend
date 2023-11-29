@@ -12,6 +12,7 @@
     align-items: end;
     /* justify-items: end; */
 
+    pointer-events: none;
     gap: 5px;
 }
 
@@ -46,6 +47,14 @@
         left: 0;
         bottom: 0;
         transform: none;
-        width: 100%;
+        right: 0;
+    }
+
+    .coordinates {
+        margin-right: 10px;
+    }
+
+    .cooldown {
+        margin-left: 10px;
     }
 }

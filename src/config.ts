@@ -1,4 +1,3 @@
-import { Color, Point } from "pixi.js";
 import { AppColor } from "./types/AppColor";
 
 export const config = {
@@ -33,8 +32,8 @@ export const config = {
         minLevelPx: 5
     },
     discord: {
-        clientId: "970714810905936022",
-        redirectUri: "https://api.pixelbattle.fun/login",
+        clientId: (import.meta.env.VITE_DISCORD_BOT_ID as string)!,
+        redirectUri: (import.meta.env.VITE_DISCORD_BOT_REDIRECT as string)!,
         scope: ["identify", "guilds.join"] 
     },
     hover: {
@@ -42,8 +41,6 @@ export const config = {
         scale: 1.2
     },
     url: {
-        api: "https://api.pixelbattle.fun", 
-        client: "https://pixelbattle.fun",
-        ws: "wss://api.pixelbattle.fun/pixels/socket"
+        api: (import.meta.env.VITE_BACKEND as string)!,
     }
 }

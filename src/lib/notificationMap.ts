@@ -10,19 +10,19 @@ export const ServerNotificationMap: NotificationMap = {
         message: "Подождите пару секунд"
     },
     "RateLimit": {
-        title: "Рейт лимит (C)",
+        title: "Рейт лимит (С)",
         message: "Подождите пару секунд"
     },
     "TokenBanned": {
-        title: "Аккаунт забанен (C)",
+        title: "Аккаунт забанен (С)",
         message: "Ваш аккаунт забанен"
     },
     "NotAuthorized": {
-        title: "Необходимо авторизоваться (C)",
+        title: "Необходимо авторизоваться (С)",
         message: "Вы не вошли в дискорд аккаунт"
     },
     "Unknown": {
-        title: "Неизвестная ошибка",
+        title: "Неизвестная ошибка (С)",
         message: "Неизвестная ошибка"
     },
 }

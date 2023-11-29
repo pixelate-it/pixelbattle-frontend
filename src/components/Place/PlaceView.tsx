@@ -3,6 +3,7 @@ import { AppColor } from "../../types/AppColor";
 import { PlaceManager } from "../../managers/place";
 import { InfoManager } from "../../managers/info";
 import { ColorPickerManager } from "../../managers/picker";
+import { DragEvent } from "pixi-viewport/dist/types";
 
 
 export class PlaceView extends Sprite {
@@ -13,6 +14,10 @@ export class PlaceView extends Sprite {
     get size() {
         return PlaceManager.image.value.size
     }
+
+    private numOfTouches = 0
+    public isZommed = false;
+    public isDragged = false;
 
     constructor() {
         super()
@@ -30,19 +35,17 @@ export class PlaceView extends Sprite {
 
         this.on("pointermove", this.onPointerMove.bind(this));
         this.on("pointerout", this.onPointerOut.bind(this));
-        this.on("pointerup", this.onClick.bind(this));
     }
 
 
-    private async onClick(event: FederatedPointerEvent) {
-        const position = event.getLocalPosition(this)
-        const x = Math.floor(position.x)
-        const y = Math.floor(position.y)
-        const point = new Point(x, y)
+    public async onClick(event: DragEvent) {
+        const ev = (event.event as FederatedPointerEvent)
+        const position = ev.getLocalPosition(this)
+        const point = new Point(Math.floor(position.x), Math.floor(position.y))
         const color = this.image.getPixel(point)
 
 
-        if (event.button === 0) {
+        if (ev.button === 0) {
             if (ColorPickerManager.isEnabled.value) {
                 return this.emit("will-color-pick", color)
             }
@@ -51,8 +54,7 @@ export class PlaceView extends Sprite {
         }
 
 
-        if (event.button === 2) {
-
+        if (ev.button === 2) {
             return this.emit("will-color-pick", color)
         }
 

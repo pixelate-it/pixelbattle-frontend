@@ -1,7 +1,7 @@
 .tag {
     display: flex;
     justify-content: space-between;
-    min-width: 300px;
+    /* min-width: 300px; */
     align-items: center;
     padding: 4px 8px;
     gap: 10px;
@@ -47,6 +47,7 @@
     margin-right: auto;
     font-size: 18px;
     font-weight: 500;
+    color: var(--white);
 }
 
 .score {

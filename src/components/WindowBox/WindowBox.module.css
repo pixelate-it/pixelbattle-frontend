@@ -1,6 +1,8 @@
 .window {
     background-color: var(--window-background);
     border-radius: 8px;
+    max-width: 100%;
+    pointer-events: auto;
 
 }
 

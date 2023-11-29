@@ -53,8 +53,8 @@ export class PlaceApp {
                 minWidth: config.zoom.minLevelPx,
                 minHeight: config.zoom.minLevelPx
             })
-   
             .moveCenter(new Point(size.x / 2, size.y / 2))
+            .on("clicked", this.container?.place.onClick.bind(this.container.place))
 
 
         this.app.stage.addChild(this.viewport);
