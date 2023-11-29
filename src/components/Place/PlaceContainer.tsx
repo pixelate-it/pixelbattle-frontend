@@ -25,8 +25,18 @@ type Reason = "Cooldown" | "Not logged" | "Game ended" | "Banned"
 
 export class PlaceContainer extends Container {
     private pointer = new PlacePointer();
-    private place = new PlaceView();
-    private isDragged = false;
+    public place = new PlaceView();
+    // private isDragged = false;
+
+    get isDragged() {
+        return this.place.isDragged
+    }
+
+    set isDragged(v: boolean) {
+        this.place.isDragged = v
+    }
+
+
 
     private pixelInfo = {
         lastPoint: new Point(-1, -1),
@@ -46,6 +56,9 @@ export class PlaceContainer extends Container {
 
         this.viewport.on("drag-start", this.onDragStart.bind(this));
         this.viewport.on("drag-end", this.onDragEnd.bind(this));
+
+        this.viewport.on("zoomed", (e) => this.place.isZommed = true)
+        this.viewport.on("zoomed-end", (e) => this.place.isZommed = false)
 
         this.place.on("will-place", this.onWillPlace.bind(this));
         this.place.on("place", this.onPlace.bind(this));

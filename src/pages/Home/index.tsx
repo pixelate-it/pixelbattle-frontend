@@ -15,6 +15,8 @@ import { TopBar } from '../../components/Bar/TopBar/TopBar';
 import { NotificationsContext, NotificationsManager } from '../../managers/notifications';
 
 export function Home() {
+    
+    // Should probably refactor this somehow
     return (
         <NotificationsContext.Provider value={NotificationsManager}>
             <ProfileContext.Provider value={ProfileManager}>

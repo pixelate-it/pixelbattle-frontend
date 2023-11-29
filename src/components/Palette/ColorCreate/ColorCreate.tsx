@@ -21,12 +21,18 @@ export function ColorCreate() {
         setOpen(!open)
     }
 
+    function openPicker() {
+        setColor(palette.palette.value.selected.toHex())
+
+        toggle()
+    }
+
     return (
         <div className={styles.wrapper}>
             {open ?
                 (<div className="color-picker">
                     <HexColorPicker color={color} onChange={setColor} />
-                    <HexColorInput color={color} onChange={setColor} prefixed/>
+                    <HexColorInput color={color} onChange={setColor} prefixed />
                     <div className={styles.buttons}>
                         <Button onClick={onSelect}>
                             Готово
@@ -35,12 +41,12 @@ export function ColorCreate() {
                             Отмена
                         </Button>
                     </div>
-     
+
                 </div>)
                 : null}
 
 
-            <button onClick={toggle} className={styles.button}>
+            <button onClick={openPicker} className={styles.button}>
                 <img
                     width={15}
                     height={15}

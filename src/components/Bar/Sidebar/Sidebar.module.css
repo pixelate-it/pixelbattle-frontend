@@ -6,13 +6,18 @@
     flex-direction: column;
     gap: 10px;
     align-items: flex-end;
-
+    /* max-width: 100%; */
+    /* width: 100%; */
+    pointer-events: none;
 }
 
 @media screen and (max-width: 600px) {
     .sidebar {
         position: static;
-        margin-right: 10px;
-        max-width: calc(100% - 20px);
+        /* width: 100%; */
+        box-sizing: border-box;
+        padding: 10px;
+        /* margin-right: 10px; */
+        /* max-width: calc(100% - 20px); */
     }
 }

@@ -8,7 +8,7 @@ import { Point } from "pixi.js";
 
 export class AppWebSocket extends WebSocket {
     constructor() {
-        super(config.url.ws)
+        super(config.url.api.replace("http", "ws") + "/pixels/socket")
 
         this.setup()
     }
