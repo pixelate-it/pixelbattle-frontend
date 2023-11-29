@@ -17,6 +17,7 @@ import { NotificationInfo, NotificationsManager } from "../../managers/notificat
 import { ClientNotificationMap } from "../../lib/notificationMap";
 import { Ref, RefObject } from "preact";
 import { PixelInfo } from "../../interfaces/Pixels";
+import { config } from "../../config";
 
 type Reason = "Cooldown" | "Not logged" | "Game ended" | "Banned"
 
@@ -38,7 +39,7 @@ export class PlaceContainer extends Container {
 
 
     private pixelInfo = {
-        lastPoint: new Point(),
+        lastPoint: new Point(-1, -1),
         lastPointTime: 0,
         timeoutId: 0,
     }
@@ -146,8 +147,11 @@ export class PlaceContainer extends Container {
             if (this.pixelInfo.timeoutId === -1) {
                 CoordinatesManager.info.value = "loading"
                 this.pixelInfo.timeoutId = window.setTimeout(() => {
+                    if (CoordinatesManager.coordinates.value.x === -1 || CoordinatesManager.coordinates.value.y === -1) {
+                        return
+                    }
                     CoordinatesManager.fetchInfo()
-                }, 1000)
+                }, config.time.pixelInfo)
             }
 
 
