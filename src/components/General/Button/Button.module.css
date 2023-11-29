@@ -10,6 +10,7 @@
     text-decoration: none;
     color: inherit;
     display: inline-block;
+    pointer-events: auto;
 }
 
 .button:hover {
