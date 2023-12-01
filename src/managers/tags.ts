@@ -1,14 +1,14 @@
 import { signal } from "@preact/signals"
 import { FormatedTag } from "../interfaces/Tag"
 import { createContext } from "preact"
-import { MyFetch } from "../types/AppFetch"
+import { AppFetch } from "../types/AppFetch"
 import { ProfileManager } from "./profile"
 
 export const TagsManager = {
     tags: signal([] as FormatedTag[]),
     selectedTag: signal(""),
     async fetch() {
-        const response = await MyFetch.tags()
+        const response = await AppFetch.tags()
 
         TagsManager.tags.value = response.tags.map((tag, index) => ({
             name: tag[0],
@@ -69,12 +69,12 @@ export const TagsManager = {
 
         TagsManager.selectedTag.value = name
 
-        MyFetch.changeTag(name).then(() => ProfileManager.fetch())
+        AppFetch.changeTag(name).then(() => ProfileManager.fetch())
     },
     remove() {
         TagsManager.selectedTag.value = ""
         TagsManager.purgeFakeTags()
-        MyFetch.changeTag("").then(() => ProfileManager.fetch())
+        AppFetch.changeTag("").then(() => ProfileManager.fetch())
     }
 }
 

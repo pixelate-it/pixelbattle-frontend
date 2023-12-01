@@ -1,7 +1,7 @@
 import { createContext } from "preact";
 import { computed, signal } from "@preact/signals";
 import { ApiInfo } from "../interfaces/Info";
-import { MyFetch } from "../types/AppFetch";
+import { AppFetch } from "../types/AppFetch";
 
 
 
@@ -12,7 +12,7 @@ export const InfoManager = {
         InfoManager.info.value.ended = true
     },
     async fetch() {
-        const info = await MyFetch.info()
+        const info = await AppFetch.info()
 
         InfoManager.info.value = {
             ...info,

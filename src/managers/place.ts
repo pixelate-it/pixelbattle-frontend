@@ -4,14 +4,14 @@ import { Signal, signal } from "@preact/signals";
 import { AppImage } from "../types/AppImage";
 import { Point } from "pixi.js";
 import { config } from "../config";
-import { MyFetch } from "../types/AppFetch";
+import { AppFetch } from "../types/AppFetch";
 import { PlaceContainer } from "../components/Place/PlaceContainer";
 
 export const PlaceManager = {
     image: signal({} as AppImage),
     container: signal({} as PlaceContainer),
     async fetch() {
-        const image = await MyFetch.pixels()
+        const image = await AppFetch.pixels()
 
         PlaceManager.image.value = new AppImage(image)
 

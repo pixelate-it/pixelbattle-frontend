@@ -10,7 +10,7 @@ import { Viewport } from "pixi-viewport";
 import { PlaceManager } from "../../managers/place";
 import { InfoManager } from "../../managers/info";
 import { ColorPickerManager } from "../../managers/picker";
-import { MyFetch } from "../../types/AppFetch";
+import { AppFetch } from "../../types/AppFetch";
 import { DragEvent } from "pixi-viewport/dist/types";
 import { NotificationList } from "../Notifications/NotificationList/NotificationList";
 import { NotificationInfo, NotificationsManager } from "../../managers/notifications";
@@ -121,7 +121,7 @@ export class PlaceContainer extends Container {
 
         this.place.setSquare(point, PaletteManager.palette.value.selected);
 
-        MyFetch.putPixel({
+        AppFetch.putPixel({
             color: PaletteManager.palette.value.selected.toHex(),
             x: point.x,
             y: point.y

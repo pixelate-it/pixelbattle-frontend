@@ -9,7 +9,7 @@ import { Point } from "pixi.js"
 import { ApiErrorResponse, ApiResponse } from "../interfaces/ApiResponse"
 import { ServerNotificationMap } from "../lib/notificationMap"
 
-export class MyFetch {
+export class AppFetch {
     static async post<T extends {}>(url: string, body: any) {
         return fetch(config.url.api + url, {
             method: "POST",
@@ -19,7 +19,7 @@ export class MyFetch {
             body: JSON.stringify(body)
         })
         .then(res => res.json() as Promise<T | ApiErrorResponse>)
-        .then(MyFetch.checkForErrors<T>)
+        .then(AppFetch.checkForErrors<T>)
     }
 
 
@@ -33,7 +33,7 @@ export class MyFetch {
             body: JSON.stringify(body)
         })
         .then(res => res.json() as Promise<T | ApiErrorResponse>)
-        .then(MyFetch.checkForErrors<T>)
+        .then(AppFetch.checkForErrors<T>)
     }
 
     static processError(error: ApiErrorResponse) {
@@ -46,12 +46,12 @@ export class MyFetch {
     static async get<T extends {}>(url: string) {
         return fetch(config.url.api + url)
             .then(res => res.json() as Promise<T | ApiErrorResponse>)
-            .then(MyFetch.checkForErrors<T>)
+            .then(AppFetch.checkForErrors<T>)
     }
 
     static checkForErrors<T extends {} | ApiErrorResponse>(res: T | ApiErrorResponse){
         if ("error" in res && res.error) {
-            MyFetch.processError(res)
+            AppFetch.processError(res)
 
             return Promise.reject(res)
         }
@@ -67,25 +67,25 @@ export class MyFetch {
 
     static async info(): Promise<ApiInfo> {
 
-        return MyFetch.get<ApiInfo>("/info")
+        return AppFetch.get<ApiInfo>("/game")
     }
 
     static async profile(): Promise<ProfileInfo> {
         const id = ProfileManager.id.value
 
-        return MyFetch.get<ProfileInfo>(`/users/${id}`)
+        return AppFetch.get<ProfileInfo>(`/users/${id}`)
     }
 
     static async getPixel(point: Point): Promise<PixelInfo> {
-        return MyFetch.get<PixelInfo>(`/pixels?x=${point.x}&y=${point.y}`)
+        return AppFetch.get<PixelInfo>(`/pixels?x=${point.x}&y=${point.y}`)
     }
 
     static async tags(): Promise<ApiTags> {
-        return MyFetch.get<ApiTags>("/pixels/tag")
+        return AppFetch.get<ApiTags>("/pixels/tag")
     }
 
     static async putPixel(pixel: ApiPixel) {
-        return MyFetch.put<ApiResponse>("/pixels", {
+        return AppFetch.put<ApiResponse>("/pixels", {
             token: ProfileManager.token.value,
             ...pixel
         })
@@ -94,7 +94,7 @@ export class MyFetch {
     static async changeTag(tag: string): Promise<ApiResponse> {
         const id = ProfileManager.id.value
 
-        return MyFetch.post<ApiResponse>(`/users/${id}/tag`, {
+        return AppFetch.post<ApiResponse>(`/users/${id}/tag`, {
             token: ProfileManager.token.value,
             tag
         })
