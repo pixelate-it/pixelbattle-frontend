@@ -25,9 +25,13 @@ export class AppWebSocket extends WebSocket {
             ? await new Response(event.data).json()
             : JSON.parse(event.data);
 
+
         if (PlaceManager.image.value === null) {
             return;
         }
+
+        console.log(data)
+
 
         switch (data.op) {
             case 'PLACE':
@@ -37,9 +41,9 @@ export class AppWebSocket extends WebSocket {
 
             case 'ENDED':
                 if (data.value)
-                    InfoManager.start()
-                else 
                     InfoManager.end()
+                else 
+                    InfoManager.start()
                 break;
         }
     }

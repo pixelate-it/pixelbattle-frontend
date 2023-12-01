@@ -28,13 +28,13 @@ export class PlaceContainer extends Container {
     public place = new PlaceView();
     // private isDragged = false;
 
-    get isDragged() {
-        return this.place.isDragged
-    }
+    // get isDragged() {
+    //     return this.place.isDragged
+    // }
 
-    set isDragged(v: boolean) {
-        this.place.isDragged = v
-    }
+    // set isDragged(v: boolean) {
+    //     this.place.isDragged = v
+    // }
 
 
 
@@ -57,8 +57,8 @@ export class PlaceContainer extends Container {
         this.viewport.on("drag-start", this.onDragStart.bind(this));
         this.viewport.on("drag-end", this.onDragEnd.bind(this));
 
-        this.viewport.on("zoomed", (e) => this.place.isZommed = true)
-        this.viewport.on("zoomed-end", (e) => this.place.isZommed = false)
+        // this.viewport.on("zoomed", (e) => this.place.isZommed = true)
+        // this.viewport.on("zoomed-end", (e) => this.place.isZommed = false)
 
         this.place.on("will-place", this.onWillPlace.bind(this));
         this.place.on("place", this.onPlace.bind(this));
@@ -74,7 +74,7 @@ export class PlaceContainer extends Container {
         if (this.canvasRef.current)
             this.canvasRef.current.style.cursor = "grabbing";
 
-        this.isDragged = true;
+        // this.isDragged = true;
     }
 
     public onDragEnd(event: DragEvent) {
@@ -85,7 +85,7 @@ export class PlaceContainer extends Container {
 
 
         this.cursor = "default"
-        this.isDragged = false;
+        // this.isDragged = false;
     }
 
     public onCantPlace({ reason }: { reason: Reason }) {
@@ -98,9 +98,9 @@ export class PlaceContainer extends Container {
     }
 
     public onWillPlace(point: Point) {
-        if (this.isDragged) {
-            return
-        };
+        // if (this.isDragged) {
+        //     return
+        // };
 
         if (CooldownManager.hasCooldown.peek()) {
             return this.emit("cant-place", { reason: "Cooldown" });
@@ -109,6 +109,10 @@ export class PlaceContainer extends Container {
         if (!ProfileManager.token.peek()) {
             return this.emit("cant-place", { reason: "Not logged" });
         };
+
+        if (InfoManager.info.value === null || PlaceManager.image.value === null) {
+            return
+        }
         if (InfoManager.info.value.ended) {
             return this.emit("cant-place", { reason: "Game ended" });
         };
@@ -174,9 +178,9 @@ export class PlaceContainer extends Container {
     }
 
     public onWillColorPick(color: AppColor) {
-        if (this.isDragged) {
-            return
-        };
+        // if (this.isDragged) {
+        //     return
+        // };
 
         ColorPickerManager.isEnabled.value = false
 

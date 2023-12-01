@@ -64,6 +64,10 @@ export class PlacePointer extends Container {
         this.position.set(point.x + 0.5, point.y + 0.5)
         this.scale.set(config.hover.scale)
 
+        if (PlaceManager.image.value === null) {
+            return
+        }
+
         const color = PlaceManager.image.value.getPixel(point) ?? new AppColor("#ffffff")
         this.background.tint = color 
         this.border.tint = color.getReadableColor()

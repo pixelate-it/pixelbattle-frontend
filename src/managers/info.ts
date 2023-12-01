@@ -13,12 +13,17 @@ export const InfoManager = {
             return
         }
 
+        console.log("END")
+
+
         InfoManager.info.value.ended = true
     },
     start() {
         if (InfoManager.info.value === null) {
             return
         }
+
+        console.log("START")
 
         InfoManager.info.value.ended = false
     },

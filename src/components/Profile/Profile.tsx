@@ -14,7 +14,8 @@ export function Profile() {
         profile.load()
 
         if (profile.isAuthenticated.value) {
-            profile.fetch().then(() => tags.select(profile.user.value?.tag ?? ""))
+            // profile.fetch().then(() => tags.select(profile.user.value?.tag ?? ""))
+            profile.fetch()
             window.history.replaceState({}, document.title, document.location.pathname)
 
             return 
