@@ -29,7 +29,7 @@ export function TitleBar() {
             <div className={styles.content}>
                 <Param label="Кулдаун" value={info.info.value.cooldown + "мс"} />
                 <Param label="Размер" value={place.image.value?.size?.x + "x" + place.image.value?.size?.y} />
-                <Param label="Игроков" value={info.info.value.players?.online + "/" + info.info.value.players?.total} />
+                <Param label="Онлайн" value={info.info.value?.online?.toString()} />
             </div>
         </details>
     )
