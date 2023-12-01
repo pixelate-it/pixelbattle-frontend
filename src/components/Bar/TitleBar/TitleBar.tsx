@@ -17,6 +17,10 @@ export function TitleBar() {
         setInfoIntervalId(setInterval(info.fetch, config.time.update.info))
     }, [])
 
+    if (info.info.value === null || place.image.value === null) {
+        return null
+    }
+
 
     const isFinished = info.info.value.ended
 
@@ -28,8 +32,8 @@ export function TitleBar() {
             <summary className={styles.title}>{name} {icon}</summary>
             <div className={styles.content}>
                 <Param label="Кулдаун" value={info.info.value.cooldown + "мс"} />
-                <Param label="Размер" value={place.image.value?.size?.x + "x" + place.image.value?.size?.y} />
-                <Param label="Онлайн" value={info.info.value?.online?.toString()} />
+                <Param label="Размер" value={place.image.value.size.x + "x" + place.image.value.size.y} />
+                <Param label="Онлайн" value={info.info.value.online.toString()} />
             </div>
         </details>
     )

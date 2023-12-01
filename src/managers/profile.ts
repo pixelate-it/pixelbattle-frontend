@@ -1,11 +1,11 @@
 import { createContext } from "preact";
-import { ReadonlySignal, computed, signal } from "@preact/signals";
+import { ReadonlySignal, Signal, computed, signal } from "@preact/signals";
 import { config } from "../config";
 import { ProfileInfo } from "../interfaces/Profile";
 import { AppFetch } from "../types/AppFetch";
 
 export const ProfileManager = {
-    user: signal({} as ProfileInfo),
+    user: signal(null) as Signal<null | ProfileInfo>,
     token: signal(""),
     id: signal(""),
     isAuthenticated: computed(() => false),
@@ -20,9 +20,8 @@ export const ProfileManager = {
         localStorage.setItem("id", ProfileManager.id.value)
     },
     async fetch() {
-        ProfileManager.user.value = {
-            ...await AppFetch.profile(),
-        }
+        const profile = await AppFetch.profile()
+        ProfileManager.user.value = profile
     },
     login(token: string, id: string) {
         ProfileManager.token.value = token
@@ -38,8 +37,8 @@ export const ProfileManager = {
 }
 
 ProfileManager.isAuthenticated = computed(() => !!ProfileManager.token.value)
-ProfileManager.isBanned = computed(() => ProfileManager.user.value.banned)
-ProfileManager.isMod = computed(() => ProfileManager.user.value.isMod)
+ProfileManager.isBanned = computed(() => !!ProfileManager.user.value?.banned)
+ProfileManager.isMod = computed(() => !!ProfileManager.user.value?.isMod)
   
 export const ProfileContext = createContext({} as typeof ProfileManager)
 

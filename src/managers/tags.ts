@@ -19,7 +19,10 @@ export const TagsManager = {
         if (!ProfileManager.isAuthenticated.value) {
             return
         }
-        
+
+        if (ProfileManager.user.value === null) {
+            return
+        }
 
         const hasUserSelectedTag = ProfileManager.user.value.tag !== null
         if (!hasUserSelectedTag) {
@@ -33,8 +36,6 @@ export const TagsManager = {
         if (isUserSelectedTagFake) {
             TagsManager.pushFakeTag(ProfileManager.user.value.tag ?? "???")
         }
-
-
 
     },
     pushFakeTag(name: string) {

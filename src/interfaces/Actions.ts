@@ -6,7 +6,8 @@ export interface PlaceMessageData {
 }
 
 export interface EndedMessageData {
-    op: "ENDED"
+    op: "ENDED";
+    value: boolean;
 }
 
 export type MessageData = PlaceMessageData | EndedMessageData
