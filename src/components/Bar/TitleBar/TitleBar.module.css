@@ -5,7 +5,35 @@
     left: 10px;
     top: 10px;
     pointer-events: auto;
+    transform-origin: top left;
+    animation: scale-down 0.2s ease-in-out ;
     /* transform: translateX(-50%); */
+}
+
+.wrapper[open] {
+    animation: scale-up 0.2s ease-in-out;
+}
+
+@keyframes scale-up {
+    from {
+        transform: scale(0.4);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes scale-down {
+    from {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .content,
@@ -13,12 +41,20 @@
     padding: 12px;
 }
 
-.content {
+.params {
     padding-top: 0;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: flex-start;
+}
+
+.media {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 .title {

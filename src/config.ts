@@ -34,7 +34,7 @@ export const config = {
     discord: {
         clientId: (import.meta.env.VITE_DISCORD_BOT_ID as string)!,
         redirectUri: (import.meta.env.VITE_DISCORD_BOT_REDIRECT as string)!,
-        scope: ["identify", "guilds.join"] 
+        scope: ["identify", "guilds.join"]
     },
     hover: {
         outlineSize: 0.1,
@@ -42,5 +42,10 @@ export const config = {
     },
     url: {
         api: (import.meta.env.VITE_BACKEND as string)!,
+    },
+    media: {
+        youtube: "https://www.youtube.com/@pixelate-it",
+        discord: "https://discord.gg/XBPyGUv3DT",
+        // github: "https://github.com/pixelate-it",
     }
 }

@@ -25,15 +25,26 @@ export function TitleBar() {
     const isFinished = info.info.value.ended
 
     const name = info.info.value.name === "season:blank" ? "Без названия" : info.info.value.name
-    const icon = isFinished ? "🏁" : "⚔️"
+    const icon = isFinished ? "🏁" : "⚔️";
+
 
     return (
         <details className={styles.wrapper}>
             <summary className={styles.title}>{name} {icon}</summary>
             <div className={styles.content}>
-                <Param label="Кулдаун" value={info.info.value.cooldown + "мс"} />
-                <Param label="Размер" value={place.image.value.size.x + "x" + place.image.value.size.y} />
-                <Param label="Онлайн" value={info.info.value.online.toString()} />
+                <div className={styles.params}>
+                    <Param label="Кулдаун" value={info.info.value.cooldown + "мс"} />
+                    <Param label="Размер" value={place.image.value.size.x + "x" + place.image.value.size.y} />
+                    <Param label="Онлайн" value={info.info.value.online.toString()} />
+                </div>
+                <div className={styles.media}>
+                    {Object.entries(config.media).map(([name, url]) => (
+                        <a href={url} target="_blank" rel="noopener noreferrer" key={name}>
+                            <img src={`/images/icons/${name}.svg`} alt={name} width={30} height={30}/>
+                        </a>
+                    ))}
+                </div>
+
             </div>
         </details>
     )

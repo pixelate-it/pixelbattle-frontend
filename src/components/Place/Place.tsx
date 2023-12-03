@@ -9,6 +9,7 @@ import { AppWebSocket } from "../../types/AppWebSocket";
 import { effect } from "@preact/signals";
 import { CoordinatesContext } from "../../managers/coordinates";
 import { PlaceApp } from "./PlaceApp";
+import styles from "./Place.module.css"
 
 
 export function Place() {
@@ -28,7 +29,7 @@ export function Place() {
 
 
     return (
-        <canvas ref={canvasRef}></canvas>
+        <canvas ref={canvasRef} className={styles.canvas}></canvas>
     )
 }
 

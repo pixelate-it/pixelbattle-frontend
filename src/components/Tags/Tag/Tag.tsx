@@ -19,7 +19,7 @@ export function Tag({ tag }: TagProps) {
             return
         }
 
-        tags.select(tag.name)
+        tags.selectAndFetch(tag.name)
     }
 
     return (

@@ -20,7 +20,7 @@ export function OpenedTagCreate() {
         if (input === "") {
             return
         }
-        tags.select(input)
+        tags.selectAndFetch(input)
         isTagCreateOpened.value = false
     }
 

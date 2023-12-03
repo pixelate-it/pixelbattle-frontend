@@ -69,6 +69,9 @@ export const TagsManager = {
         }
 
         TagsManager.selectedTag.value = name
+    },
+    selectAndFetch(name: string) {
+        this.select(name)
 
         AppFetch.changeTag(name).then(() => ProfileManager.fetch())
     },

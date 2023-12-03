@@ -3,7 +3,44 @@
     border-radius: 8px;
     max-width: 100%;
     pointer-events: auto;
+    transform-origin: top right;
+}
 
+@keyframes scale-up {
+    from { 
+        /* max-width: 400px; */
+        /* width: 100px; */
+        transform: scale(0.2);
+
+        /* transform: translateX(100px); */
+     }
+    to { 
+        /* max-width: 100%; */
+        /* width: auto; */
+        transform: scale(1);
+
+        /* transform: translateX(0); */
+        
+    }
+}
+
+
+@keyframes scale-down {
+    from { 
+        transform: scale(1.5);
+     }
+    to { 
+        transform: scale(1);
+        
+    }
+}
+
+.window[open] {
+    animation: scale-up 0.2s ease-in-out;
+}
+
+.window:not([open]) {
+    animation: scale-down 0.2s ease-in-out;
 }
 
 .content,
