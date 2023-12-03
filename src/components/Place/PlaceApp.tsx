@@ -38,6 +38,8 @@ export class PlaceApp {
     public create(place: typeof PlaceManager) {
         this.container = new PlaceContainer(this.viewport, this.canvasRef);
 
+        if (place.image.value === null) return
+
         const { size } = place.image.value;
 
         this.viewport

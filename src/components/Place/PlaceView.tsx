@@ -8,10 +8,16 @@ import { DragEvent } from "pixi-viewport/dist/types";
 
 export class PlaceView extends Sprite {
     get image() {
+        if (PlaceManager.image.value === null) {
+            throw new Error("Can't find image")
+        }
         return PlaceManager.image.value
     }
 
     get size() {
+        if (PlaceManager.image.value === null) {
+            throw new Error("Can't find image")
+        }
         return PlaceManager.image.value.size
     }
 
@@ -28,6 +34,8 @@ export class PlaceView extends Sprite {
 
     private setup() {
         this.eventMode = "static"
+
+
         this.texture = Texture.fromBuffer(
             this.image.buffer, 
             this.size.x, 

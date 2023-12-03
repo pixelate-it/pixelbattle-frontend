@@ -4,14 +4,17 @@ import { Button } from "../General/Button/Button";
 import styles from "./Profile.module.css";
 import { Param } from "../General/Param/Param";
 import { WindowBox } from "../WindowBox/WindowBox";
+import { TagsContext } from "../../managers/tags";
 
 export function Profile() {
     const profile = useContext(ProfileContext)
+    const tags = useContext(TagsContext)
 
     useEffect(() => {
         profile.load()
 
         if (profile.isAuthenticated.value) {
+            // profile.fetch().then(() => tags.select(profile.user.value?.tag ?? ""))
             profile.fetch()
             window.history.replaceState({}, document.title, document.location.pathname)
 
@@ -35,11 +38,11 @@ export function Profile() {
 
 
     const params = {
-        "Имя": profile.user.value.username,
-        "Айди": profile.user.value.userID,
-        "Тег": profile.user.value.tag,
-        "Статус": profile.user.value.banned ? "Забанен" : null,
-        "Роль": profile.user.value.isMod ? "Модератор" : null
+        "Имя": profile.user.value?.username,
+        "Айди": profile.user.value?.userID,
+        "Тег": profile.user.value?.tag,
+        "Статус": profile.user.value?.banned ? "Забанен" : null,
+        "Роль": profile.user.value?.isMod ? "Модератор" : null
     }
 
 
