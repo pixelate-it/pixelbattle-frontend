@@ -46,6 +46,6 @@ export const config = {
     media: {
         youtube: "https://www.youtube.com/@pixelate-it",
         discord: "https://discord.gg/XBPyGUv3DT",
-        // github: "https://github.com/pixelate-it",
+        github: "https://github.com/pixelate-it",
     }
 }
