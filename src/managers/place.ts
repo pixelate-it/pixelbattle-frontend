@@ -1,7 +1,7 @@
 import { createContext } from "preact";
 import { Signal, signal } from "@preact/signals";
-import { AppImage } from "../types/AppImage";
-import { AppFetch } from "../types/AppFetch";
+import { AppImage } from "../classes/AppImage";
+import { AppFetch } from "../classes/AppFetch";
 import { PlaceContainer } from "../components/Place/PlaceContainer";
 
 export const PlaceManager = {

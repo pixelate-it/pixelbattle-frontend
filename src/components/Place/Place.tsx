@@ -5,7 +5,7 @@ import { PlaceContext } from "../../managers/place";
 import { config } from "../../config";
 import { InfoContext } from "../../managers/info";
 import { PlaceContainer } from "./PlaceContainer";
-import { AppWebSocket } from "../../types/AppWebSocket";
+import { AppWebSocket } from "../../classes/AppWebSocket";
 import { effect } from "@preact/signals";
 import { CoordinatesContext } from "../../managers/coordinates";
 import { PlaceApp } from "./PlaceApp";

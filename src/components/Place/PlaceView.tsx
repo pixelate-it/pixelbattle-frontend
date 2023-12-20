@@ -1,5 +1,5 @@
 import { Sprite, Texture, FederatedPointerEvent, Point } from "pixi.js";
-import { AppColor } from "../../types/AppColor";
+import { AppColor } from "../../classes/AppColor";
 import { PlaceManager } from "../../managers/place";
 import { InfoManager } from "../../managers/info";
 import { ColorPickerManager } from "../../managers/picker";

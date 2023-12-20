@@ -1,7 +1,7 @@
 import { signal } from "@preact/signals"
 import { FormatedTag } from "../interfaces/Tag"
 import { createContext } from "preact"
-import { AppFetch } from "../types/AppFetch"
+import { AppFetch } from "../classes/AppFetch"
 import { ProfileManager } from "./profile"
 
 export const TagsManager = {

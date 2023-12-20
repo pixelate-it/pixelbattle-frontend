@@ -1,7 +1,7 @@
 import { createContext } from "preact";
 import { Signal, computed, signal } from "@preact/signals";
 import { ApiInfo } from "../interfaces/Info";
-import { AppFetch } from "../types/AppFetch";
+import { AppFetch } from "../classes/AppFetch";
 
 
 
@@ -13,9 +13,10 @@ export const InfoManager = {
             return
         }
 
-
-
-        InfoManager.info.value.ended = true
+        InfoManager.info.value = {
+            ...InfoManager.info.value,
+            ended: true
+        }
     },
     start() {
         if (InfoManager.info.value === null) {
@@ -23,7 +24,10 @@ export const InfoManager = {
         }
 
 
-        InfoManager.info.value.ended = false
+        InfoManager.info.value = {
+            ...InfoManager.info.value,
+            ended: false
+        }
     },
     async fetch() {
         const info = await AppFetch.info()

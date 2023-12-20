@@ -2,7 +2,7 @@ import { Container, Point, Sprite } from "pixi.js";
 import { WHITE_TEXTURE } from "../../lib/WhiteTexture";
 import { PlaceManager } from "../../managers/place";
 import { config } from "../../config";
-import { AppColor } from "../../types/AppColor";
+import { AppColor } from "../../classes/AppColor";
 
 function getRandomArbitrary(min: number, max: number) {
     return Math.random() * (max - min) + min;

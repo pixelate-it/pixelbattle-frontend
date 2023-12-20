@@ -2,7 +2,8 @@ import { createContext } from "preact";
 import { ReadonlySignal, Signal, computed, signal } from "@preact/signals";
 import { config } from "../config";
 import { ProfileInfo } from "../interfaces/Profile";
-import { AppFetch } from "../types/AppFetch";
+import { AppFetch } from "../classes/AppFetch";
+import { AppLocalStorage } from "../classes/AppLocalStorage";
 
 export const ProfileManager = {
     user: signal(null) as Signal<null | ProfileInfo>,
@@ -12,12 +13,14 @@ export const ProfileManager = {
     isBanned: computed(() => false),
     isMod: computed(() => false),
     load() {
-        ProfileManager.token.value = localStorage.getItem("token") ?? ""
-        ProfileManager.id.value = localStorage.getItem("id") ?? ""
+        ProfileManager.token.value = AppLocalStorage.profile.token ?? ""
+        ProfileManager.id.value = AppLocalStorage.profile.id ?? ""
     },
     save() {
-        localStorage.setItem("token", ProfileManager.token.value)
-        localStorage.setItem("id", ProfileManager.id.value)
+        AppLocalStorage.profile = { 
+            token: ProfileManager.token.value,
+            id: ProfileManager.id.value
+        }
     },
     async fetch() {
         const profile = await AppFetch.profile()
@@ -31,15 +34,15 @@ export const ProfileManager = {
         ProfileManager.token.value = ""
         ProfileManager.id.value = ""
         ProfileManager.user.value = {} as ProfileInfo
-        localStorage.removeItem("token")
-        localStorage.removeItem("id")
+        
+        AppLocalStorage.resetProfile()
     },
 }
 
 ProfileManager.isAuthenticated = computed(() => !!ProfileManager.token.value)
 ProfileManager.isBanned = computed(() => !!ProfileManager.user.value?.banned)
 ProfileManager.isMod = computed(() => !!ProfileManager.user.value?.isMod)
-  
+
 export const ProfileContext = createContext({} as typeof ProfileManager)
 
 

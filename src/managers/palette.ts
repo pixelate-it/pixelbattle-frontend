@@ -1,10 +1,10 @@
 import { createContext } from "preact";
-import { AppColor } from "../types/AppColor";
+import { AppColor } from "../classes/AppColor";
 import { signal } from "@preact/signals";
 import { config } from "../config";
 
 export const PaletteManager = {
-    palette: signal(config.colors.palette),
+    palette: signal(config.defaults.colors.palette),
     setCurrentColor: (color: AppColor) => {
         PaletteManager.palette.value = {
             ...PaletteManager.palette.value,
@@ -22,7 +22,7 @@ export const PaletteManager = {
         PaletteManager.save()
     },
     isDefaultColor(color: AppColor) {
-        return config.colors.palette.colors.some(c => c.equals(color))
+        return config.defaults.colors.palette.colors.some(c => c.equals(color))
     },
     addColor(color: AppColor) {
         PaletteManager.palette.value = {
@@ -68,7 +68,7 @@ export const PaletteManager = {
 export const PaletteContext = createContext({} as typeof PaletteManager)
 
 
-interface FlatPalette {
+export interface FlatPalette {
     colors: string[]
     selected: string
 }

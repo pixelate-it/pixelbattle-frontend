@@ -21,6 +21,11 @@
     outline: 2px solid var(--white);
     margin: 0;
     padding: 0;
+    transition: outline-offset 0.2s ease;
+}
+
+.button:hover {
+    outline-offset: 2px;
 }
 
 /* .input {

@@ -10,10 +10,16 @@
     cursor: pointer;
     outline: 2px solid var(--white);
     border-radius: 50%;
+    transition: all 0.2s ease-in-out;
 }
 
 .input:checked {
-    outline: 2px solid var(--primary);
+    background-color: var(--primary);
+    outline-offset: 2px;
+}
+
+.input:hover {
+    outline-offset: 2px;
 }
 
 .icon {

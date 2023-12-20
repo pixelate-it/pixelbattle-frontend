@@ -41,6 +41,10 @@
     padding: 12px;
 }
 
+.content {
+    padding-top: 0;
+}
+
 .params {
     padding-top: 0;
     display: flex;
@@ -54,7 +58,6 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     gap: 10px;
-    margin-top: 20px;
 }
 
 .title {
@@ -73,4 +76,11 @@
         width: 100%;
         border-radius: 0;
     }
+}
+
+.icons {
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
+    align-items: center;
 }

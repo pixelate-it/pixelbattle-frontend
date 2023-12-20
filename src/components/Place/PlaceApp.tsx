@@ -4,7 +4,7 @@ import { RefObject } from "preact";
 import { config } from "../../config";
 import { PlaceManager } from "../../managers/place";
 import { PlaceContainer } from "./PlaceContainer";
-import { AppWebSocket } from "../../types/AppWebSocket";
+import { AppWebSocket } from "../../classes/AppWebSocket";
 
 export class PlaceApp {
     public app: Application;
@@ -21,7 +21,7 @@ export class PlaceApp {
             view: canvasRef.current!,
             width: window.innerWidth,
             height: window.innerHeight,
-            backgroundColor: config.colors.background,
+            backgroundColor: config.defaults.colors.background,
         });
 
         this.viewport = new Viewport({
@@ -66,7 +66,10 @@ export class PlaceApp {
         this.viewport.addChild(this.container);
 
         place.container.value = this.container
+        
         const ws = new AppWebSocket();
+        ws.connect()
+
         this.canvasRef.current!.style.cursor = "crosshair";
 
         window.addEventListener('resize', this.onWindowResize.bind(this));

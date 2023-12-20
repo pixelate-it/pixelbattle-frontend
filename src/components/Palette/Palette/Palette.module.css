@@ -16,6 +16,20 @@
     --size: 25px;
 
     pointer-events: auto;
+
+    animation: scale-down 0.2s ease-in-out ;
+    transform-origin: bottom center;
+    /* transition: all 0.2s ease-in-out; */
+    /* overflow: hidden; */
+}
+
+@keyframes scale-down {
+    from {
+        transform: scale(0.2);
+    }
+    to {
+        transform: scale(1);
+    }
 }
 
 .hr {

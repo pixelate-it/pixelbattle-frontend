@@ -1,6 +1,6 @@
 import { useContext, useState } from "preact/hooks";
 import { PaletteContext } from "../../../managers/palette";
-import { AppColor } from "../../../types/AppColor";
+import { AppColor } from "../../../classes/AppColor";
 import styles from "./ColorCreate.module.css"
 import { HexAlphaColorPicker, HexColorInput, HexColorPicker } from "react-colorful";
 import "./ColorPicker.css"

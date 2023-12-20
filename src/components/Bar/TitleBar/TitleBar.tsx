@@ -5,6 +5,7 @@ import { InfoContext } from "../../../managers/info";
 import { PlaceContext } from "../../../managers/place";
 import { effect, useSignal } from "@preact/signals";
 import { config } from "../../../config";
+import { Snowflake } from "../../Snow/Snowflake/Snowflake";
 
 export function TitleBar() {
     const info = useContext(InfoContext)
@@ -37,13 +38,17 @@ export function TitleBar() {
                     <Param label="Размер" value={place.image.value.size.x + "x" + place.image.value.size.y} />
                     <Param label="Онлайн" value={info.info.value.online.toString()} />
                 </div>
-                <div className={styles.media}>
-                    {Object.entries(config.media).map(([name, url]) => (
-                        <a href={url} target="_blank" rel="noopener noreferrer" key={name}>
-                            <img src={`/images/icons/${name}.svg`} alt={name} width={30} height={30}/>
-                        </a>
-                    ))}
+                <div className={styles.icons}>
+                    <div className={styles.media}>
+                        {Object.entries(config.media).map(([name, url]) => (
+                            <a href={url} target="_blank" rel="noopener noreferrer" key={name}>
+                                <img src={`/images/icons/${name}.svg`} alt={name} width={35} height={35}/>
+                            </a>
+                        ))}
+                    </div>
+                    <Snowflake />
                 </div>
+                
 
             </div>
         </details>

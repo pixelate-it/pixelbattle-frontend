@@ -1,5 +1,5 @@
 import { Container, FederatedPointerEvent, Point } from "pixi.js";
-import { AppColor } from "../../types/AppColor";
+import { AppColor } from "../../classes/AppColor";
 import { PaletteManager } from "../../managers/palette";
 import { PlacePointer } from "./PlacePointer";
 import { PlaceView } from "./PlaceView";
@@ -10,7 +10,7 @@ import { Viewport } from "pixi-viewport";
 import { PlaceManager } from "../../managers/place";
 import { InfoManager } from "../../managers/info";
 import { ColorPickerManager } from "../../managers/picker";
-import { AppFetch } from "../../types/AppFetch";
+import { AppFetch } from "../../classes/AppFetch";
 import { DragEvent } from "pixi-viewport/dist/types";
 import { NotificationList } from "../Notifications/NotificationList/NotificationList";
 import { NotificationInfo, NotificationsManager } from "../../managers/notifications";

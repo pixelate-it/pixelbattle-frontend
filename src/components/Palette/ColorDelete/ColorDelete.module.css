@@ -12,6 +12,7 @@
 
     border: none;
     background-color: transparent;
+    transition: outline-offset 0.2s ease-out;
 }
 
 .icon {
@@ -27,4 +28,8 @@
 .button:disabled {
     cursor: not-allowed;
     opacity: 0.5;
+}
+
+.button:hover {
+    outline-offset: 2px;
 }

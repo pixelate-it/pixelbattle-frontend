@@ -6,18 +6,28 @@ import { AppColor } from "./AppColor";
 import { Point } from "pixi.js";
 
 
-export class AppWebSocket extends WebSocket {
-    constructor() {
-        super(config.url.api.replace("http", "ws") + "/pixels/socket")
+export class AppWebSocket {
+    private ws!: WebSocket;
 
-        this.setup()
+
+    constructor() {
+        this.connect()
     }
 
-    private setup() {
-        this.addEventListener("open", this.onOpen.bind(this))
-        this.addEventListener("message", this.onMessage.bind(this))
-        this.addEventListener("close", this.onClose.bind(this))
-        this.addEventListener("error", this.onError.bind(this))
+    public connect() {
+        this.createWebSocket()
+        this.setupEventListeners()
+    }
+
+    private createWebSocket() {
+        this.ws = new WebSocket(config.url.api.replace("http", "ws") + "/pixels/socket")
+    }
+
+    private setupEventListeners() {
+        this.ws.addEventListener("open", this.onOpen.bind(this))
+        this.ws.addEventListener("message", this.onMessage.bind(this))
+        this.ws.addEventListener("close", this.onClose.bind(this))
+        this.ws.addEventListener("error", this.onError.bind(this))
     }
 
     private async onMessage(event: MessageEvent<string | Blob>) {
@@ -30,7 +40,6 @@ export class AppWebSocket extends WebSocket {
             return;
         }
 
-        console.log(data)
 
 
         switch (data.op) {
@@ -51,8 +60,14 @@ export class AppWebSocket extends WebSocket {
     private onOpen(event: Event) {
     }
 
+    private reconnect() {
+        PlaceManager.fetch()
+            .then(() => PlaceManager.container.value.update())
+            .then(() => this.connect())
+    }
+
     private onClose(event: CloseEvent) {
-        setTimeout(this.setup.bind(this), config.time.ws)
+        setTimeout(this.reconnect.bind(this), config.time.ws)
     }
 
     private onError(event: Event) {
