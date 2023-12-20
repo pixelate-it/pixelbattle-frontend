@@ -1,13 +1,5 @@
 import { useContext, useEffect, useRef } from "preact/hooks";
-import { Application, Point } from "pixi.js"
-import { Viewport } from "pixi-viewport";
 import { PlaceContext } from "../../managers/place";
-import { config } from "../../config";
-import { InfoContext } from "../../managers/info";
-import { PlaceContainer } from "./PlaceContainer";
-import { AppWebSocket } from "../../classes/AppWebSocket";
-import { effect } from "@preact/signals";
-import { CoordinatesContext } from "../../managers/coordinates";
 import { PlaceApp } from "./PlaceApp";
 import styles from "./Place.module.css"
 

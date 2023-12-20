@@ -11,7 +11,6 @@ export class AppWebSocket {
 
 
     constructor() {
-        this.connect()
     }
 
     public connect() {
@@ -40,6 +39,8 @@ export class AppWebSocket {
             return;
         }
 
+        console.log(data)
+
 
 
         switch (data.op) {
@@ -67,7 +68,8 @@ export class AppWebSocket {
     }
 
     private onClose(event: CloseEvent) {
-        setTimeout(this.reconnect.bind(this), config.time.ws)
+        console.log("CLOSE")
+        // setTimeout(this.reconnect.bind(this), config.time.ws)
     }
 
     private onError(event: Event) {
