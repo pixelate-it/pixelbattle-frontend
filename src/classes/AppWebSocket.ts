@@ -39,10 +39,6 @@ export class AppWebSocket {
             return;
         }
 
-        console.log(data)
-
-
-
         switch (data.op) {
             case 'PLACE':
                 PlaceManager.image.value.setPixel(new Point(data.x, data.y), new AppColor(data.color))
@@ -68,8 +64,7 @@ export class AppWebSocket {
     }
 
     private onClose(event: CloseEvent) {
-        console.log("CLOSE")
-        // setTimeout(this.reconnect.bind(this), config.time.ws)
+        setTimeout(this.reconnect.bind(this), config.time.ws)
     }
 
     private onError(event: Event) {

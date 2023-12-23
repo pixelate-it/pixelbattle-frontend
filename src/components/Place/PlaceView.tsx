@@ -37,8 +37,8 @@ export class PlaceView extends Sprite {
 
 
         this.texture = Texture.fromBuffer(
-            this.image.buffer, 
-            this.size.x, 
+            this.image.buffer,
+            this.size.x,
             this.size.y)
 
         this.on("pointermove", this.onPointerMove.bind(this));
@@ -52,6 +52,10 @@ export class PlaceView extends Sprite {
         const point = new Point(Math.floor(position.x), Math.floor(position.y))
         const color = this.image.getPixel(point)
 
+        const isOutsideOfCanvas = point.x < 0 || point.x > this.image.size.x || point.y < 0 || point.y > this.image.size.y
+        if (isOutsideOfCanvas) {
+            return
+        }
 
         if (ev.button === 0) {
             if (ColorPickerManager.isEnabled.value) {
@@ -72,13 +76,13 @@ export class PlaceView extends Sprite {
         const position = event.getLocalPosition(this)
         const { x: width, y: height } = this.image.size
 
-        if (position.x < 0 
-            || position.x > width 
-            || position.y < 0 
+        if (position.x < 0
+            || position.x > width
+            || position.y < 0
             || position.y > height) return
 
         const point = new Point(Math.floor(position.x), Math.floor(position.y))
-        
+
         this.emit("hover", point);
     }
 
