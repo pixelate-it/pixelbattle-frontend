@@ -35,7 +35,7 @@ export class SnowParticle extends Sprite {
             x: random(0, SnowParticle.app.renderer.width),
             y: -5,
             vx: random(-2, 2),
-            vy: random(2, 10),
+            vy: random(8, 10),
             alpha: random(0, 1),
         })
 
@@ -50,12 +50,12 @@ export class SnowParticle extends Sprite {
     public reset() {
         this.x = random(0, SnowParticle.app.renderer.width);
         this.y = 0;
-        this.vx = random(0, 10);
+        this.vx = random(-3, 3);
     }
 
     public randomize() {
-        this.vx += random(-2, 2)
-        this.vy = random(2, 10)
+        this.vx += random(-1, 1)
+        this.vy = random(2, 6)
     }
 
     public update(time: number) {
