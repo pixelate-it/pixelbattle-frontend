@@ -1,4 +1,4 @@
-import { Color, ColorSource } from "pixi.js";
+import { Color, ColorSource } from "@pixi/color";
 
 
 export class AppColor extends Color {

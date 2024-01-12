@@ -1,10 +1,12 @@
 import { Viewport } from "pixi-viewport";
-import { Application, Point } from "pixi.js";
+import { Application } from "@pixi/app";
+import { Point } from "@pixi/math";
 import { RefObject } from "preact";
 import { config } from "../../config";
 import { PlaceManager } from "../../managers/place";
 import { PlaceContainer } from "./PlaceContainer";
 import { AppWebSocket } from "../../classes/AppWebSocket";
+import { EventSystem } from "@pixi/events";
 
 export class PlaceApp {
     public app: Application;
@@ -24,11 +26,15 @@ export class PlaceApp {
             backgroundColor: config.defaults.colors.background,
         });
 
+        // https://github.com/davidfig/pixi-viewport/issues/441#issuecomment-1628206981
+		const events = new EventSystem(this.app.renderer);
+		events.domElement = canvasRef.current!;
+
         this.viewport = new Viewport({
             screenWidth: window.innerWidth,
             screenHeight: window.innerHeight,
             worldWidth: worldSize,
-            events: this.app.renderer.events,
+            events: events,
             worldHeight: worldSize,
             disableOnContextMenu: true
         });
@@ -66,7 +72,7 @@ export class PlaceApp {
         this.viewport.addChild(this.container);
 
         place.container.value = this.container
-        
+
         const ws = new AppWebSocket();
         ws.connect()
 

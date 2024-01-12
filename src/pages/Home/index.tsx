@@ -1,20 +1,21 @@
-import { Place } from '../../components/Place/Place';
 import { PlaceContext, PlaceManager } from '../../managers/place';
 import { PaletteContext, PaletteManager } from '../../managers/palette';
-import { PaletteGroup } from '../../components/Palette/PaletteGroup/PaletteGroup';
 import { InfoContext, InfoManager } from '../../managers/info';
-import { Palette } from '../../components/Palette/Palette/Palette';
 import { ProfileContext, ProfileManager } from '../../managers/profile';
-import { Cooldown } from '../../components/Cooldown/Cooldown';
 import { CooldownContext, CooldownManager } from '../../managers/cooldown';
-import { BottomBar } from '../../components/Bar/BottomBar/BottomBar';
 import { CoordinatesContext, CoordinatesManager } from '../../managers/coordinates';
 import { TagsContext, TagsManager } from '../../managers/tags';
 import { ColorPickerContext, ColorPickerManager } from '../../managers/picker';
-import { TopBar } from '../../components/Bar/TopBar/TopBar';
 import { NotificationsContext, NotificationsManager } from '../../managers/notifications';
-import { Snow } from '../../components/Snow/Snow';
 import { SettingsContext, SettingsManager } from '../../managers/settings';
+
+import { lazy } from 'preact-iso';
+import { Suspense } from 'preact/compat';
+
+const Snow = lazy(() => import("../../components/Snow/Snow").then(r => r.Snow))
+const Place = lazy(() => import("../../components/Place/Place").then(r => r.Place))
+const BottomBar = lazy(() => import("../../components/Bar/BottomBar/BottomBar").then(r => r.BottomBar))
+const TopBar = lazy(() => import("../../components/Bar/TopBar/TopBar").then(r => r.TopBar))
 
 export function Home() {
 
@@ -30,10 +31,13 @@ export function Home() {
                                     <CoordinatesContext.Provider value={CoordinatesManager}>
                                         <PlaceContext.Provider value={PlaceManager}>
                                             <PaletteContext.Provider value={PaletteManager}>
-                                                <Place />
-                                                <TopBar />
-                                                <BottomBar />
-                                                <Snow />
+                                                <Suspense fallback={<p>Loading</p>}>
+                                                    <Place />
+                                                    <TopBar />
+                                                    <BottomBar />
+                                                    <Snow />
+                                                </Suspense>
+
                                             </PaletteContext.Provider>
                                         </PlaceContext.Provider>
                                     </CoordinatesContext.Provider>
