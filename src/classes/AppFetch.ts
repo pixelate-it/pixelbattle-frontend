@@ -5,7 +5,7 @@ import { ProfileInfo } from "../interfaces/Profile"
 import { ApiTags } from "../interfaces/Tag"
 import { ProfileManager } from "../managers/profile"
 import { NotificationInfo, NotificationsManager } from "../managers/notifications"
-import { Point } from "pixi.js"
+import { Point } from "@pixi/math"
 import { ApiErrorResponse, ApiResponse } from "../interfaces/ApiResponse"
 import { ServerNotificationMap } from "../lib/notificationMap"
 

@@ -3,7 +3,7 @@ import { InfoManager } from "../managers/info";
 import { PlaceManager } from "../managers/place";
 import { MessageData } from "../interfaces/Actions";
 import { AppColor } from "./AppColor";
-import { Point } from "pixi.js";
+import { Point } from "@pixi/math"
 
 
 export class AppWebSocket {

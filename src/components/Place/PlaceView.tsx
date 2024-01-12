@@ -1,9 +1,14 @@
-import { Sprite, Texture, FederatedPointerEvent, Point } from "pixi.js";
+
 import { AppColor } from "../../classes/AppColor";
 import { PlaceManager } from "../../managers/place";
 import { InfoManager } from "../../managers/info";
 import { ColorPickerManager } from "../../managers/picker";
+
 import { DragEvent } from "pixi-viewport/dist/types";
+import { Texture } from "@pixi/core";
+import { Point } from "@pixi/math";
+import { Sprite } from "@pixi/sprite";
+import { FederatedPointerEvent } from "@pixi/events";
 
 
 export class PlaceView extends Sprite {

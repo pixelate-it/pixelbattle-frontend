@@ -1,6 +1,13 @@
-import { Application, Color, Graphics, Sprite, Texture } from "pixi.js";
+
+import { Texture } from "@pixi/core";
+import { Application } from "@pixi/app";
+import { Sprite } from "@pixi/sprite";
+import { Graphics } from "@pixi/graphics"
+;
 import { random } from "../../lib/random";
 import { config } from "../../config";
+import { AppColor } from "../../classes/AppColor";
+
 
 export interface SnowParticleData {
     x: number;
@@ -12,7 +19,7 @@ export interface SnowParticleData {
 
 export class SnowParticle extends Sprite {
     public static graphics = new Graphics()
-        .beginFill(new Color(0xffffff))
+        .beginFill(new AppColor(0xffffff))
         .drawCircle(config.snow.size / 2, config.snow.size / 2, config.snow.size)
         .endFill();
     public static texture: Texture;
