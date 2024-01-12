@@ -1,4 +1,5 @@
-import { Container, FederatedPointerEvent, Point } from "pixi.js";
+import { Container  } from "@pixi/display";
+import { Point } from "@pixi/math"
 import { AppColor } from "../../classes/AppColor";
 import { PaletteManager } from "../../managers/palette";
 import { PlacePointer } from "./PlacePointer";

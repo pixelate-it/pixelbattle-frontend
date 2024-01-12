@@ -1,4 +1,6 @@
-import { Container, Point, Sprite } from "pixi.js";
+import { Container } from "@pixi/display";
+import { Sprite } from "@pixi/sprite";
+import { Point } from "@pixi/math";
 import { WHITE_TEXTURE } from "../../lib/WhiteTexture";
 import { PlaceManager } from "../../managers/place";
 import { config } from "../../config";

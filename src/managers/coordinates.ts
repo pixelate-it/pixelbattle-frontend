@@ -1,6 +1,6 @@
 import { createContext } from "preact";
 import { Signal, computed, signal } from "@preact/signals";
-import { Point } from "pixi.js";
+import { Point } from "@pixi/math"
 import { ApiPixel, PixelInfo } from "../interfaces/Pixels";
 import { AppFetch } from "../classes/AppFetch";
 
