@@ -10,15 +10,7 @@ export default defineConfig({
             input: {
                 main: resolve(__dirname, "index.html"),
                 404: resolve(__dirname, "404.html"),
-            },
-            output: {
-                manualChunks(l) {
-                    if(l.includes("node_modules")) {
-                        const a = l.toString().split("node_modules/")[1].split("/")[0]
-                        return a.toString();
-                    }
-                }
-            },
-        },
+            }
+        }
     }
 });
