@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd"><path style="opacity:1" fill="#c93332" d="M31.5-.5h192v16h-192v-16zM31.5 15.5v16h-16v-16h16z"/><path style="opacity:1" fill="#dc3c3b" d="M31.5 15.5h192v16h16v192h-16v16h-192v-16h-16v-192h16v-16z"/><path style="opacity:1" fill="#c93332" d="M223.5 15.5h16v16-16h-16zM-.5 31.5h16v192h-16v-192z"/><path style="opacity:1" fill="#e16564" d="M207.5 47.5h-32v-16h32v16z"/><path style="opacity:1" fill="#c93332" d="M239.5 31.5h16v192h-16v-192z"/><path style="opacity:1" fill="#c1c2d0" d="M95.5 63.5h-32v-16h32v16z"/><path style="opacity:1" fill="#e16564" d="M207.5 47.5h16v32h-16v-32z"/><path style="opacity:1" fill="#e0e1e0" d="M63.5 63.5h32v16h32v16h32v16h32v32h-32v16h-32v16h-32v16h-32v-128z"/><path style="opacity:1" fill="#c1c2d0" d="M95.5 63.5h32v16h-32v-16zM127.5 79.5h32v16h-32v-16zM159.5 95.5h32v16h-32v-16zM191.5 111.5h16v16h-16v-16z"/><path style="opacity:1" fill="#e16564" d="M47.5 207.5h-16v-32h16v32zM47.5 207.5h32v16h-32v-16z"/><path style="opacity:1" fill="#c93332" d="M15.5 223.5h16v16h-16v-16zM239.5 223.5v16h-16v-16h16zM31.5 239.5h192v16h-192v-16z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" id="icon" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd">
+    <path style="opacity:1" fill="#c93332" d="M31.5-.5h192v16h-192v-16zM31.5 15.5v16h-16v-16h16z"/>
+    <path style="opacity:1" fill="#dc3c3b" d="M31.5 15.5h192v16h16v192h-16v16h-192v-16h-16v-192h16v-16z"/>
+    <path style="opacity:1" fill="#c93332" d="M223.5 15.5h16v16-16h-16zM-.5 31.5h16v192h-16v-192z"/>
+    <path style="opacity:1" fill="#e16564" d="M207.5 47.5h-32v-16h32v16z"/>
+    <path style="opacity:1" fill="#c93332" d="M239.5 31.5h16v192h-16v-192z"/>
+    <path style="opacity:1" fill="#c1c2d0" d="M95.5 63.5h-32v-16h32v16z"/>
+    <path style="opacity:1" fill="#e16564" d="M207.5 47.5h16v32h-16v-32z"/>
+    <path style="opacity:1" fill="#e0e1e0" d="M63.5 63.5h32v16h32v16h32v16h32v32h-32v16h-32v16h-32v16h-32v-128z"/>
+    <path style="opacity:1" fill="#c1c2d0" d="M95.5 63.5h32v16h-32v-16zM127.5 79.5h32v16h-32v-16zM159.5 95.5h32v16h-32v-16zM191.5 111.5h16v16h-16v-16z"/>
+    <path style="opacity:1" fill="#e16564" d="M47.5 207.5h-16v-32h16v32zM47.5 207.5h32v16h-32v-16z"/>
+    <path style="opacity:1" fill="#c93332" d="M15.5 223.5h16v16h-16v-16zM239.5 223.5v16h-16v-16h16zM31.5 239.5h192v16h-192v-16z"/>
+</svg>

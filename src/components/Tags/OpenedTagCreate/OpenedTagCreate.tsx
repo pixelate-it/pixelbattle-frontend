@@ -4,6 +4,7 @@ import { Button } from "../../General/Button/Button"
 import { TextField } from "../../General/TextField/TextField"
 import { isTagCreateOpened } from "../OpenTagSignal"
 import styles from "./OpenedTagCreate.module.css"
+import { Icon } from "../../General/Icon/Icon"
 
 export function OpenedTagCreate() {
     const tags = useContext(TagsContext)
@@ -31,10 +32,10 @@ export function OpenedTagCreate() {
     return (<div className={styles.form}>
         <TextField placeholder="Новый тег" onInput={handleInput} min={4} max={8}/>
         <Button onClick={createTag}>
-            <img src="/images/icons/plus.svg" />
+            <Icon icon="plus" />
         </Button>
         <Button onClick={closeTagCreate} type="danger">
-            <img src="/images/icons/plus.svg" style={{ transform: "rotate(45deg)" }} />
+            <Icon icon="plus" className={styles.closeIcon}/>
         </Button>
     </div>)
 }

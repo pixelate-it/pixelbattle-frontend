@@ -2,6 +2,7 @@ import { useContext } from "preact/hooks"
 import styles from "./Snowflake.module.css"
 import { SettingsContext } from "../../../managers/settings"
 import { TargetedEvent } from "preact/compat"
+import { Icon } from "../../General/Icon/Icon"
 
 export function Snowflake() {
     const settings = useContext(SettingsContext)
@@ -17,11 +18,6 @@ export function Snowflake() {
 
     return <div className={styles.wrapper}>
         <input type="checkbox" className={styles.input} onChange={toggleSnow} defaultChecked={settings.settings.value.enableSnow}/>
-        <img
-            src="/images/icons/snowflake.svg"
-            alt="Snowflake"
-            width={35}
-            height={35}
-        />
+        <Icon icon="snowflake" size={35} viewBoxSize={272}/>
     </div>
 }
