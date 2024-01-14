@@ -6,6 +6,7 @@ import { PlaceContext } from "../../../managers/place";
 import { effect, useSignal } from "@preact/signals";
 import { config } from "../../../config";
 import { Snowflake } from "../../Snow/Snowflake/Snowflake";
+import { Icon } from "../../General/Icon/Icon";
 
 export function TitleBar() {
     const info = useContext(InfoContext)
@@ -42,7 +43,8 @@ export function TitleBar() {
                     <div className={styles.media}>
                         {Object.entries(config.media).map(([name, url]) => (
                             <a href={url} target="_blank" rel="noopener noreferrer" key={name}>
-                                <img src={`/images/icons/${name}.svg`} alt={name} width={35} height={35}/>
+                                <Icon icon={name} size={35} viewBoxSize={256}/>
+                                {/* <img src={`/images/icons/${name}.svg`} alt={name} width={35} height={35}/> */}
                             </a>
                         ))}
                     </div>

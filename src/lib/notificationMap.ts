@@ -21,10 +21,6 @@ export const ServerNotificationMap: NotificationMap = {
         title: "Необходимо авторизоваться (С)",
         message: "Вы не вошли в дискорд аккаунт"
     },
-    "Unknown": {
-        title: "Неизвестная ошибка (С)",
-        message: "Неизвестная ошибка"
-    },
 }
 
 export const ClientNotificationMap: NotificationMap = {

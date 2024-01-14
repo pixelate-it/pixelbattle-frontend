@@ -7,8 +7,8 @@ import { NotificationList } from "../../Notifications/NotificationList/Notificat
 
 export function Sidebar() {
     return <div className={styles.sidebar}>
-        <Tags />
         <Profile />
+        <Tags />
         <NotificationList />
     </div>
 }
