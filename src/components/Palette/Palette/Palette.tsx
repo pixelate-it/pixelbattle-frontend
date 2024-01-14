@@ -18,11 +18,11 @@ export function Palette() {
             <PaletteGroup>
                 {palette.palette.value.colors.map(color => <ColorSelect color={color} />)}
             </PaletteGroup>
-            <hr className={styles.hr}/>
+            <hr className={styles.hr} />
             <PaletteGroup>
+                <ColorPick />
                 <ColorCreate />
                 <ColorDelete />
-                <ColorPick />
             </PaletteGroup>
         </div>
     )

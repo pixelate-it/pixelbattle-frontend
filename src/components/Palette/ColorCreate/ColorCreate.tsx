@@ -5,6 +5,7 @@ import styles from "./ColorCreate.module.css"
 import { HexAlphaColorPicker, HexColorInput, HexColorPicker } from "react-colorful";
 import "./ColorPicker.css"
 import { Button } from "../../General/Button/Button";
+import { Icon } from "../../General/Icon/Icon";
 
 export function ColorCreate() {
     const palette = useContext(PaletteContext);
@@ -47,11 +48,12 @@ export function ColorCreate() {
 
 
             <button onClick={openPicker} className={styles.button}>
-                <img
+                <Icon icon="plus" className={styles.icon} />
+                {/* <img
                     width={15}
                     height={15}
                     src="/images/icons/plus.svg"
-                    className={styles.icon} />
+                    className={styles.icon} /> */}
             </button>
 
             {/* <input

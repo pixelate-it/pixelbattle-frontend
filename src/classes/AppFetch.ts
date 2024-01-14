@@ -10,7 +10,7 @@ import { ApiErrorResponse, ApiResponse } from "../interfaces/ApiResponse"
 import { ServerNotificationMap } from "../lib/notificationMap"
 
 export class AppFetch {
-    static async post<T extends {}>(url: string, body: any) {
+    static async post<T extends {}>(url: string, body: unknown) {
         return fetch(config.url.api + url, {
             method: "POST",
             headers: {
@@ -24,7 +24,7 @@ export class AppFetch {
 
 
 
-    static async put<T extends {}>(url: string, body: any) {
+    static async put<T extends {}>(url: string, body: unknown) {
         return fetch(config.url.api + url, {
             method: "PUT",
             headers: {
@@ -37,8 +37,13 @@ export class AppFetch {
     }
 
     static processError(error: ApiErrorResponse) {
+        const notification = ServerNotificationMap[error.reason] ?? {
+            title: "Неизвестная ошибка (С)",
+            message: error.reason,
+        }
+
         NotificationsManager.addNotification({
-            ...ServerNotificationMap[error.reason] ?? ServerNotificationMap.Unknown,
+            ...notification,
             type: "error"
         })
     }

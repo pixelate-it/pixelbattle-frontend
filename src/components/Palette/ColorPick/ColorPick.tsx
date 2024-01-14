@@ -1,6 +1,7 @@
 import { useContext } from "preact/hooks"
 import styles from "./ColorPick.module.css"
 import { ColorPickerContext } from "../../../managers/picker"
+import { Icon } from "../../General/Icon/Icon"
 
 export function ColorPick() {
     const picker = useContext(ColorPickerContext)
@@ -14,7 +15,7 @@ export function ColorPick() {
                 className={styles.input} 
                 onInput={() => picker.toggle()}
                 checked={picker.isEnabled.value}/>
-            <img width={15} height={15} src="/images/icons/color-picker.svg" className={styles.icon} />
+            <Icon icon="color-picker" className={styles.icon} viewBoxSize={21}/>
         </div>
     )
 }
