@@ -26,7 +26,6 @@ export class PlaceView extends Sprite {
         return PlaceManager.image.value.size
     }
 
-    private numOfTouches = 0
     public isZommed = false;
     public isDragged = false;
 
@@ -39,8 +38,8 @@ export class PlaceView extends Sprite {
 
     private setup() {
         this.eventMode = "static"
-
-
+    
+        
         this.texture = Texture.fromBuffer(
             this.image.buffer,
             this.size.x,

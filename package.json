@@ -25,6 +25,7 @@
     "@pixi/sprite": "^7.3.3",
     "@pixi/utils": "^7.3.3",
     "@preact/signals": "^1.2.2",
+    "fast-png": "^6.2.0",
     "pixi-viewport": "^5.0.2",
     "preact": "^10.19.3",
     "preact-iso": "^2.3.2",
