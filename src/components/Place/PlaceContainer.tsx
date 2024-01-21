@@ -27,17 +27,6 @@ type Reason = "Cooldown" | "Not logged" | "Game ended" | "Banned"
 export class PlaceContainer extends Container {
     private pointer = new PlacePointer();
     public place = new PlaceView();
-    // private isDragged = false;
-
-    // get isDragged() {
-    //     return this.place.isDragged
-    // }
-
-    // set isDragged(v: boolean) {
-    //     this.place.isDragged = v
-    // }
-
-
 
     private pixelInfo = {
         lastPoint: new Point(-1, -1),
@@ -58,8 +47,6 @@ export class PlaceContainer extends Container {
         this.viewport.on("drag-start", this.onDragStart.bind(this));
         this.viewport.on("drag-end", this.onDragEnd.bind(this));
 
-        // this.viewport.on("zoomed", (e) => this.place.isZommed = true)
-        // this.viewport.on("zoomed-end", (e) => this.place.isZommed = false)
 
         this.place.on("will-place", this.onWillPlace.bind(this));
         this.place.on("place", this.onPlace.bind(this));
@@ -75,18 +62,13 @@ export class PlaceContainer extends Container {
         if (this.canvasRef.current)
             this.canvasRef.current.style.cursor = "grabbing";
 
-        // this.isDragged = true;
     }
 
     public onDragEnd(event: DragEvent) {
-
         if (this.canvasRef.current)
             this.canvasRef.current.style.cursor = "crosshair";
 
-
-
         this.cursor = "default"
-        // this.isDragged = false;
     }
 
     public onCantPlace({ reason }: { reason: Reason }) {
@@ -99,10 +81,6 @@ export class PlaceContainer extends Container {
     }
 
     public onWillPlace(point: Point) {
-        // if (this.isDragged) {
-        //     return
-        // };
-
         if (CooldownManager.hasCooldown.peek()) {
             return this.emit("cant-place", { reason: "Cooldown" });
         };
@@ -179,10 +157,6 @@ export class PlaceContainer extends Container {
     }
 
     public onWillColorPick(color: AppColor) {
-        // if (this.isDragged) {
-        //     return
-        // };
-
         ColorPickerManager.isEnabled.value = false
 
         PaletteManager.addAndSelect(color)

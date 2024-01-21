@@ -65,7 +65,7 @@ export class AppFetch {
     }
 
     static async pixels() {
-        return fetch(config.url.api + "/pixels.bmp")
+        return fetch(config.url.api + "/pixels.png")
             .then(res => res.arrayBuffer())
     }
 
