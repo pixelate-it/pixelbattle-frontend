@@ -50,9 +50,9 @@ export class AppImage {
 
     public getPixel(point: Point): AppColor {
         const index = (point.x + point.y * this._size.x)
-        const [r, g, b] = this._buffer.slice(index * this.bufferPixelDataSize, index * this.bufferPixelDataSize + this.bufferPixelDataSize);
+        const [r, g, b, a] = this._buffer.slice(index * this.bufferPixelDataSize, index * this.bufferPixelDataSize + this.bufferPixelDataSize);
 
-        return new AppColor(new Uint8Array([r, g, b, 255]));
+        return new AppColor(new Uint8Array([r, g, b, a]));
     }
 
 
