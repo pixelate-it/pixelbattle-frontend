@@ -1,13 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" id="icon" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd">
-    <path style="opacity:1" fill="#c93332" d="M31.5-.5h192v16h-192v-16zM31.5 15.5v16h-16v-16h16z"/>
-    <path style="opacity:1" fill="#dc3c3b" d="M31.5 15.5h192v16h16v192h-16v16h-192v-16h-16v-192h16v-16z"/>
-    <path style="opacity:1" fill="#c93332" d="M223.5 15.5h16v16-16h-16zM-.5 31.5h16v192h-16v-192z"/>
-    <path style="opacity:1" fill="#e16564" d="M207.5 47.5h-32v-16h32v16z"/>
-    <path style="opacity:1" fill="#c93332" d="M239.5 31.5h16v192h-16v-192z"/>
-    <path style="opacity:1" fill="#c1c2d0" d="M95.5 63.5h-32v-16h32v16z"/>
-    <path style="opacity:1" fill="#e16564" d="M207.5 47.5h16v32h-16v-32z"/>
-    <path style="opacity:1" fill="#e0e1e0" d="M63.5 63.5h32v16h32v16h32v16h32v32h-32v16h-32v16h-32v16h-32v-128z"/>
-    <path style="opacity:1" fill="#c1c2d0" d="M95.5 63.5h32v16h-32v-16zM127.5 79.5h32v16h-32v-16zM159.5 95.5h32v16h-32v-16zM191.5 111.5h16v16h-16v-16z"/>
-    <path style="opacity:1" fill="#e16564" d="M47.5 207.5h-16v-32h16v32zM47.5 207.5h32v16h-32v-16z"/>
-    <path style="opacity:1" fill="#c93332" d="M15.5 223.5h16v16h-16v-16zM239.5 223.5v16h-16v-16h16zM31.5 239.5h192v16h-192v-16z"/>
+<svg version="1.1" id="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <polygon points="15,2 15,1 14,1 14,0 2,0 2,1 1,1 1,2 0,2 0,14 1,14 1,15 2,15 2,16 14,16 14,15 15,15 15,14 16,14 16,13 16,2" style="fill:#DC3C3B;"/>
+  <g style="fill:#C93332;">
+  	<rect x="2" width="12" height="1"/>
+  	<rect x="1" y="1" width="1" height="1"/>
+  	<rect x="14" y="1" width="1" height="1"/>
+  	<rect x="15" y="2" width="1" height="12"/>
+  	<rect x="14" y="14" width="1" height="1"/>
+  	<rect x="2" y="15" width="12" height="1"/>
+  	<rect x="1" y="14" width="1" height="1"/>
+  	<rect y="2" width="1" height="12"/>
+  </g>
+  <g style="fill:#E16564;">
+  	<rect x="2" y="11" width="1" height="2"/>
+  	<rect x="3" y="13" width="2" height="1"/>
+  	<rect x="11" y="2" width="2" height="1"/>
+  	<rect x="13" y="3" width="1" height="2"/>
+  </g>
+  <polygon points="12,7 12,6 10,6 10,5 8,5 8,4 6,4 6,3 4,3 4,4 4,12 6,12 6,11 8,11 8,10 10,10 10,9 12,9 12,8 13,8 13,7" style="fill:#E0E1E0;"/>
+  <g style="fill:#C1C2D0;">
+  	<rect x="4" y="3" width="2" height="1"/>
+  	<rect x="6" y="4" width="2" height="1"/>
+  	<rect x="8" y="5" width="2" height="1"/>
+  	<rect x="10" y="6" width="2" height="1"/>
+  	<rect x="12" y="7" width="1" height="1"/>
+  </g>
 </svg>
