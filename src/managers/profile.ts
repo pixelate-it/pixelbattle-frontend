@@ -1,7 +1,7 @@
 import { createContext } from "preact";
 import { ReadonlySignal, Signal, computed, signal } from "@preact/signals";
 import { config } from "../config";
-import { ProfileInfo } from "../interfaces/Profile";
+import { ProfileInfo, UserRole } from "../interfaces/Profile";
 import { AppFetch } from "../classes/AppFetch";
 import { AppLocalStorage } from "../classes/AppLocalStorage";
 
@@ -11,7 +11,7 @@ export const ProfileManager = {
     id: signal(""),
     isAuthenticated: computed(() => false),
     isBanned: computed(() => false),
-    isMod: computed(() => false),
+    isStaff: computed(() => false),
     load() {
         ProfileManager.token.value = AppLocalStorage.profile.token ?? ""
         ProfileManager.id.value = AppLocalStorage.profile.id ?? ""
@@ -41,7 +41,7 @@ export const ProfileManager = {
 
 ProfileManager.isAuthenticated = computed(() => !!ProfileManager.token.value)
 ProfileManager.isBanned = computed(() => !!ProfileManager.user.value?.banned)
-ProfileManager.isMod = computed(() => !!ProfileManager.user.value?.isMod)
+ProfileManager.isStaff = computed(() => (ProfileManager.user.value?.role ?? UserRole.User) >= UserRole.Moderator)
 
 export const ProfileContext = createContext({} as typeof ProfileManager)
 

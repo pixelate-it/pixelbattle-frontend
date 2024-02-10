@@ -5,6 +5,7 @@ import styles from "./Profile.module.css";
 import { Param } from "../General/Param/Param";
 import { WindowBox } from "../WindowBox/WindowBox";
 import { TagsContext } from "../../managers/tags";
+import { UserRole } from "../../interfaces/Profile";
 
 export function Profile() {
     const profile = useContext(ProfileContext)
@@ -41,8 +42,12 @@ export function Profile() {
         "Имя": profile.user.value?.username,
         "Айди": profile.user.value?.userID,
         "Тег": profile.user.value?.tag,
-        "Статус": profile.user.value?.banned ? "Забанен" : null,
-        "Роль": profile.user.value?.isMod ? "Модератор" : null
+        "Статус": profile.user.value?.banned ? `Забанен по причине "${profile.user.value?.banned.reason ?? "Не указано"}"` : null,
+        "Роль": {
+            [UserRole.User]: null,
+            [UserRole.Moderator]: "Модератор",
+            [UserRole.Admin]: "Админ",
+        }[profile.user.value?.role ?? UserRole.User]
     }
 
 
