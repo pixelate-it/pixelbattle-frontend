@@ -31,7 +31,6 @@ export function Profile() {
         if (!id) return;
 
         profile.login(token, id)
-        profile.save()
         profile.fetch()
         
         window.history.replaceState({}, document.title, document.location.pathname)

@@ -85,7 +85,7 @@ export class PlaceContainer extends Container {
             return this.emit("cant-place", { reason: "Cooldown" });
         };
 
-        if (!ProfileManager.token.peek()) {
+        if (ProfileManager.profile.peek() === null) {
             return this.emit("cant-place", { reason: "Not logged" });
         };
 

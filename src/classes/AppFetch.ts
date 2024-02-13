@@ -16,7 +16,7 @@ export class AppFetch {
         }
 
         if (options.withCredentials) {
-            headers["Authorization"] = `Bearer ${ProfileManager.token.value}`
+            headers["Authorization"] = `Bearer ${ProfileManager.profile.value?.token}`
         }
 
         return fetch(config.url.api + options.url, {
@@ -76,7 +76,7 @@ export class AppFetch {
     }
 
     static async profile(): Promise<ProfileInfo> {
-        return AppFetch.get<ProfileInfo>(`/users/${ProfileManager.id.value}`)
+        return AppFetch.get<ProfileInfo>(`/users/${ProfileManager.profile.value?.id}`)
     }
 
     static async getPixel(point: Point): Promise<PixelInfo> {
@@ -92,8 +92,6 @@ export class AppFetch {
     }
 
     static async changeTag(tag: string): Promise<ApiResponse> {
-        const id = ProfileManager.id.value
-
-        return AppFetch.post<ApiResponse>(`/users/${id}/tag`, { tag }, true)
+        return AppFetch.post<ApiResponse>(`/users/${ProfileManager.profile.value?.id}/tag`, { tag }, true)
     }
 }

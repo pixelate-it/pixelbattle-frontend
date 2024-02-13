@@ -10,11 +10,12 @@ import { AppLocalStorage } from "../classes/AppLocalStorage";
 export const SettingsManager = {
     settings: signal(config.defaults.settings),
     load() {
-        if (AppLocalStorage.settings) 
-            this.settings.value = AppLocalStorage.settings;
+        const settings = AppLocalStorage.get("settings")
+        if (settings) 
+            this.settings.value = settings;
     },
     save() {
-        AppLocalStorage.settings = this.settings.value ?? config.defaults.settings
+        AppLocalStorage.set("settings", this.settings.value ?? config.defaults.settings) 
     },
 }
   

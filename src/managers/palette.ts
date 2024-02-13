@@ -2,6 +2,7 @@ import { createContext } from "preact";
 import { AppColor } from "../classes/AppColor";
 import { signal } from "@preact/signals";
 import { config } from "../config";
+import { AppLocalStorage } from "../classes/AppLocalStorage";
 
 export const PaletteManager = {
     palette: signal(config.defaults.colors.palette),
@@ -37,30 +38,31 @@ export const PaletteManager = {
 
         if (!isColorInPalette) {
             this.addColor(color)
-        } 
-        
+        }
+
         this.setCurrentColor(color)
-        
+
         PaletteManager.save()
     },
     save() {
-        const flatPalette: FlatPalette = {
-            colors: PaletteManager.palette.value.colors.map(c => c.toHexa()),
-            selected: PaletteManager.palette.value.selected.toHexa()
-        }
-
-        localStorage.setItem("palette", JSON.stringify(flatPalette))
+        AppLocalStorage.set("palette", {
+            colors: PaletteManager.palette.value.colors,
+            selected: PaletteManager.palette.value.selected
+        }, ({ colors, selected }) => JSON.stringify({ colors: colors.map(color => color.toHex()), selected: selected.toHex() }))
     },
     load() {
-        const palette = localStorage.getItem("palette")
+        const palette = AppLocalStorage.get("palette", (str) => {
+            const flatPalette = JSON.parse(str) as FlatPalette
+
+            return {
+                colors: flatPalette.colors.map(color => new AppColor(color)),
+                selected: new AppColor(flatPalette.selected)
+            }
+        })
+
         if (!palette) return
 
-        const flatPalette = JSON.parse(palette) as FlatPalette
-
-        PaletteManager.palette.value = {
-            colors: flatPalette.colors.map(c => new AppColor(c)),
-            selected: new AppColor(flatPalette.selected)
-        }
+        PaletteManager.palette.value = palette;
     },
 
 }
