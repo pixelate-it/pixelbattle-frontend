@@ -1,9 +1,22 @@
+export type DiscordUserId = string;
+
 export interface ProfileInfo {
-    // token: string,
-	userID: string,
-	cooldown: number,
-	tag: string | null,
-	banned: boolean,
-	username: string
-    isMod: boolean;
+	userID: DiscordUserId;
+	cooldown: number;
+	tag: string | null;
+	banned: BanInfo | null;
+	username: string;
+	role: UserRole;
+}
+
+export enum UserRole {
+    User = 0,
+    Moderator = 1,
+    Admin = 2
+}
+
+export interface BanInfo {
+    moderatorID: DiscordUserId;
+    timeout: number;
+    reason: string | null;
 }

@@ -1,11 +1,11 @@
-<svg width="89" height="89" viewBox="0 0 89 89" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="89" height="89" fill="white"/>
-<rect x="26" y="72" width="9" height="9" fill="#074BF3"/>
-<rect x="26" width="9" height="72" fill="#7797E6"/>
-<rect x="53" y="36" width="9" height="9" fill="#FE2500"/>
-<rect x="53" width="9" height="36" fill="#EB8271"/>
-<rect x="62" y="80" width="9" height="9" fill="#FFCF4A"/>
-<rect x="62" width="9" height="80" fill="#F5DD9D"/>
-<rect x="80" y="55" width="9" height="9" fill="#5CBF0D"/>
-<rect x="80" width="9" height="55" fill="#C1EBA0"/>
+<svg viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" fill="none" style="image-rendering:optimizeQuality; clip-rule:evenodd">
+  <rect rx="100" x="0" y="0" width="700" height="700" style="fill: rgb(255, 255, 255);"/>
+  <rect x="100" y="0" width="100" height="400" style="fill: rgb(131, 131, 255);"/>
+  <rect x="100" y="400" width="100" height="100" style="fill: rgb(0, 1, 252);"/>
+  <rect x="200" y="0" width="100" height="300" style="fill: rgb(254, 172, 174);"/>
+  <rect x="200" y="300" width="100" height="100" style="fill: rgb(252, 6, 0);"/>
+  <rect x="400" y="0" width="100" height="300" style="fill: rgb(252, 241, 159);"/>
+  <rect x="400" y="300" width="100" height="100" style="fill: rgb(228, 201, 0);"/>
+  <rect x="500" y="0" width="100" height="400" style="fill: rgb(173, 255, 171);"/>
+  <rect x="500" y="400" width="100" height="100" style="fill: rgb(2, 255, 0);"/>
 </svg>

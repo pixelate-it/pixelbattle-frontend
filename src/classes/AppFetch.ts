@@ -10,31 +10,36 @@ import { ApiErrorResponse, ApiResponse } from "../interfaces/ApiResponse"
 import { ServerNotificationMap } from "../lib/notificationMap"
 
 export class AppFetch {
-    static async post<T extends {}>(url: string, body: unknown) {
-        return fetch(config.url.api + url, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(body)
+    private static fetch<T extends {}>(options: { url: string, method: "POST" | "PUT" | "GET", withCredentials: boolean, body?: unknown }) {
+        const headers: HeadersInit = {
+            'Content-Type': 'application/json',
+        }
+
+        if (options.withCredentials) {
+            headers["Authorization"] = `Bearer ${ProfileManager.profile.value?.token}`
+        }
+
+        return fetch(config.url.api + options.url, {
+            method: options.method,
+            headers: options.method === "GET" ? undefined : headers,
+            body: options.body ? JSON.stringify(options.body) : undefined
         })
-        .then(res => res.json() as Promise<T | ApiErrorResponse>)
-        .then(AppFetch.checkForErrors<T>)
+            .then(res => res.json() as Promise<T | ApiErrorResponse>)
+            .then(AppFetch.checkForErrors<T>)
     }
 
-
-
-    static async put<T extends {}>(url: string, body: unknown) {
-        return fetch(config.url.api + url, {
-            method: "PUT",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(body)
-        })
-        .then(res => res.json() as Promise<T | ApiErrorResponse>)
-        .then(AppFetch.checkForErrors<T>)
+    static async post<T extends {}>(url: string, body: unknown, withCredentials: boolean = false) {
+        return AppFetch.fetch<T>({ url, method: "POST", withCredentials, body })
     }
+
+    static async put<T extends {}>(url: string, body: unknown, withCredentials: boolean = false) {
+        return AppFetch.fetch<T>({ url, method: "PUT", withCredentials, body })
+    }
+
+    static async get<T extends {}>(url: string, withCredentials: boolean = false) {
+        return AppFetch.fetch<T>({ url, method: "GET", withCredentials })
+    }
+
 
     static processError(error: ApiErrorResponse) {
         const notification = ServerNotificationMap[error.reason] ?? {
@@ -48,13 +53,9 @@ export class AppFetch {
         })
     }
 
-    static async get<T extends {}>(url: string) {
-        return fetch(config.url.api + url)
-            .then(res => res.json() as Promise<T | ApiErrorResponse>)
-            .then(AppFetch.checkForErrors<T>)
-    }
 
-    static checkForErrors<T extends {} | ApiErrorResponse>(res: T | ApiErrorResponse){
+
+    static checkForErrors<T extends {} | ApiErrorResponse>(res: T | ApiErrorResponse) {
         if ("error" in res && res.error) {
             AppFetch.processError(res)
 
@@ -71,14 +72,11 @@ export class AppFetch {
 
 
     static async info(): Promise<ApiInfo> {
-
         return AppFetch.get<ApiInfo>("/game")
     }
 
     static async profile(): Promise<ProfileInfo> {
-        const id = ProfileManager.id.value
-
-        return AppFetch.get<ProfileInfo>(`/users/${id}`)
+        return AppFetch.get<ProfileInfo>(`/users/${ProfileManager.profile.value?.id}`)
     }
 
     static async getPixel(point: Point): Promise<PixelInfo> {
@@ -90,28 +88,10 @@ export class AppFetch {
     }
 
     static async putPixel(pixel: ApiPixel) {
-        return AppFetch.put<ApiResponse>("/pixels", {
-            token: ProfileManager.token.value,
-            ...pixel
-        })
+        return AppFetch.put<ApiResponse>("/pixels", pixel, true)
     }
 
     static async changeTag(tag: string): Promise<ApiResponse> {
-        const id = ProfileManager.id.value
-
-        return AppFetch.post<ApiResponse>(`/users/${id}/tag`, {
-            token: ProfileManager.token.value,
-            tag
-        })
+        return AppFetch.post<ApiResponse>(`/users/${ProfileManager.profile.value?.id}/tag`, { tag }, true)
     }
 }
-
-// interface ApiGoodResponse extends ApiResponse {
-//     error: false;
-// }
-
-// interface ApiError {
-//     statusCode: number;
-//     error: string;
-//     message: string;
-// }

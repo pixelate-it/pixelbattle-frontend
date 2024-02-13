@@ -21,7 +21,7 @@ export const CooldownManager = {
             return
         }
 
-        const cooldownDuration = ProfileManager.isMod.value 
+        const cooldownDuration = ProfileManager.isStaff.value 
             ? config.time.modCooldown
             : InfoManager.info.value.cooldown
 

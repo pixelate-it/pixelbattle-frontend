@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" id="icon" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd">
-    <path style="opacity:1" fill="#463b78" d="M15.5-.5h224v16h16v224h-16v16h-224v-16h-16v-224h16v-16z"/>
-    <path style="opacity:1" fill="#4b5bab" d="M31.5 15.5h192v16h16v192h-16v16h-192v-16h-16v-192h16v-16z"/>
-    <path style="opacity:1" fill="#feffea" d="M63.5 47.5h32v16h64v-16h32v16h16v32h16v64h-16v16h-16v16h-16v-16h-96v16h-16v-16h-16v-16h-16v-64h16v-32h16v-16z"/>
-    <path style="opacity:1" fill="#4b5bab" d="M79.5 95.5h32v32h-32v-32zM143.5 95.5h32v32h-32v-32z"/>
-</svg>

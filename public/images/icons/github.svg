@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" id="icon" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd">
-    <path style="opacity:1" fill="#262736" d="M31.5-.5h192v16h-176v16h-16v16h-16v176h-16v-192h16v-16h16v-16z"/>
-    <path style="opacity:1" d="M223.5 15.5h16v16h16v192h-16v16h-16v16h-64v-32h32v-16h16v-16h16v-112h-16v-32h-16v-16h-16v16h-16v16h-16v-16h-32v16h-16v-16h-16v-16h-16v16h-16v32h-16v112h16v16h16v16h32v32h-64v-16h-16v-192h16v-16h16v-16h176z"/>
-    <path style="opacity:1" fill="#fefffe" d="M159.5 255.5h-64v-32h-32v-16h-16v-16h-16v-112h16v-32h16v-16h16v16h16v16h16v-16h32v16h16v-16h16v-16h16v16h16v32h16v112h-16v16h-16v16h-32v32z"/>
-</svg>
