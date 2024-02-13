@@ -15,25 +15,8 @@ export function Profile() {
         profile.load()
 
         if (profile.isAuthenticated.value) {
-            // profile.fetch().then(() => tags.select(profile.user.value?.tag ?? ""))
             profile.fetch().then(() => tags.select(profile.user.value?.tag ?? ""))
-            window.history.replaceState({}, document.title, document.location.pathname)
-
-            return 
         };
-
-        const params = new URLSearchParams(document.location.search)
-
-        const token = params.get("token")
-        if (!token) return;
-
-        const id = params.get("id")
-        if (!id) return;
-
-        profile.login(token, id)
-        profile.fetch()
-        
-        window.history.replaceState({}, document.title, document.location.pathname)
     }, [])
 
 
