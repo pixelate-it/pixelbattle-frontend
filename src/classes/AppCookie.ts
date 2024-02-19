@@ -8,7 +8,7 @@ interface CookieMap {
 }
 
 export class AppCookie {
-    static readonly url = config.url.api.includes(':') ? '' : '.' +
+    static readonly url = (config.url.api.split('//')[1].includes(':') ? '' : '.') +
         config.url.api
         .split('//')
         .slice(-1)[0]
