@@ -1,12 +1,11 @@
-import { useContext, useEffect, useRef } from "preact/hooks"
+import { useContext, useEffect, useRef } from "preact/hooks";
 import styles from "./Snow.module.css"
 import { SnowParticle } from "./SnowParticle";
-import { random } from "../../lib/random";
 import { config } from "../../config";
 import { SettingsContext } from "../../managers/settings";
 
 import { Application } from "@pixi/app";
-import { ParticleContainer } from "@pixi/particle-container"
+import { ParticleContainer } from "@pixi/particle-container";
 
 
 export function Snow() {

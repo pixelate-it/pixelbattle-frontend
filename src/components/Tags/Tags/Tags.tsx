@@ -1,17 +1,14 @@
-import { useContext, useEffect, useState } from "preact/hooks"
-import { config } from "../../../config"
-import styles from "./Tags.module.css"
-import { Tag } from "../Tag/Tag"
-import { Button } from "../../General/Button/Button"
-import { TextField } from "../../General/TextField/TextField"
-import { WindowBox } from "../../WindowBox/WindowBox"
-import { TagsContext } from "../../../managers/tags"
-import { ProfileContext } from "../../../managers/profile"
-import { signal } from "@preact/signals"
-import { OpenedTagCreate } from "../OpenedTagCreate/OpenedTagCreate"
-import { ClosedTagCreate } from "../ClosedTagCreate/ClosedTagCreate"
-import { isTagCreateOpened } from "../OpenTagSignal"
-import { InfoContext } from "../../../managers/info"
+import { useContext, useEffect, useState } from "preact/hooks";
+import { config } from "../../../config";
+import styles from "./Tags.module.css";
+import { Tag } from "../Tag/Tag";
+import { WindowBox } from "../../WindowBox/WindowBox";
+import { TagsContext } from "../../../managers/tags";
+import { ProfileContext } from "../../../managers/profile";
+import { OpenedTagCreate } from "../OpenedTagCreate/OpenedTagCreate";
+import { ClosedTagCreate } from "../ClosedTagCreate/ClosedTagCreate";
+import { isTagCreateOpened } from "../OpenTagSignal";
+import { InfoContext } from "../../../managers/info";
 
 
 

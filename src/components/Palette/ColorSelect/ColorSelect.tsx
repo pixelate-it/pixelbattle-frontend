@@ -1,7 +1,7 @@
 import { useContext } from "preact/hooks";
 import { PaletteContext } from "../../../managers/palette";
-import { AppColor } from "../../../classes/AppColor"
-import styles from "./ColorSelect.module.css"
+import { AppColor } from "../../../classes/AppColor";
+import styles from "./ColorSelect.module.css";
 
 interface ColorSelectProps {
     color: AppColor;

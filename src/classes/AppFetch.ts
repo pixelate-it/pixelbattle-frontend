@@ -1,13 +1,13 @@
-import { config } from "../config"
-import { ApiInfo } from "../interfaces/Info"
-import { ApiPixel, PixelInfo } from "../interfaces/Pixels"
-import { ProfileInfo } from "../interfaces/Profile"
-import { ApiTags } from "../interfaces/Tag"
-import { ProfileManager } from "../managers/profile"
-import { NotificationInfo, NotificationsManager } from "../managers/notifications"
-import { Point } from "@pixi/math"
-import { ApiErrorResponse, ApiResponse } from "../interfaces/ApiResponse"
-import { ServerNotificationMap } from "../lib/notificationMap"
+import { config } from "../config";
+import { ApiInfo } from "../interfaces/Info";
+import { ApiPixel, PixelInfo } from "../interfaces/Pixels";
+import { ProfileInfo } from "../interfaces/Profile";
+import { ApiTags } from "../interfaces/Tag";
+import { ProfileManager } from "../managers/profile";
+import { NotificationsManager } from "../managers/notifications";
+import { Point } from "@pixi/math";
+import { ApiErrorResponse, ApiResponse } from "../interfaces/ApiResponse";
+import { ServerNotificationMap } from "../lib/notificationMap";
 
 export class AppFetch {
     private static fetch<T extends {}>(options: { url: string, method: "POST" | "PUT" | "GET", withCredentials: boolean, body?: unknown }) {

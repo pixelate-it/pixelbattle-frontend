@@ -67,7 +67,7 @@ export const PaletteManager = {
 
 }
 
-export const PaletteContext = createContext({} as typeof PaletteManager)
+export const PaletteContext = createContext({} as typeof PaletteManager);
 
 
 export interface FlatPalette {

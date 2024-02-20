@@ -1,6 +1,6 @@
-import cookie from "js-cookie"
-import { config } from '../config'
-import { DiscordUserId } from "../interfaces/Profile"
+import cookie from "js-cookie";
+import { config } from '../config';
+import { DiscordUserId } from "../interfaces/Profile";
 
 interface CookieMap {
     userid: DiscordUserId;

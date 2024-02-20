@@ -1,8 +1,7 @@
-
 import { Texture } from "@pixi/core";
 import { Application } from "@pixi/app";
 import { Sprite } from "@pixi/sprite";
-import { Graphics } from "@pixi/graphics"
+import { Graphics } from "@pixi/graphics";
 ;
 import { random } from "../../lib/random";
 import { config } from "../../config";

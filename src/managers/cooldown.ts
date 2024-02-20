@@ -1,5 +1,5 @@
 import { createContext } from "preact";
-import { Signal, computed, signal } from "@preact/signals";
+import { computed, signal } from "@preact/signals";
 import { InfoManager } from "./info";
 import { ProfileManager } from "./profile";
 import { config } from "../config";
@@ -46,4 +46,4 @@ CooldownManager.hasCooldown = computed(() => {
     return CooldownManager.progress.value > 0
 })
 
-export const CooldownContext = createContext({} as typeof CooldownManager)
+export const CooldownContext = createContext({} as typeof CooldownManager);

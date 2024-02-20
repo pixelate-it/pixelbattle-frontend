@@ -1,8 +1,8 @@
-import { signal } from "@preact/signals"
-import { FormatedTag } from "../interfaces/Tag"
-import { createContext } from "preact"
-import { AppFetch } from "../classes/AppFetch"
-import { ProfileManager } from "./profile"
+import { signal } from "@preact/signals";
+import { FormatedTag } from "../interfaces/Tag";
+import { createContext } from "preact";
+import { AppFetch } from "../classes/AppFetch";
+import { ProfileManager } from "./profile";
 
 export const TagsManager = {
     tags: signal([] as FormatedTag[]),
@@ -82,4 +82,4 @@ export const TagsManager = {
     }
 }
 
-export const TagsContext = createContext({} as typeof TagsManager)
+export const TagsContext = createContext({} as typeof TagsManager);

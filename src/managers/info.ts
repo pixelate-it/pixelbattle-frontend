@@ -1,5 +1,5 @@
 import { createContext } from "preact";
-import { Signal, computed, signal } from "@preact/signals";
+import { Signal, signal } from "@preact/signals";
 import { ApiInfo } from "../interfaces/Info";
 import { AppFetch } from "../classes/AppFetch";
 
@@ -43,7 +43,4 @@ export const InfoManager = {
 
 
 
-export const InfoContext = createContext({} as typeof InfoManager)
-
-
-
+export const InfoContext = createContext({} as typeof InfoManager);

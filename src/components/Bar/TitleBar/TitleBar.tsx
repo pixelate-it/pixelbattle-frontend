@@ -3,7 +3,6 @@ import { Param } from "../../General/Param/Param";
 import styles from "./TitleBar.module.css";
 import { InfoContext } from "../../../managers/info";
 import { PlaceContext } from "../../../managers/place";
-import { effect, useSignal } from "@preact/signals";
 import { config } from "../../../config";
 import { Snowflake } from "../../Snow/Snowflake/Snowflake";
 import { Icon } from "../../General/Icon/Icon";

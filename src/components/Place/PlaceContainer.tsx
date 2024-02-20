@@ -13,14 +13,12 @@ import { InfoManager } from "../../managers/info";
 import { ColorPickerManager } from "../../managers/picker";
 import { AppFetch } from "../../classes/AppFetch";
 import { DragEvent } from "pixi-viewport/dist/types";
-import { NotificationList } from "../Notifications/NotificationList/NotificationList";
-import { NotificationInfo, NotificationsManager } from "../../managers/notifications";
+import { NotificationsManager } from "../../managers/notifications";
 import { ClientNotificationMap } from "../../lib/notificationMap";
-import { Ref, RefObject } from "preact";
-import { PixelInfo } from "../../interfaces/Pixels";
+import { RefObject } from "preact";
 import { config } from "../../config";
 
-type Reason = "Cooldown" | "Not logged" | "Game ended" | "Banned"
+type Reason = "Cooldown" | "Not logged" | "Game ended" | "Banned";
 
 
 

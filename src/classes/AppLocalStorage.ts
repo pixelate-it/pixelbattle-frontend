@@ -1,7 +1,5 @@
-import { config } from "../config"
-import { Settings } from "../interfaces/Settings"
-import { FlatPalette, PaletteManager } from "../managers/palette"
-import { AppColor } from "./AppColor"
+import { config } from "../config";
+import { Settings } from "../interfaces/Settings";
 
 type Palette = typeof config.defaults.colors.palette
 

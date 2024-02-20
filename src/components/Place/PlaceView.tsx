@@ -1,11 +1,9 @@
-
 import { AppColor } from "../../classes/AppColor";
 import { PlaceManager } from "../../managers/place";
-import { InfoManager } from "../../managers/info";
 import { ColorPickerManager } from "../../managers/picker";
 
 import { DragEvent } from "pixi-viewport/dist/types";
-import { Texture } from "@pixi/core";
+import { FORMATS, ALPHA_MODES, Texture } from "@pixi/core";
 import { Point } from "@pixi/math";
 import { Sprite } from "@pixi/sprite";
 import { FederatedPointerEvent } from "@pixi/events";
@@ -43,7 +41,12 @@ export class PlaceView extends Sprite {
         this.texture = Texture.fromBuffer(
             this.image.buffer,
             this.size.x,
-            this.size.y)
+            this.size.y,
+            {
+                format: FORMATS.RGB,
+                alphaMode: ALPHA_MODES.NO_PREMULTIPLIED_ALPHA
+            }
+        );
 
         this.on("pointermove", this.onPointerMove.bind(this));
         this.on("pointerout", this.onPointerOut.bind(this));

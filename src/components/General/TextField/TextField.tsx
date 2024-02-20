@@ -1,4 +1,4 @@
-import styles from "./TextField.module.css"
+import styles from "./TextField.module.css";
 
 interface TextFieldProps {
     placeholder: string;

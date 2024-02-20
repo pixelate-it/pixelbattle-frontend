@@ -2,7 +2,6 @@ import { useContext } from "preact/hooks";
 import { FormatedTag } from "../../../interfaces/Tag";
 import styles from "./Tag.module.css";
 import { TagsContext } from "../../../managers/tags";
-import { InfoContext } from "../../../managers/info";
 import { ProfileContext } from "../../../managers/profile";
 
 interface TagProps {
