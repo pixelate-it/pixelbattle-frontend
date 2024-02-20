@@ -15,8 +15,4 @@ export const PlaceManager = {
 }
 
 
-export const PlaceContext = createContext({} as typeof PlaceManager)
-
-
-
-
+export const PlaceContext = createContext({} as typeof PlaceManager);

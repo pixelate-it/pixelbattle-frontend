@@ -8,4 +8,4 @@ export const ColorPickerManager = {
     }
 }
 
-export const ColorPickerContext = createContext({} as typeof ColorPickerManager)
+export const ColorPickerContext = createContext({} as typeof ColorPickerManager);

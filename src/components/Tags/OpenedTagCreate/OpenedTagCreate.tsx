@@ -1,10 +1,10 @@
-import { useContext, useState } from "preact/hooks"
-import { TagsContext } from "../../../managers/tags"
-import { Button } from "../../General/Button/Button"
-import { TextField } from "../../General/TextField/TextField"
-import { isTagCreateOpened } from "../OpenTagSignal"
-import styles from "./OpenedTagCreate.module.css"
-import { Icon } from "../../General/Icon/Icon"
+import { useContext, useState } from "preact/hooks";
+import { TagsContext } from "../../../managers/tags";
+import { Button } from "../../General/Button/Button";
+import { TextField } from "../../General/TextField/TextField";
+import { isTagCreateOpened } from "../OpenTagSignal";
+import styles from "./OpenedTagCreate.module.css";
+import { Icon } from "../../General/Icon/Icon";
 
 export function OpenedTagCreate() {
     const tags = useContext(TagsContext)

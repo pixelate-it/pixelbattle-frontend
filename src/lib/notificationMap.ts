@@ -1,7 +1,7 @@
-import { NotificationInfo } from "../managers/notifications"
+import { NotificationInfo } from "../managers/notifications";
 
 type NotificationMap = {
-    [key: string]: Omit<NotificationInfo, "id" | "type">
+    [key: string]: Omit<NotificationInfo, "id" | "type">;
 }
 
 export const ServerNotificationMap: NotificationMap = {

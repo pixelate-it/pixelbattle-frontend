@@ -1,9 +1,6 @@
 import { createContext } from "preact";
-import { ReadonlySignal, Signal, computed, signal } from "@preact/signals";
+import { signal } from "@preact/signals";
 import { config } from "../config";
-import { ProfileInfo } from "../interfaces/Profile";
-import { AppFetch } from "../classes/AppFetch";
-import { Settings } from "../interfaces/Settings";
 import { AppLocalStorage } from "../classes/AppLocalStorage";
 
 

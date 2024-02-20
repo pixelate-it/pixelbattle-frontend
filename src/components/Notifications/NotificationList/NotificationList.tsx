@@ -1,7 +1,7 @@
-import { useContext } from "preact/hooks"
-import { NotificationsContext } from "../../../managers/notifications"
-import styles from "./NotificationList.module.css"
-import { AppNotification } from "../AppNotification/AppNotification"
+import { useContext } from "preact/hooks";
+import { NotificationsContext } from "../../../managers/notifications";
+import styles from "./NotificationList.module.css";
+import { AppNotification } from "../AppNotification/AppNotification";
 
 
 export function NotificationList() {

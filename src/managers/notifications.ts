@@ -29,4 +29,4 @@ export const NotificationsManager = {
     }
 }
 
-export const NotificationsContext = createContext({} as typeof NotificationsManager)
+export const NotificationsContext = createContext({} as typeof NotificationsManager);

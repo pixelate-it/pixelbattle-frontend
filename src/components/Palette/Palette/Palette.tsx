@@ -5,7 +5,7 @@ import { ColorSelect } from "../ColorSelect/ColorSelect";
 import { ColorCreate } from "../ColorCreate/ColorCreate";
 import { ColorDelete } from "../ColorDelete/ColorDelete";
 import { ColorPick } from "../ColorPick/ColorPick";
-import styles from "./Palette.module.css"
+import styles from "./Palette.module.css";
 
 
 export function Palette() {

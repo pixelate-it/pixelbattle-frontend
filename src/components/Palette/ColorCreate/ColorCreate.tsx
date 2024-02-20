@@ -1,9 +1,9 @@
 import { useContext, useState } from "preact/hooks";
 import { PaletteContext } from "../../../managers/palette";
 import { AppColor } from "../../../classes/AppColor";
-import styles from "./ColorCreate.module.css"
-import { HexAlphaColorPicker, HexColorInput, HexColorPicker } from "react-colorful";
-import "./ColorPicker.css"
+import styles from "./ColorCreate.module.css";
+import { HexColorInput, HexColorPicker } from "react-colorful";
+import "./ColorPicker.css";
 import { Button } from "../../General/Button/Button";
 import { Icon } from "../../General/Icon/Icon";
 

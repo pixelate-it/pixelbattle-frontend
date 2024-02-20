@@ -1,5 +1,5 @@
-import { useContext, useEffect } from "preact/hooks"
-import { ProfileContext, ProfileManager } from "../../managers/profile"
+import { useEffect } from "preact/hooks";
+import { ProfileManager } from "../../managers/profile";
 
 export function Logout() {
     useEffect(() => {

@@ -1,8 +1,8 @@
-import { useContext } from "preact/hooks"
-import { TagsContext } from "../../../managers/tags"
-import { Button } from "../../General/Button/Button"
-import { isTagCreateOpened } from "../OpenTagSignal"
-import styles from "./ClosedTagCreate.module.css"
+import { useContext } from "preact/hooks";
+import { TagsContext } from "../../../managers/tags";
+import { Button } from "../../General/Button/Button";
+import { isTagCreateOpened } from "../OpenTagSignal";
+import styles from "./ClosedTagCreate.module.css";
 
 export function ClosedTagCreate() {
     const tags = useContext(TagsContext)

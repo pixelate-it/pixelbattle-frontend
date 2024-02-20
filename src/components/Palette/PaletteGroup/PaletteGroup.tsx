@@ -1,8 +1,5 @@
-import { useContext } from "preact/hooks"
-import { PaletteContext } from "../../../managers/palette"
-import { ColorSelect } from "../ColorSelect/ColorSelect"
-import styles from "./PaletteGroup.module.css"
-import { ComponentChildren } from "preact"
+import styles from "./PaletteGroup.module.css";
+import { ComponentChildren } from "preact";
 
 interface PaletteGroupProps {
     children: ComponentChildren

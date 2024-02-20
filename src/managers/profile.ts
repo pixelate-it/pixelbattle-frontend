@@ -1,9 +1,7 @@
 import { createContext } from "preact";
-import { ReadonlySignal, Signal, computed, signal } from "@preact/signals";
-import { config } from "../config";
+import { Signal, computed, signal } from "@preact/signals";
 import { ProfileInfo, UserRole } from "../interfaces/Profile";
 import { AppFetch } from "../classes/AppFetch";
-import { AppLocalStorage } from "../classes/AppLocalStorage";
 import { AppCookie } from "../classes/AppCookie";
 
 export const ProfileManager = {

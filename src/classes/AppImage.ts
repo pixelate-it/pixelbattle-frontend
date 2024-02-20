@@ -1,55 +1,30 @@
-import { Point } from "@pixi/math"
+import { Point } from "@pixi/math";
 import { AppColor } from "./AppColor";
-import { DecodedPng, PngDataArray, decode } from "fast-png";
+import { decode } from "fast-png";
 
 export class AppImage {
-    private _buffer: Uint8Array;
+    private _buffer: Uint8ClampedArray;
     private _size: Point;
-    private imagePixelDataSize = 3;
-    private bufferPixelDataSize = 4;
+    private bufferPixelDataSize = 3;
 
     get size() {
         return this._size;
     }
 
-    /**
-     * Add alpha channel to the image with 3 channels
-     * @param decodedBuffer 
-     */
-    private convert3ChannelTo4Channel(decodedBuffer: DecodedPng) {
-        const numPixels = decodedBuffer.width * decodedBuffer.height;
-        const pixelData = new Uint8Array(numPixels * this.bufferPixelDataSize);
-
-        for (let row = 0; row < decodedBuffer.height; row++) {
-            for (let col = 0; col < decodedBuffer.width; col++) {
-                const imageByteOffset = (row * decodedBuffer.width + col) * this.imagePixelDataSize;
-                const offset = row * decodedBuffer.width + col;
-
-                pixelData[offset * this.bufferPixelDataSize + 0] = decodedBuffer.data[imageByteOffset + 0];
-                pixelData[offset * this.bufferPixelDataSize + 1] = decodedBuffer.data[imageByteOffset + 1];
-                pixelData[offset * this.bufferPixelDataSize + 2] = decodedBuffer.data[imageByteOffset + 2];
-                pixelData[offset * this.bufferPixelDataSize + 3] = 255;
-            }
-        }
-
-        return pixelData
-    }
-
     constructor(buffer: ArrayBuffer) {
-        const decodedBuffer = decode(buffer)
-
+        const decodedBuffer = decode(buffer);
 
         this._size = new Point(decodedBuffer.width, decodedBuffer.height);
-        this._buffer = this.convert3ChannelTo4Channel(decodedBuffer);
+        this._buffer = decodedBuffer.data as Uint8ClampedArray;
     }
 
 
-    get buffer(): Uint8Array {
+    get buffer(): Uint8ClampedArray {
         return this._buffer;
     }
 
     public getPixel(point: Point): AppColor {
-        const index = (point.x + point.y * this._size.x)
+        const index = (point.x + point.y * this._size.x);
         const [r, g, b] = this._buffer.slice(index * this.bufferPixelDataSize, index * this.bufferPixelDataSize + this.bufferPixelDataSize);
 
         return new AppColor(new Uint8Array([r, g, b, 255]));
@@ -63,6 +38,5 @@ export class AppImage {
         this._buffer[startIndex] = r;
         this._buffer[startIndex + 1] = g;
         this._buffer[startIndex + 2] = b;
-        this._buffer[startIndex + 3] = 255;
     }
 }

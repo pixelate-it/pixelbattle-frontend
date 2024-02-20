@@ -2,9 +2,9 @@
   "name": "pixelbattle",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 9001",
+    "dev": "vite --host 0.0.0.0 --port 9001",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview --host 0.0.0.0"
   },
   "license": "GPL-3.0-only",
   "version": "3.3.0",

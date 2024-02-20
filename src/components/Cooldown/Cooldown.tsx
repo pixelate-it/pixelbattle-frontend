@@ -1,8 +1,6 @@
-import { useContext, useEffect } from "preact/hooks"
-import { PlaceContext } from "../../managers/place";
-import styles from "./Cooldown.module.css"
+import { useContext, useEffect } from "preact/hooks";
+import styles from "./Cooldown.module.css";
 import { CooldownContext } from "../../managers/cooldown";
-import { computed } from "@preact/signals";
 
 export function Cooldown() {
     const cooldown = useContext(CooldownContext);
