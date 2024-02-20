@@ -3,7 +3,7 @@ import { PlaceManager } from "../../managers/place";
 import { ColorPickerManager } from "../../managers/picker";
 
 import { DragEvent } from "pixi-viewport/dist/types";
-import { FORMATS, ALPHA_MODES, Texture } from "@pixi/core";
+import { ALPHA_MODES, FORMATS, SCALE_MODES, Texture } from "@pixi/core";
 import { Point } from "@pixi/math";
 import { Sprite } from "@pixi/sprite";
 import { FederatedPointerEvent } from "@pixi/events";
@@ -44,7 +44,8 @@ export class PlaceView extends Sprite {
             this.size.y,
             {
                 format: FORMATS.RGB,
-                alphaMode: ALPHA_MODES.NO_PREMULTIPLIED_ALPHA
+                alphaMode: ALPHA_MODES.NO_PREMULTIPLIED_ALPHA,
+                scaleMode: SCALE_MODES.NEAREST
             }
         );
 

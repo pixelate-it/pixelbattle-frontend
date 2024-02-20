@@ -2,3 +2,5 @@ node_modules
 dist
 .idea
 .env
+
+vite.config.ts.*.mjs
