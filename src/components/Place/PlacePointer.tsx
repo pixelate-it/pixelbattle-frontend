@@ -3,6 +3,7 @@ import { Sprite } from "@pixi/sprite";
 import { Point } from "@pixi/math";
 import { WHITE_TEXTURE } from "../../lib/WhiteTexture";
 import { PlaceManager } from "../../managers/place";
+import { PaletteManager } from "../../managers/palette";
 import { config } from "../../config";
 import { AppColor } from "../../classes/AppColor";
 
@@ -70,7 +71,7 @@ export class PlacePointer extends Container {
             return
         }
 
-        const color = PlaceManager.image.value.getPixel(point) ?? new AppColor("#ffffff")
+        const color = PaletteManager.palette.value.selected;
         this.background.tint = color 
         this.border.tint = color.getReadableColor()
     }
