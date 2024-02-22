@@ -39,6 +39,9 @@
     max-height: 1lh;
     margin-top: 10px;
 }
+.success {
+    background-color: var(--success);
+}
 
 .error {
     background-color: var(--danger);
