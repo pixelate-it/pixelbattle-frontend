@@ -39,6 +39,7 @@
 .content,
 .title {
     padding: 12px;
+    user-select: none;
 }
 
 .content {

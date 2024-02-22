@@ -1,5 +1,6 @@
 import { useContext, useState } from "preact/hooks";
 import { TagsContext } from "../../../managers/tags";
+import { NotificationsManager } from "../../../managers/notifications";
 import { Button } from "../../General/Button/Button";
 import { TextField } from "../../General/TextField/TextField";
 import { isTagCreateOpened } from "../OpenTagSignal";
@@ -21,7 +22,14 @@ export function OpenedTagCreate() {
         if (input === "") {
             return
         }
+
         tags.selectAndFetch(input)
+        NotificationsManager.addNotification({
+            type: "success",
+            title: "Изменение тега",
+            message: `Ваш новый тег: ${input}`
+        })
+
         isTagCreateOpened.value = false
     }
 
