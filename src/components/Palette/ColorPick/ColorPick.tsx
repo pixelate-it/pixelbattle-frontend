@@ -15,7 +15,7 @@ export function ColorPick() {
                 className={styles.input} 
                 onInput={() => picker.toggle()}
                 checked={picker.isEnabled.value}/>
-            <Icon icon="color-picker" className={styles.icon} viewBoxSize={21}/>
+            <Icon icon="color-picker" className={styles.icon} alt={"Пипетка"} viewBoxSize={21}/>
         </div>
     )
 }

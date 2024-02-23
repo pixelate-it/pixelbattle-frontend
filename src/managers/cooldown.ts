@@ -21,7 +21,7 @@ export const CooldownManager = {
             return
         }
 
-        const cooldownDuration = ProfileManager.isStaff.value 
+        const cooldownDuration = ProfileManager.isStaff.value
             ? config.time.modCooldown
             : InfoManager.info.value.cooldown
 
@@ -31,7 +31,7 @@ export const CooldownManager = {
         if (progress >= 1) {
             CooldownManager.progress.value = 0
             cancelAnimationFrame(CooldownManager.reqId.value)
-            return 
+            return
         }
 
         CooldownManager.progress.value = progress * 100

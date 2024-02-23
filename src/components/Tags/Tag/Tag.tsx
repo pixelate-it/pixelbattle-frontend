@@ -3,6 +3,7 @@ import { FormatedTag } from "../../../interfaces/Tag";
 import styles from "./Tag.module.css";
 import { TagsContext } from "../../../managers/tags";
 import { ProfileContext } from "../../../managers/profile";
+import {NotificationsManager} from "../../../managers/notifications";
 
 interface TagProps {
     tag: FormatedTag;
@@ -19,6 +20,11 @@ export function Tag({ tag }: TagProps) {
         }
 
         tags.selectAndFetch(tag.name)
+        NotificationsManager.addNotification({
+            type: "success",
+            title: "Изменение тега",
+            message: `Ваш новый тег: ${tag.name}`
+        })
     }
 
     return (
