@@ -53,9 +53,9 @@ export const config = {
         amount: 100,
     },
     media: {
-        youtube: "https://youtube.pixelbattle.fun",
-        discord: "https://discord.pixelbattle.fun",
-        github: "https://github.pixelbattle.fun",
-        help: "https://help.pixelbattle.fun"
+        youtube: ["https://youtube.pixelbattle.fun", "YouTube канал Pixelate It!"],
+        discord: ["https://discord.pixelbattle.fun", "Discord-сервер Pixelate It!"],
+        github: ["https://github.pixelbattle.fun", "GitHub Pixelate It!"],
+        help: ["https://help.pixelbattle.fun", "Страница помощи"]
     }
 }

@@ -12,7 +12,7 @@ export function ColorDelete() {
             onClick={() => palette.removeColor(palette.palette.value.selected)}
             disabled={palette.isDefaultColor(palette.palette.value.selected)}>
 
-            <Icon icon="plus" className={styles.icon}/>
+            <Icon icon="plus" className={styles.icon} alt={"Удалить выбранный цвет"}/>
         </button>
     )
 }

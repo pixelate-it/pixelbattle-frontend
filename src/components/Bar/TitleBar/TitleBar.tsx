@@ -41,8 +41,8 @@ export function TitleBar() {
                 <div className={styles.icons}>
                     <div className={styles.media}>
                         {Object.entries(config.media).map(([name, url]) => (
-                            <a href={url} target="_blank" rel="noopener noreferrer" key={name}>
-                                <Icon icon={name} size={35} viewBoxSize={256}/>
+                            <a href={url[0]} target="_blank" rel="noopener noreferrer" key={name}>
+                                <Icon icon={name} alt={url[1]} size={35} viewBoxSize={256}/>
                                 {/* <img src={`/images/icons/${name}.svg`} alt={name} width={35} height={35}/> */}
                             </a>
                         ))}

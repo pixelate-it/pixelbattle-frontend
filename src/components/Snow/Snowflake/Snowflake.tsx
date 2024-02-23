@@ -18,6 +18,6 @@ export function Snowflake() {
 
     return <div className={styles.wrapper}>
         <input type="checkbox" className={styles.input} onChange={toggleSnow} defaultChecked={settings.settings.value.enableSnow}/>
-        <Icon icon="snowflake" size={35} viewBoxSize={272}/>
+        <Icon icon="snowflake" alt={"Переключить снег"} size={35} viewBoxSize={272}/>
     </div>
 }
