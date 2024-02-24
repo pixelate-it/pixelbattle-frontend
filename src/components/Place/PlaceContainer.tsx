@@ -17,6 +17,7 @@ import { NotificationsManager } from "../../managers/notifications";
 import { ClientNotificationMap } from "../../lib/notificationMap";
 import { RefObject } from "preact";
 import { config } from "../../config";
+import { PlaceOverlay } from "./PlaceOverlay";
 
 type Reason = "Cooldown" | "Not logged" | "Game ended" | "Banned";
 
@@ -25,6 +26,7 @@ type Reason = "Cooldown" | "Not logged" | "Game ended" | "Banned";
 export class PlaceContainer extends Container {
     private pointer = new PlacePointer();
     public place = new PlaceView();
+    private overlay = new PlaceOverlay()
 
     private pixelInfo = {
         lastPoint: new Point(-1, -1),
@@ -45,7 +47,6 @@ export class PlaceContainer extends Container {
         this.viewport.on("drag-start", this.onDragStart.bind(this));
         this.viewport.on("drag-end", this.onDragEnd.bind(this));
 
-
         this.place.on("will-place", this.onWillPlace.bind(this));
         this.place.on("place", this.onPlace.bind(this));
         this.place.on("will-color-pick", this.onWillColorPick.bind(this));
@@ -53,7 +54,9 @@ export class PlaceContainer extends Container {
         this.place.on("out", this.onOut.bind(this));
 
         this.addChild(this.place);
+        this.addChild(this.overlay)
         this.addChild(this.pointer);
+
     }
 
     public onDragStart(event: DragEvent) {

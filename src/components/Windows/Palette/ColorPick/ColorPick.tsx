@@ -1,7 +1,7 @@
 import { useContext } from "preact/hooks";
 import styles from "./ColorPick.module.css";
-import { ColorPickerContext } from "../../../managers/picker";
-import { Icon } from "../../General/Icon/Icon";
+import { ColorPickerContext } from "../../../../managers/picker";
+import { Icon } from "../../../General/Icon/Icon";
 
 export function ColorPick() {
     const picker = useContext(ColorPickerContext)

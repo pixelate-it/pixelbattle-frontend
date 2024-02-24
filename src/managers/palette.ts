@@ -51,8 +51,7 @@ export const PaletteManager = {
         }, ({ colors, selected }) => JSON.stringify({ colors: colors.map(color => color.toHex()), selected: selected.toHex() }))
     },
     load() {
-        const palette = AppLocalStorage.get("palette", (str) => {
-            const flatPalette = JSON.parse(str) as FlatPalette
+        const palette = AppLocalStorage.get("palette", (flatPalette) => {
 
             return {
                 colors: flatPalette.colors.map(color => new AppColor(color)),

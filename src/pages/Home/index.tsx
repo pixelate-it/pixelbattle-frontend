@@ -11,6 +11,7 @@ import { SettingsContext, SettingsManager } from '../../managers/settings';
 
 import { lazy } from 'preact-iso';
 import { Suspense } from 'preact/compat';
+import { OverlayContext, OverlayManager } from '../../managers/overlay';
 
 const Snow = lazy(() => import("../../components/Snow/Snow").then(r => r.Snow))
 const Place = lazy(() => import("../../components/Place/Place").then(r => r.Place))
@@ -31,12 +32,15 @@ export function Home() {
                                     <CoordinatesContext.Provider value={CoordinatesManager}>
                                         <PlaceContext.Provider value={PlaceManager}>
                                             <PaletteContext.Provider value={PaletteManager}>
-                                                <Suspense fallback={<p>Loading</p>}>
-                                                    <Place />
-                                                    <TopBar />
-                                                    <BottomBar />
-                                                    <Snow />
-                                                </Suspense>
+                                                <OverlayContext.Provider value={OverlayManager}>
+                                                    <Suspense fallback={<p>Loading</p>}>
+                                                        <Place />
+                                                        <TopBar />
+                                                        <BottomBar />
+                                                        <Snow />
+                                                    </Suspense>
+                                                </OverlayContext.Provider>
+
 
                                             </PaletteContext.Provider>
                                         </PlaceContext.Provider>

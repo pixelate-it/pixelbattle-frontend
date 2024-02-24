@@ -1,0 +1,30 @@
+.coordinates {
+    display: flex;
+    gap: 12px;
+    max-width: 400px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.image {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.imageName {
+    background-color: var(--window-background-2);
+    padding: 8px 16px;
+    border-radius: 5px;
+    display: grid;
+    place-items: center start;
+    flex-grow: 1;
+}
+
+.removeIcon {
+    transform: rotateZ(45deg);
+}

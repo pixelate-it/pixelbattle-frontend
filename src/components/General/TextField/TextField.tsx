@@ -2,19 +2,27 @@ import styles from "./TextField.module.css";
 
 interface TextFieldProps {
     placeholder: string;
-    onInput?: (event: Event) => void;
+    value?: string;
+    onInput: (value: string) => void;
     min?: number;
     max?: number;
+    type?: "text" | "number";
+    defaultValue?: string;
 }
 
-export function TextField({ placeholder, onInput, min, max }: TextFieldProps) {
+export function TextField({ placeholder, onInput, min, max, type = "text", defaultValue, value }: TextFieldProps) {
     return (
         <input
-            type="text"
+            type={type}
             className={styles.input}
+            value={value}
             placeholder={placeholder}
-            onInput={onInput} 
+            onInput={(event) => onInput(event.currentTarget.value)} 
+            defaultValue={defaultValue}
             minLength={min}
-            maxLength={max}/>
+            maxLength={max}
+            min={min}
+            max={max}
+        />
     )
 }
