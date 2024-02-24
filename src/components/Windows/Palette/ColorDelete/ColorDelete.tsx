@@ -1,7 +1,7 @@
 import { useContext } from "preact/hooks";
-import { PaletteContext } from "../../../managers/palette";
+import { PaletteContext } from "../../../../managers/palette";
 import styles from "./ColorDelete.module.css";
-import { Icon } from "../../General/Icon/Icon";
+import { Icon } from "../../../General/Icon/Icon";
 
 export function ColorDelete() {
     const palette = useContext(PaletteContext)

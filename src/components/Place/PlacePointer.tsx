@@ -55,6 +55,7 @@ export class PlacePointer extends Container {
         this.border.scale.set(1 + config.hover.outlineSize)
         this.eventMode = "none"
         this.visible = false
+        this.zIndex = 9
 
         this.addChild(this.border, this.background)
     }

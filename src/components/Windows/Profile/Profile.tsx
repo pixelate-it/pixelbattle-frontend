@@ -1,11 +1,11 @@
 import { useContext, useEffect } from "preact/hooks";
-import { ProfileContext } from "../../managers/profile";
-import { Button } from "../General/Button/Button";
+import { ProfileContext } from "../../../managers/profile";
+import { Button } from "../../General/Button/Button";
 import styles from "./Profile.module.css";
-import { Param } from "../General/Param/Param";
-import { WindowBox } from "../WindowBox/WindowBox";
-import { TagsContext } from "../../managers/tags";
-import { UserRole } from "../../interfaces/Profile";
+import { Param } from "../../General/Param/Param";
+import { WindowBox } from "../../WindowBox/WindowBox";
+import { TagsContext } from "../../../managers/tags";
+import { UserRole } from "../../../interfaces/Profile";
 
 export function Profile() {
     const profile = useContext(ProfileContext)

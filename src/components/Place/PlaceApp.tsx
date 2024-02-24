@@ -66,9 +66,7 @@ export class PlaceApp {
 
 
         this.app.stage.addChild(this.viewport);
-
-        this.app.render()
-
+        
         this.viewport.addChild(this.container);
 
         place.container.value = this.container

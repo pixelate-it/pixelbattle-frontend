@@ -11,13 +11,6 @@ export function OpenedTagCreate() {
     const tags = useContext(TagsContext)
     const [input, setInput] = useState<string>("")
 
-    function handleInput(event: Event) {
-        const input = event.target as HTMLInputElement
-        const value = input.value
-
-        setInput(value)
-    }
-
     function createTag() {
         if (input === "") {
             return
@@ -38,7 +31,7 @@ export function OpenedTagCreate() {
     }
 
     return (<div className={styles.form}>
-        <TextField placeholder="Новый тег" onInput={handleInput} min={4} max={8}/>
+        <TextField placeholder="Новый тег" onInput={setInput} min={4} max={8}/>
         <Button onClick={createTag}>
             <Icon icon="plus" />
         </Button>

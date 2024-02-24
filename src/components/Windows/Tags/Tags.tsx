@@ -1,14 +1,13 @@
 import { useContext, useEffect, useState } from "preact/hooks";
 import { config } from "../../../config";
 import styles from "./Tags.module.css";
-import { Tag } from "../Tag/Tag";
+import { Tag } from "../../Tags/Tag/Tag";
 import { WindowBox } from "../../WindowBox/WindowBox";
 import { TagsContext } from "../../../managers/tags";
 import { ProfileContext } from "../../../managers/profile";
-import { OpenedTagCreate } from "../OpenedTagCreate/OpenedTagCreate";
-import { ClosedTagCreate } from "../ClosedTagCreate/ClosedTagCreate";
-import { isTagCreateOpened } from "../OpenTagSignal";
-import { InfoContext } from "../../../managers/info";
+import { OpenedTagCreate } from "../../Tags/OpenedTagCreate/OpenedTagCreate";
+import { ClosedTagCreate } from "../../Tags/ClosedTagCreate/ClosedTagCreate";
+import { isTagCreateOpened } from "../../Tags/OpenTagSignal";
 
 
 
@@ -18,7 +17,6 @@ export function Tags() {
     const [tagsInterval, setTagsInterval] = useState<NodeJS.Timeout>()
     const tags = useContext(TagsContext)
     const profile = useContext(ProfileContext)
-    const info = useContext(InfoContext)
 
 
     useEffect(() => {
