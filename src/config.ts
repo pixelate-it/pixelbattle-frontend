@@ -56,7 +56,7 @@ export const config = {
         amount: 100,
     },
     overlay: {
-        opacity: 0.6,
+        defaultOpacity: 60,
     },
     media: {
         youtube: ["https://youtube.pixelbattle.fun", "YouTube канал Pixelate It!"],

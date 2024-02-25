@@ -9,7 +9,8 @@ interface Overlay {
     position: {
         x: number;
         y: number;
-    }
+    };
+    opacity: number;
 }
 
 interface LocalStorageMap {
