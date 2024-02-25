@@ -61,7 +61,6 @@ export class PlaceContainer extends Container {
         }
 
         if (overlayPosition === null || overlayImage === null) {
-            console.log("Overlay position is null")
             this.place.onClick(placePoint, ev.button);
             return
         }
@@ -74,7 +73,6 @@ export class PlaceContainer extends Container {
 
 
         if (!isOnTopOfOverlay) {
-            console.log("Not on overlay")
             this.place.onClick(placePoint, ev.button);
             return
         }
@@ -82,7 +80,6 @@ export class PlaceContainer extends Container {
         const overlayPoint = placePoint.clone().set(placePoint.x - overlayPosition.x, placePoint.y - overlayPosition.y)
         const color = overlayImage.getPixel(overlayPoint)
 
-        console.log(color.toHex())
         if (color.alpha === 0) {
             this.place.onClick(placePoint, ev.button);
             return
