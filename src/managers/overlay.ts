@@ -7,14 +7,13 @@ import { AppImage } from "../classes/AppImage";
 import { AppLocalStorage } from "../classes/AppLocalStorage";
 
 
-async function arrayBufferToString(buffer: ArrayBuffer): Promise<string> {
-    return new Blob([buffer]).text()
+function arrayBufferToString(buffer: ArrayBuffer): string {
+    return String.fromCharCode(...new Uint8ClampedArray(buffer));
 }
 
-async function stringToArrayBuffer(str: string): Promise<ArrayBuffer> {
-    return new Blob([str]).arrayBuffer()    
+function stringToArrayBuffer(str: string): ArrayBuffer {
+    return new Uint8ClampedArray(str.split('').map(c => c.charCodeAt(0))).buffer;
 }
-
 
 
 export const OverlayManager = {
@@ -44,11 +43,11 @@ export const OverlayManager = {
         AppLocalStorage.set(
             "overlay",
             {
-                data: await arrayBufferToString(OverlayManager.image.value!.getRaw()),
+                data: arrayBufferToString(OverlayManager.image.value!.raw),
                 name: OverlayManager.imageName.value!,
                 position: {
                     x: OverlayManager.position.value!.x,
-                    y: OverlayManager.position.value!.x
+                    y: OverlayManager.position.value!.y
                 }
             }
         )
@@ -61,7 +60,7 @@ export const OverlayManager = {
             return;
 
 
-        OverlayManager.image.value = new AppImage(await stringToArrayBuffer(localStorageOverlay.data));
+        OverlayManager.image.value = new AppImage(stringToArrayBuffer(localStorageOverlay.data));
         OverlayManager.position.value = new Point(localStorageOverlay.position.x, localStorageOverlay.position.y)
         OverlayManager.imageName.value = localStorageOverlay.name;
     }
