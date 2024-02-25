@@ -1,5 +1,4 @@
-
-import { Texture } from "@pixi/core";
+import { ALPHA_MODES, FORMATS, SCALE_MODES, Texture } from "@pixi/core";
 import { Sprite } from "@pixi/sprite";
 import { OverlayManager } from "../../managers/overlay";
 import { WHITE_TEXTURE } from "../../lib/WhiteTexture";
@@ -41,6 +40,11 @@ export class PlaceOverlay extends Sprite {
             OverlayManager.image.value!.buffer,
             OverlayManager.image.value!.size.x,
             OverlayManager.image.value!.size.y,
+            {
+                format: FORMATS.RGBA,
+                alphaMode: ALPHA_MODES.NO_PREMULTIPLIED_ALPHA,
+                scaleMode: SCALE_MODES.NEAREST
+            }
         );
     }
 }
