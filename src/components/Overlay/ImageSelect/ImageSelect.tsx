@@ -20,7 +20,6 @@ export function ImageSelect() {
 
 
     async function uploadImage(image: File) {
-        console.log(await image.arrayBuffer())
         const decodedImage = new AppImage(await image.arrayBuffer());
         const isBiggerThatCanvas = place.image.value!.size.x < decodedImage.size.x || place.image.value!.size.y < decodedImage.size.y
 
