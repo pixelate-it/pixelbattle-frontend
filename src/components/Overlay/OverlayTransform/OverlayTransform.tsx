@@ -19,6 +19,11 @@ export function OverlayTransform() {
         overlay.save()
     }
 
+    function changeOpacity(opacity: string) {
+        overlay.opacity.value = parseInt(opacity)
+        overlay.save()
+    }
+
     return <div class={styles.wrapper}>
         <div class={styles.image}>
             <p class={styles.imageName}>{overlay.imageName}</p>
@@ -26,21 +31,40 @@ export function OverlayTransform() {
                 <Icon icon="plus" className={styles.removeIcon} />
             </Button>
         </div>
-        <div class={styles.coordinates}>
-            <TextField
-                min={0}
-                max={place.image.value?.size.x}
-                type="number"
-                placeholder="X координата"
-                defaultValue={overlay.position.value!.x.toString()}
-                onInput={(input) => changeCoords("x", parseInt(input))} />
-            <TextField
-                min={0}
-                max={place.image.value?.size.y}
-                type="number"
-                placeholder="Y координата"
-                defaultValue={overlay.position.value!.y.toString()}
-                onInput={(input) => changeCoords("y", parseInt(input))} />
+        <div class={styles.groups}>
+            <div class={styles.group}>
+                <p class={styles.groupTitle}>Координаты</p>
+                <div class={styles.coordinates}>
+                    <TextField
+                        min={0}
+                        max={place.image.value?.size.x}
+                        type="number"
+                        placeholder="X координата"
+                        defaultValue={overlay.position.value!.x.toString()}
+                        onInput={(input) => changeCoords("x", parseInt(input))} />
+                    <TextField
+                        min={0}
+                        max={place.image.value?.size.y}
+                        type="number"
+                        placeholder="Y координата"
+                        defaultValue={overlay.position.value!.y.toString()}
+                        onInput={(input) => changeCoords("y", parseInt(input))} />
+                </div>
+            </div>
+            <div class={styles.group}>
+                <p class={styles.groupTitle}>Прозрачность</p>
+                <TextField
+                    min={0}
+                    max={100}
+                    type="number"
+                    placeholder="Прозрачность"
+                    defaultValue={overlay.opacity.value!.toString()}
+                    onInput={changeOpacity} />
+            </div>
+
+
+
+
         </div>
     </div>
 }

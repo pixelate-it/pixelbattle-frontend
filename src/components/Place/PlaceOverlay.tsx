@@ -19,9 +19,7 @@ export class PlaceOverlay extends Sprite {
             contains: () => false
         }
 
-        this.alpha = config.overlay.opacity;
-        
-
+        OverlayManager.opacity.subscribe(opacity => opacity && (this.alpha = opacity / 100));
         OverlayManager.position.subscribe((position) => {
             if (position) {
                 this.position = position;

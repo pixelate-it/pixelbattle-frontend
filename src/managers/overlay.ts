@@ -5,6 +5,7 @@ import { AppFetch } from "../classes/AppFetch";
 import { Point } from "@pixi/math";
 import { AppImage } from "../classes/AppImage";
 import { AppLocalStorage } from "../classes/AppLocalStorage";
+import { config } from "../config";
 
 
 function arrayBufferToString(buffer: ArrayBuffer): string {
@@ -19,11 +20,14 @@ export const OverlayManager = {
     image: signal(null) as Signal<AppImage | null>,
     imageName: signal(null) as Signal<string | null>,
     position: signal(null) as Signal<Point | null>,
+    opacity: signal(null) as Signal<number | null>,
     isSet: computed(() => false),
     setImage(image: AppImage, imageName: string, position: Point) {
         OverlayManager.image.value = image;
         OverlayManager.imageName.value = imageName;
         OverlayManager.position.value = position;
+        OverlayManager.opacity.value = config.overlay.defaultOpacity;
+
 
         OverlayManager.save()
     },
@@ -31,6 +35,7 @@ export const OverlayManager = {
         OverlayManager.image.value = null;
         OverlayManager.imageName.value = null;
         OverlayManager.position.value = null;
+        OverlayManager.opacity.value = null;
 
         OverlayManager.save()
     },
@@ -48,7 +53,8 @@ export const OverlayManager = {
                 position: {
                     x: OverlayManager.position.value!.x,
                     y: OverlayManager.position.value!.y
-                }
+                },
+                opacity: OverlayManager.opacity.value!
             }
         )
     },
@@ -62,6 +68,7 @@ export const OverlayManager = {
         OverlayManager.image.value = new AppImage(stringToArrayBuffer(localStorageOverlay.data), 4);
         OverlayManager.position.value = new Point(localStorageOverlay.position.x, localStorageOverlay.position.y)
         OverlayManager.imageName.value = localStorageOverlay.name;
+        OverlayManager.opacity.value = localStorageOverlay.opacity;
     }
 }
 
