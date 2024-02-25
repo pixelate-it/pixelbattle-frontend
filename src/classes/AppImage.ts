@@ -1,6 +1,6 @@
 import { Point } from "@pixi/math";
 import { AppColor } from "./AppColor";
-import { decode } from "fast-png";
+import { decode } from "@stevebel/png";
 
 export class AppImage {
     private _buffer: Uint8ClampedArray;
@@ -15,7 +15,7 @@ export class AppImage {
         const decodedBuffer = decode(buffer);
 
         this._size = new Point(decodedBuffer.width, decodedBuffer.height);
-        this._buffer = decodedBuffer.data as Uint8ClampedArray;
+        this._buffer = new Uint8ClampedArray(decodedBuffer.data);
     }
 
     get raw() {

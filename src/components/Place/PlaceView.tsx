@@ -43,7 +43,7 @@ export class PlaceView extends Sprite {
             this.size.x,
             this.size.y,
             {
-                format: FORMATS.RGB,
+                format: FORMATS.RGBA,
                 alphaMode: ALPHA_MODES.NO_PREMULTIPLIED_ALPHA,
                 scaleMode: SCALE_MODES.NEAREST
             }
