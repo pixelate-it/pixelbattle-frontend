@@ -27,8 +27,11 @@ export const config = {
         ws: 2000, // Websocket reconnect time
         shake: 200,
         notificationRemoved: 3000,
-        modCooldown: 50,
         pixelInfo: 500,
+    },
+    cooldown: {
+        offset: 50,
+        staff: 50,  
     },
     shakeAmount: 0.1,
     zoom: {
@@ -51,6 +54,9 @@ export const config = {
     snow: {
         size: 2,
         amount: 100,
+    },
+    overlay: {
+        opacity: 0.6,
     },
     media: {
         youtube: ["https://youtube.pixelbattle.fun", "YouTube канал Pixelate It!"],

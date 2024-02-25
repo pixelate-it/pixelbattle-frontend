@@ -15,7 +15,6 @@ function stringToArrayBuffer(str: string): ArrayBuffer {
     return new Uint8ClampedArray(str.split('').map(c => c.charCodeAt(0))).buffer;
 }
 
-
 export const OverlayManager = {
     image: signal(null) as Signal<AppImage | null>,
     imageName: signal(null) as Signal<string | null>,
@@ -35,8 +34,9 @@ export const OverlayManager = {
 
         OverlayManager.save()
     },
-    async save() {
+    save() {
         if (!OverlayManager.isSet.value) {
+            AppLocalStorage.reset("overlay")
             return;
         }
 
@@ -52,15 +52,14 @@ export const OverlayManager = {
             }
         )
     },
-    async load() {
+    load() {
         const localStorageOverlay = AppLocalStorage.get("overlay")
-
 
         if (!localStorageOverlay)
             return;
 
 
-        OverlayManager.image.value = new AppImage(stringToArrayBuffer(localStorageOverlay.data));
+        OverlayManager.image.value = new AppImage(stringToArrayBuffer(localStorageOverlay.data), 4);
         OverlayManager.position.value = new Point(localStorageOverlay.position.x, localStorageOverlay.position.y)
         OverlayManager.imageName.value = localStorageOverlay.name;
     }
