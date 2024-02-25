@@ -54,18 +54,10 @@ export class PlaceView extends Sprite {
     }
 
 
-    public async onClick(event: DragEvent) {
-        const ev = (event.event as FederatedPointerEvent)
-        const position = ev.getLocalPosition(this)
-        const point = new Point(Math.floor(position.x), Math.floor(position.y))
+    public async onClick(point: Point, mouseButton: number) {
         const color = this.image.getPixel(point)
 
-        const isOutsideOfCanvas = point.x < 0 || point.x > this.image.size.x || point.y < 0 || point.y > this.image.size.y
-        if (isOutsideOfCanvas) {
-            return
-        }
-
-        if (ev.button === 0) {
+        if (mouseButton === 0) {
             if (ColorPickerManager.isEnabled.value) {
                 return this.emit("will-color-pick", color)
             }
@@ -74,10 +66,9 @@ export class PlaceView extends Sprite {
         }
 
 
-        if (ev.button === 2) {
+        if (mouseButton === 2) {
             return this.emit("will-color-pick", color)
         }
-
     }
 
     private onPointerMove(event: FederatedPointerEvent) {

@@ -4,7 +4,6 @@ import { InfoManager } from "./info";
 import { ProfileManager } from "./profile";
 import { config } from "../config";
 
-// const updateInterval = 10
 export const CooldownManager = {
     progress: signal(0),
     reqId: signal(0),
@@ -21,9 +20,9 @@ export const CooldownManager = {
             return
         }
 
-        const cooldownDuration = ProfileManager.isStaff.value
-            ? config.time.modCooldown
-            : InfoManager.info.value.cooldown
+        const cooldownDuration = config.cooldown.offset + (ProfileManager.isStaff.value
+            ? config.cooldown.staff
+            : InfoManager.info.value.cooldown)
 
         const progress = currentTime / cooldownDuration;
 
@@ -36,13 +35,10 @@ export const CooldownManager = {
 
         CooldownManager.progress.value = progress * 100
 
-
         requestAnimationFrame(CooldownManager.update);
     }
 }
 CooldownManager.hasCooldown = computed(() => {
-    // console.log(CooldownManager.cooldown.value)
-    // console.log(CooldownManager.time - new Date().getTime())
     return CooldownManager.progress.value > 0
 })
 

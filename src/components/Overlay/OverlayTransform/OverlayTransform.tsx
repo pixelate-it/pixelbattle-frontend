@@ -16,6 +16,7 @@ export function OverlayTransform() {
         newPosition[type] = value;
 
         overlay.position.value = newPosition
+        overlay.save()
     }
 
     return <div class={styles.wrapper}>

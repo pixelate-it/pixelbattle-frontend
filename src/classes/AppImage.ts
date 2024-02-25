@@ -6,10 +6,10 @@ export class AppImage {
     private _buffer: Uint8ClampedArray;
     private _size: Point;
     private _raw: ArrayBuffer;
+    private bufferPixelDataSize: number;
 
-    private bufferPixelDataSize = 3;
-
-    constructor(buffer: ArrayBuffer) {
+    constructor(buffer: ArrayBuffer, bufferPixelDataSize: number = 3) {
+        this.bufferPixelDataSize = bufferPixelDataSize;
         this._raw = buffer;
 
         const decodedBuffer = decode(buffer);
@@ -22,7 +22,7 @@ export class AppImage {
         return this._raw;
     }
 
-    get buffer(): Uint8ClampedArray {
+    get buffer() {
         return this._buffer;
     }
 
@@ -31,10 +31,10 @@ export class AppImage {
     }
 
     public getPixel(point: Point): AppColor {
-        const index = (point.x + point.y * this._size.x);
-        const [r, g, b] = this._buffer.slice(index * this.bufferPixelDataSize, index * this.bufferPixelDataSize + this.bufferPixelDataSize);
-
-        return new AppColor(new Uint8Array([r, g, b, 255]));
+        const index = point.x + point.y * this._size.x;
+        const [r, g, b, ...rest] = this._buffer.slice(index * this.bufferPixelDataSize, index * this.bufferPixelDataSize + this.bufferPixelDataSize);
+        
+        return new AppColor(new Uint8Array([r, g, b, rest.length === 0 ? 255 : rest[0]]));
     }
 
 

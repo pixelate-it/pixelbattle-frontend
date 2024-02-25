@@ -1,4 +1,4 @@
-import { Container  } from "@pixi/display";
+import { Container } from "@pixi/display";
 import { Point } from "@pixi/math"
 import { AppColor } from "../../classes/AppColor";
 import { PaletteManager } from "../../managers/palette";
@@ -18,6 +18,9 @@ import { ClientNotificationMap } from "../../lib/notificationMap";
 import { RefObject } from "preact";
 import { config } from "../../config";
 import { PlaceOverlay } from "./PlaceOverlay";
+import { FederatedPointerEvent } from "@pixi/events";
+import { OverlayManager } from "../../managers/overlay";
+import { Color } from "@pixi/color";
 
 type Reason = "Cooldown" | "Not logged" | "Game ended" | "Banned";
 
@@ -25,7 +28,7 @@ type Reason = "Cooldown" | "Not logged" | "Game ended" | "Banned";
 
 export class PlaceContainer extends Container {
     private pointer = new PlacePointer();
-    public place = new PlaceView();
+    private place = new PlaceView();
     private overlay = new PlaceOverlay()
 
     private pixelInfo = {
@@ -38,6 +41,68 @@ export class PlaceContainer extends Container {
         super();
 
         this.setup();
+    }
+
+    public onClick(event: DragEvent) {
+        const ev = (event.event as FederatedPointerEvent)
+        const position = ev.getLocalPosition(this)
+        const placePoint = new Point(Math.floor(position.x), Math.floor(position.y))
+        const image = PlaceManager.image.value;
+
+        const overlayImage = OverlayManager.image.value;
+        const overlayPosition = OverlayManager.position.value;
+
+        if (image === null) 
+            return;
+
+        const isOutsideOfCanvas = placePoint.x < 0 || placePoint.x > image.size.x || placePoint.y < 0 || placePoint.y > image.size.y
+        if (isOutsideOfCanvas) {
+            return
+        }
+
+        if (overlayPosition === null || overlayImage === null) {
+            console.log("Overlay position is null")
+            this.place.onClick(placePoint, ev.button);
+            return
+        }
+
+
+        const isOnTopOfOverlay = placePoint.x <= (overlayImage.size.x + overlayPosition.x)
+            && placePoint.x >= overlayPosition.x
+            && placePoint.y <= (overlayImage.size.y + overlayPosition.y)
+            && placePoint.y >= overlayPosition.y
+
+
+        if (!isOnTopOfOverlay) {
+            console.log("Not on overlay")
+            this.place.onClick(placePoint, ev.button);
+            return
+        }
+
+        const overlayPoint = placePoint.clone().set(placePoint.x - overlayPosition.x, placePoint.y - overlayPosition.y)
+        const color = overlayImage.getPixel(overlayPoint)
+
+        console.log(color.toHex())
+        if (color.alpha === 0) {
+            this.place.onClick(placePoint, ev.button);
+            return
+        }
+
+        if (ev.button === 0) {
+            if (ColorPickerManager.isEnabled.value) {
+                this.onWillColorPick(color)
+                return;
+            }
+
+            return this.onWillPlace(placePoint)
+        }
+
+
+        if (ev.button === 2) {
+            return this.onWillColorPick(color)
+        }
+
+        
     }
 
 

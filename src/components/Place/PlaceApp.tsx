@@ -38,8 +38,9 @@ export class PlaceApp {
             worldHeight: worldSize,
             disableOnContextMenu: true
         });
-
     }
+
+
 
     public create(place: typeof PlaceManager) {
         this.container = new PlaceContainer(this.viewport, this.canvasRef);
@@ -62,11 +63,11 @@ export class PlaceApp {
                 minHeight: config.zoom.minLevelPx
             })
             .moveCenter(new Point(size.x / 2, size.y / 2))
-            .on("clicked", this.container?.place.onClick.bind(this.container.place))
+            .on("clicked", this.container.onClick.bind(this.container))
 
 
         this.app.stage.addChild(this.viewport);
-        
+
         this.viewport.addChild(this.container);
 
         place.container.value = this.container
