@@ -8,7 +8,7 @@ export class AppImage {
     private _raw: ArrayBuffer;
     private bufferPixelDataSize: number;
 
-    constructor(buffer: ArrayBuffer, bufferPixelDataSize: number = 3) {
+    constructor(buffer: ArrayBuffer, bufferPixelDataSize: number = 4) {
         this.bufferPixelDataSize = bufferPixelDataSize;
         this._raw = buffer;
 

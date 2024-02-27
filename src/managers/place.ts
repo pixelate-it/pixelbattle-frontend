@@ -10,7 +10,7 @@ export const PlaceManager = {
     async fetch() {
         const image = await AppFetch.pixels()
 
-        PlaceManager.image.value = new AppImage(image)
+        PlaceManager.image.value = new AppImage(image, 4)
     },
 }
 
