@@ -5,6 +5,9 @@ import { TargetedEvent } from "preact/compat"
 import { Icon } from "../../General/Icon/Icon"
 
 export function Snowflake() {
+    if (![11, 0, 1].includes(new Date().getMonth())) // December, January, February
+        return null
+
     const settings = useContext(SettingsContext)
 
     function toggleSnow(event: TargetedEvent<HTMLInputElement>): void {

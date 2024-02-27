@@ -9,9 +9,12 @@ import { ParticleContainer } from "@pixi/particle-container";
 
 
 export function Snow() {
+    if (![11, 0, 1].includes(new Date().getMonth())) // December, January, February
+        return null
+
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const settings = useContext(SettingsContext)
-    
+
     settings.load()
 
     if (!settings.settings.value.enableSnow) 
