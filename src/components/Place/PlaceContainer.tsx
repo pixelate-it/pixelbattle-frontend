@@ -222,6 +222,9 @@ export class PlaceContainer extends Container {
     public onWillColorPick(color: AppColor) {
         ColorPickerManager.isEnabled.value = false
 
+        this.pointer.background.tint = color;
+        this.pointer.border.tint = color.getReadableColor()
+
         PaletteManager.addAndSelect(color)
     }
 }
