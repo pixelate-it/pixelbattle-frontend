@@ -1,21 +1,26 @@
 import { Point } from "@pixi/math";
 import { AppColor } from "./AppColor";
-import { decode } from "@stevebel/png";
 
 export class AppImage {
-    private _buffer: Uint8ClampedArray;
-    private _size: Point;
-    private _raw: ArrayBuffer;
-    private bufferPixelDataSize: number;
+    private _buffer!: Uint8ClampedArray;
+    private _size!: Point;
 
-    constructor(buffer: ArrayBuffer, bufferPixelDataSize: number = 4) {
-        this.bufferPixelDataSize = bufferPixelDataSize;
-        this._raw = buffer;
+    constructor(
+        private readonly _raw: ArrayBuffer,
+        private readonly bufferPixelDataSize: number = 4
+    ) {}
 
-        const decodedBuffer = decode(buffer);
+    async process() {
+        const bitmap = await createImageBitmap(new Blob([ this._raw ]));
+        const canvas = document.createElement('canvas');
+        canvas.width = bitmap.width;
+        canvas.height = bitmap.height;
 
-        this._size = new Point(decodedBuffer.width, decodedBuffer.height);
-        this._buffer = new Uint8ClampedArray(decodedBuffer.data);
+        const ctx = canvas.getContext('2d')!;
+        ctx.drawImage(bitmap, 0, 0);
+
+        this._size = new Point(bitmap.width, bitmap.height);
+        this._buffer = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
     }
 
     get raw() {
