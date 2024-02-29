@@ -8,9 +8,10 @@ export const PlaceManager = {
     image: signal(null) as Signal<null | AppImage>,
     container: signal({} as PlaceContainer),
     async fetch() {
-        const image = await AppFetch.pixels()
+        const image = await AppFetch.pixels();
 
-        PlaceManager.image.value = new AppImage(image, 4)
+        PlaceManager.image.value = new AppImage(image, 4);
+        await PlaceManager.image.value.process();
     },
 }
 

@@ -21,7 +21,9 @@ export function ImageSelect() {
 
     async function uploadImage(image: File) {
         const decodedImage = new AppImage(await image.arrayBuffer(), 4);
-        const isBiggerThatCanvas = place.image.value!.size.x < decodedImage.size.x || place.image.value!.size.y < decodedImage.size.y
+        await decodedImage.process();
+
+        const isBiggerThatCanvas = place.image.value!.size.x < decodedImage.size.x || place.image.value!.size.y < decodedImage.size.y;
 
         if (isBiggerThatCanvas) {
             notifications.addNotification({
@@ -84,7 +86,7 @@ export function ImageSelect() {
 
         <input
             type="file"
-            accept="image/png"
+            accept="image/*"
             onInput={onInput}
             ref={fileInputRef}
             class={styles.input}

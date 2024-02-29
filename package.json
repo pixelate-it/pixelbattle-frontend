@@ -25,7 +25,6 @@
     "@pixi/sprite": "^7.3.3",
     "@pixi/utils": "^7.3.3",
     "@preact/signals": "^1.2.2",
-    "@stevebel/png": "^1.5.1",
     "js-cookie": "^3.0.5",
     "pixi-viewport": "^5.0.2",
     "preact": "^10.19.3",
