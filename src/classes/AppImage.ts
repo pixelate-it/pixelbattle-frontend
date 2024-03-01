@@ -41,6 +41,8 @@ export class AppImage {
         this._buffer = this.bufferPixelDataSize === imageFormat.RGB
             ? this.convertRGBAtoRGB(imageData, this._size)
             : imageData;
+
+        return this;
     }
 
     get raw() {
