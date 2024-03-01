@@ -58,14 +58,13 @@ export const OverlayManager = {
             }
         )
     },
-    load() {
+    async load() {
         const localStorageOverlay = AppLocalStorage.get("overlay")
 
         if (!localStorageOverlay)
             return;
 
-
-        OverlayManager.image.value = new AppImage(stringToArrayBuffer(localStorageOverlay.data), 4);
+        OverlayManager.image.value = await new AppImage(stringToArrayBuffer(localStorageOverlay.data)).process();
         OverlayManager.position.value = new Point(localStorageOverlay.position.x, localStorageOverlay.position.y)
         OverlayManager.imageName.value = localStorageOverlay.name;
         OverlayManager.opacity.value = localStorageOverlay.opacity;
