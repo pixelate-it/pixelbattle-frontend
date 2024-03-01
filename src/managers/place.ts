@@ -1,6 +1,6 @@
 import { createContext } from "preact";
 import { Signal, signal } from "@preact/signals";
-import { AppImage } from "../classes/AppImage";
+import { AppImage, imageFormat } from "../classes/AppImage";
 import { AppFetch } from "../classes/AppFetch";
 import { PlaceContainer } from "../components/Place/PlaceContainer";
 
@@ -10,7 +10,7 @@ export const PlaceManager = {
     async fetch() {
         const image = await AppFetch.pixels();
 
-        PlaceManager.image.value = new AppImage(image, 4);
+        PlaceManager.image.value = new AppImage(image, imageFormat.RGB);
         await PlaceManager.image.value.process();
     },
 }

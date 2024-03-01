@@ -1,26 +1,46 @@
 import { Point } from "@pixi/math";
 import { AppColor } from "./AppColor";
 
+export enum imageFormat {
+    RGB = 3,
+    RGBA = 4
+}
+
 export class AppImage {
     private _buffer!: Uint8ClampedArray;
     private _size!: Point;
 
     constructor(
         private readonly _raw: ArrayBuffer,
-        private readonly bufferPixelDataSize: number = 4
+        private readonly bufferPixelDataSize: imageFormat = imageFormat.RGBA
     ) {}
+
+    private convertRGBAtoRGB(DATA_RGBA: Uint8ClampedArray, { x, y }: Point) {
+        const DATA_RGB = new Uint8ClampedArray(x * y * imageFormat.RGB);
+        for(let i = 0, j = 0; i < DATA_RGBA.length; i += 4, j += 3) {
+            DATA_RGB[j] = DATA_RGBA[i];
+            DATA_RGB[j + 1] = DATA_RGBA[i + 1];
+            DATA_RGB[j + 2] = DATA_RGBA[i + 2];
+        }
+
+        return DATA_RGB;
+    }
 
     async process() {
         const bitmap = await createImageBitmap(new Blob([ this._raw ]));
         const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d')!;
+
         canvas.width = bitmap.width;
         canvas.height = bitmap.height;
-
-        const ctx = canvas.getContext('2d')!;
         ctx.drawImage(bitmap, 0, 0);
 
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+
         this._size = new Point(bitmap.width, bitmap.height);
-        this._buffer = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        this._buffer = this.bufferPixelDataSize === imageFormat.RGB
+            ? this.convertRGBAtoRGB(imageData, this._size)
+            : imageData;
     }
 
     get raw() {
