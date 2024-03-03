@@ -5,7 +5,11 @@ import styles from "./PixelInfo.module.css";
 export function PixelInfo() {
     const coords = useContext(CoordinatesContext);
 
-    if (coords.info.value === null) return null;
+    if (coords.info.value === null) {
+        return <div className={[styles.wrapper, styles.empty].join(" ")}>
+            Пусто
+        </div>;
+    }
 
     if (coords.info.value === "loading") {
         return (

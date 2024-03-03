@@ -6,6 +6,11 @@ import { AppLocalStorage } from "../classes/AppLocalStorage";
 
 export const PaletteManager = {
     palette: signal(config.defaults.colors.palette),
+    reset() {
+        PaletteManager.palette.value = config.defaults.colors.palette;
+
+        PaletteManager.save()
+    },
     setCurrentColor: (color: AppColor) => {
         PaletteManager.palette.value = {
             ...PaletteManager.palette.value,

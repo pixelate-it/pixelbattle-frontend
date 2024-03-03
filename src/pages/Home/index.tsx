@@ -15,7 +15,7 @@ import { OverlayContext, OverlayManager } from '../../managers/overlay';
 
 const Snow = lazy(() => import("../../components/Snow/Snow").then(r => r.Snow))
 const Place = lazy(() => import("../../components/Place/Place").then(r => r.Place))
-const BottomBar = lazy(() => import("../../components/Bar/BottomBar/BottomBar").then(r => r.BottomBar))
+// const BottomBar = lazy(() => import("../../components/Bar/BottomBar/BottomBar").then(r => r.BottomBar))
 const TopBar = lazy(() => import("../../components/Bar/TopBar/TopBar").then(r => r.TopBar))
 
 export function Home() {
@@ -36,7 +36,6 @@ export function Home() {
                                                     <Suspense fallback={<p>Loading</p>}>
                                                         <Place />
                                                         <TopBar />
-                                                        <BottomBar />
                                                         <Snow />
                                                     </Suspense>
                                                 </OverlayContext.Provider>

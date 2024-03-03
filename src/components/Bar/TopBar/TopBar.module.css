@@ -1,17 +1,24 @@
 .wrapper {
     pointer-events: none;
+    height: 100%;
+    display: flex;
+    inset: 0 0;
+    padding: 10px;
+    box-sizing: border-box;
+    position: absolute;
+    flex-direction: column;
 }
 
 
 @media screen and (max-width: 600px) {
     .wrapper {
-        display: flex;
-        flex-direction: column;
-        top: 0;
-        position: absolute;
-        left: 0;
+        padding: 0;
+        /* display: flex;
+        flex-direction: column; */
+
+        /* left: 0;
         right: 0;
         align-items: flex-end;
-        gap: 20px;
+        gap: 20px; */
     }
 }

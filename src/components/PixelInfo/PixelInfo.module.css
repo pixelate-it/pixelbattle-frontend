@@ -2,8 +2,12 @@
     background-color: var(--window-background);
     border-radius: 4px;
     padding: 5px 10px;
-    animation: appear 0.2s ease-in-out forwards;
+    /* animation: appear 0.2s ease-in-out forwards; */
 
+}
+
+.empty {
+    opacity: 0;
 }
 
 .tag::before {
@@ -12,14 +16,12 @@
     margin-inline: 5px;
 }
 
-@keyframes appear {
+/* @keyframes appear {
     from {
         opacity: 0;
-        /* transform: scale(0.9); */
     }
 
     to {
         opacity: 1;
-        /* transform: scale(1); */
     }
-}
+} */
