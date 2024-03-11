@@ -24,3 +24,8 @@
 .danger {
     --background-color: var(--danger);
 }
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
