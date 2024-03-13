@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /manifest.json
+Disallow: /cdn-cgi/
+Disallow: /pwa/
+Disallow: /images/
+Disallow: /fonts/
+
+User-agent: Yandex
+Disallow: /?*server
