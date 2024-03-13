@@ -11,21 +11,16 @@ import { ServerNotificationMap } from "../lib/notificationMap";
 
 export class AppFetch {
     private static fetch<T extends {}>(options: { url: string, method: "POST" | "PUT" | "GET", withCredentials: boolean, body?: unknown }) {
-        const headers: HeadersInit = {
-            'Content-Type': 'application/json',
-        }
-
-        if (options.withCredentials) {
-            headers["Authorization"] = `Bearer ${ProfileManager.profile.value?.token}`
-        }
-
         return fetch(config.url.api + options.url, {
+            credentials: options.withCredentials ? 'include' : 'omit',
             method: options.method,
-            headers: options.method === "GET" ? undefined : headers,
-            body: options.body ? JSON.stringify(options.body) : undefined
+            body: options.body ? JSON.stringify(options.body) : undefined,
+            headers: options.method === "GET" ? undefined : {
+                'Content-Type': 'application/json'
+            }
         })
             .then(res => res.json() as Promise<T | ApiErrorResponse>)
-            .then(AppFetch.checkForErrors<T>)
+            .then(AppFetch.checkForErrors<T>);
     }
 
     static async post<T extends {}>(url: string, body: unknown, withCredentials: boolean = false) {
