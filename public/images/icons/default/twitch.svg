@@ -1,0 +1,23 @@
+<svg version="1.1" id="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+	<g>
+		<polygon points="15,2 15,1 14,1 14,0 2,0 2,1 1,1 1,2 0,2 0,14 1,14 1,15 2,15 2,16 14,16 14,15 15,15 15,14 16,14 16,2" style="fill:#8652F6"/>
+		<g style="fill:#8018DB">
+			<rect x="15" y="2" width="1" height="12"/>
+			<rect x="14" y="14" width="1" height="1"/>
+			<rect x="2" y="15" width="12" height="1"/>
+			<rect x="1" y="14" width="1" height="1"/>
+			<rect x="0" y="2" width="1" height="12"/>
+			<rect x="1" y="1" width="1" height="1"/>
+			<rect x="2" width="12" height="1"/>
+			<rect x="14" y="1" width="1" height="1"/>
+		</g>
+	</g>
+	<g>
+		<polygon points="12,3 4,3 4,4 3,4 3,11 3,12 5,12 5,13 5,14 8,14 8,13 9,13 9,12 11,12 11,11 12,11 12,10 13,10 13,3" style="fill:#FFFFFF"/>
+		<path d="M4,3v1H3v8h2v2h2h1v-1h1v-1h2v-1h1v-1h1V4V3H4z M12,9h-1v1H9v1H8v1H7v-2H5V4h7V9z"/>
+		<g>
+			<rect x="10" y="5" width="1" height="3"/>
+			<rect x="8" y="5" width="1" height="3"/>
+		</g>
+	</g>
+</svg>
