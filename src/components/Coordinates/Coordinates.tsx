@@ -13,8 +13,13 @@ export function Coordinates() {
     }
 
     return (
-        <p className={styles.coordinates}>
+        <p className={styles.coordinates} style={{
+            animationDelay: '500ms',
+            animationDuration: '500ms',
+            opacity: coordinates.areCoordinatesSet.value ? 1 : 0,
+            transition: 'opacity 500ms'
+        }}>
             {coordinates.coordinates.value.x + ", " + coordinates.coordinates.value.y}
         </p>
-    )
+    );
 }

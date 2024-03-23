@@ -13,7 +13,12 @@ export function PixelInfo() {
 
     if (coords.info.value === "loading") {
         return (
-            <div className={styles.wrapper}>
+            <div className={styles.wrapper} style={{
+                animationDelay: '500ms',
+                animationDuration: '500ms',
+                opacity: coords.info.value ? 1 : 0,
+                transition: 'opacity 500ms'
+            }}>
                 Загрузка...
             </div>
         )

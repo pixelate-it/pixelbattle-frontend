@@ -33,8 +33,8 @@ export class PlaceContainer extends Container {
 
     private pixelInfo = {
         lastPoint: new Point(-1, -1),
-        lastPointTime: 0,
-        timeoutId: 0,
+        lastPointTimeout: -1,
+        timeoutId: -1,
     }
 
     constructor(private viewport: Viewport, private canvasRef: RefObject<HTMLCanvasElement>) {
@@ -186,28 +186,23 @@ export class PlaceContainer extends Container {
 
 
     public onHover(point: Point) {
-        CoordinatesManager.setCoordinates(point)
-        this.pointer.hover(point)
+        CoordinatesManager.setCoordinates(point);
+        this.pointer.hover(point);
 
-        if (this.pixelInfo.lastPoint.equals(point)) {
-            if (this.pixelInfo.timeoutId === -1) {
-                CoordinatesManager.info.value = "loading"
-                this.pixelInfo.timeoutId = window.setTimeout(() => {
-                    if (CoordinatesManager.coordinates.value.x === -1 || CoordinatesManager.coordinates.value.y === -1) {
-                        return
-                    }
-                    CoordinatesManager.fetchInfo()
-                }, config.time.pixelInfo)
-            }
-
-
-            return
+        if(this.pixelInfo.lastPoint.equals(point)) return;
+        if(this.pixelInfo.timeoutId !== -1) {
+            window.clearTimeout(this.pixelInfo.timeoutId);
+            this.pixelInfo.timeoutId = -1;
         }
 
-        window.clearTimeout(this.pixelInfo.timeoutId);
-        this.pixelInfo.timeoutId = -1;
+        CoordinatesManager.info.value = 'loading';
         this.pixelInfo.lastPoint = point.clone();
-        CoordinatesManager.info.value = null;
+        this.pixelInfo.timeoutId = window.setTimeout(() => {
+            if(CoordinatesManager.coordinates.value.x === -1 || CoordinatesManager.coordinates.value.y === -1) {
+                return;
+            }
+            CoordinatesManager.fetchInfo();
+        }, config.time.pixelInfo);
     }
 
     public update() {
@@ -215,8 +210,11 @@ export class PlaceContainer extends Container {
     }
 
     public onOut() {
-        CoordinatesManager.removeCoordinates()
-        this.pointer.out()
+        CoordinatesManager.removeCoordinates();
+        CoordinatesManager.info.value = null;
+        window.clearTimeout(this.pixelInfo.timeoutId);
+        this.pixelInfo.lastPoint = new Point(-1, -1);
+        this.pointer.out();
     }
 
     public onWillColorPick(color: AppColor) {
