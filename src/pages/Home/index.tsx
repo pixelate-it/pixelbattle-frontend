@@ -7,11 +7,9 @@ import { CoordinatesContext, CoordinatesManager } from '../../managers/coordinat
 import { TagsContext, TagsManager } from '../../managers/tags';
 import { ColorPickerContext, ColorPickerManager } from '../../managers/picker';
 import { NotificationsContext, NotificationsManager } from '../../managers/notifications';
-import { SettingsContext, SettingsManager } from '../../managers/settings'
-    ;
+import { SettingsContext, SettingsManager } from '../../managers/settings';
 
-import { lazy } from 'preact-iso';
-import { Suspense } from 'preact/compat';
+import { lazy } from 'preact/compat';
 import { OverlayContext, OverlayManager } from '../../managers/overlay';
 import { ModalContext, ModalManager } from '../../managers/modal';
 import { Modal } from '../../components/Modal/Modal';
@@ -22,14 +20,13 @@ const Place = lazy(() => import("../../components/Place/Place").then(r => r.Plac
 const TopBar = lazy(() => import("../../components/Bar/TopBar/TopBar").then(r => r.TopBar))
 
 export function Home() {
-
     // Should probably refactor this somehow
     return (
         <ModalContext.Provider value={ModalManager}>
-
             <NotificationsContext.Provider value={NotificationsManager}>
                 <ProfileContext.Provider value={ProfileManager}>
                     <SettingsContext.Provider value={SettingsManager}>
+                        <Snow />
                         <TagsContext.Provider value={TagsManager}>
                             <InfoContext.Provider value={InfoManager}>
                                 <ColorPickerContext.Provider value={ColorPickerManager}>
@@ -38,15 +35,10 @@ export function Home() {
                                             <PlaceContext.Provider value={PlaceManager}>
                                                 <PaletteContext.Provider value={PaletteManager}>
                                                     <OverlayContext.Provider value={OverlayManager}>
-                                                        <Suspense fallback={<p>Loading</p>}>
-                                                            <Place />
-                                                            <TopBar />
-                                                            <Snow />
-                                                            <Modal />
-                                                        </Suspense>
+                                                        <Place />
+                                                        <TopBar />
+                                                        <Modal />
                                                     </OverlayContext.Provider>
-
-
                                                 </PaletteContext.Provider>
                                             </PlaceContext.Provider>
                                         </CoordinatesContext.Provider>
@@ -58,6 +50,5 @@ export function Home() {
                 </ProfileContext.Provider>
             </NotificationsContext.Provider>
         </ModalContext.Provider>
-
     );
 }
