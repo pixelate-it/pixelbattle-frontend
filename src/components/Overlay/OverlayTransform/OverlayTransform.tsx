@@ -33,31 +33,31 @@ export function OverlayTransform() {
         </div>
         <div class={styles.groups}>
             <div class={styles.group}>
-                <p class={styles.groupTitle}>Координаты</p>
+                <p class={styles.groupTitle}>Какие то циферки</p>
                 <div class={styles.coordinates}>
                     <TextField
                         min={0}
                         max={place.image.value?.size.x}
                         type="number"
-                        placeholder="X координата"
+                        placeholder="X пукалка"
                         defaultValue={overlay.position.value!.x.toString()}
                         onInput={(input) => changeCoords("x", parseInt(input))} />
                     <TextField
                         min={0}
                         max={place.image.value?.size.y}
                         type="number"
-                        placeholder="Y координата"
+                        placeholder="Y пукалка"
                         defaultValue={overlay.position.value!.y.toString()}
                         onInput={(input) => changeCoords("y", parseInt(input))} />
                 </div>
             </div>
             <div class={styles.group}>
-                <p class={styles.groupTitle}>Прозрачность</p>
+                <p class={styles.groupTitle}>Дымность</p>
                 <TextField
                     min={0}
                     max={100}
                     type="number"
-                    placeholder="Прозрачность"
+                    placeholder="Дымность"
                     defaultValue={overlay.opacity.value!.toString()}
                     onInput={changeOpacity} />
             </div>

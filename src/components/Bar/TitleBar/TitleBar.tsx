@@ -34,9 +34,9 @@ export function TitleBar() {
             <summary className={styles.title}>{name} {icon}</summary>
             <div className={styles.content}>
                 <div className={styles.params}>
-                    <Param label="Кулдаун" value={info.info.value.cooldown + "мс"} />
-                    <Param label="Размер" value={place.image.value.size.x + "x" + place.image.value.size.y} />
-                    <Param label="Онлайн" value={info.info.value.online.toString()} />
+                    <Param label="Подожди" value={info.info.value.cooldown + "мс"} />
+                    <Param label="Пропорция" value={place.image.value.size.x + "x" + place.image.value.size.y} />
+                    <Param label="Офлайн" value={info.info.value.online.toString()} />
                 </div>
                 <div className={styles.icons}>
                     <div className={styles.media}>

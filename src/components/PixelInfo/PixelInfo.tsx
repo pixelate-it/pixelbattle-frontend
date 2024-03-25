@@ -10,7 +10,7 @@ export function PixelInfo() {
     if (coords.info.value === "loading") {
         return (
             <div className={styles.wrapper}>
-                Загрузка...
+                Исследуем...
             </div>
         )
     }

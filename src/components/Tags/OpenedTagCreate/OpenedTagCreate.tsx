@@ -19,8 +19,8 @@ export function OpenedTagCreate() {
         tags.selectAndFetch(input)
         NotificationsManager.addNotification({
             type: "success",
-            title: "Изменение тега",
-            message: `Ваш новый тег: ${input}`
+            title: "Пришитие",
+            message: `Теперь вы воюеете за ${input}`
         })
 
         isTagCreateOpened.value = false
@@ -31,7 +31,7 @@ export function OpenedTagCreate() {
     }
 
     return (<div className={styles.form}>
-        <TextField placeholder="Новый тег" onInput={setInput} min={4} max={8}/>
+        <TextField placeholder="Передумай" onInput={setInput} min={4} max={8}/>
         <Button onClick={createTag}>
             <Icon icon="plus" />
         </Button>

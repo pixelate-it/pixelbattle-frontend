@@ -6,38 +6,38 @@ type NotificationMap = {
 
 export const ServerNotificationMap: NotificationMap = {
     "UserCooldown": {
-        title: "Кулдаун активен (С)",
-        message: "Подождите пару секунд"
+        title: "Твоя любимая ошибка (С)",
+        message: "ПОДОЖДИТЕ ПАРУ СЕКУНД"
     },
     "RateLimit": {
-        title: "Рейт лимит (С)",
-        message: "Подождите пару секунд"
+        title: "Ты знаешь кто я? (С)",
+        message: "Не DDoS' сайт пж"
     },
     "TokenBanned": {
-        title: "Аккаунт забанен (С)",
-        message: "Ваш аккаунт забанен"
+        title: "Хаха, нельзя рисовать (С)",
+        message: "А вот не надо было правила нарушать"
     },
     "NotAuthorized": {
-        title: "Необходимо авторизоваться (С)",
-        message: "Вы не вошли в дискорд аккаунт"
+        title: "Представься (С)",
+        message: "Впились для начала"
     },
 }
 
 export const ClientNotificationMap: NotificationMap = {
     "Banned": {
-        title: "Аккаунт забанен",
-        message: "Ваш аккаунт забанен",
+        title: "Хаха, нельзя рисовать",
+        message: "А вот не надо было правила нарушать",
     },
     "Cooldown": {
-        title: "Подождите пару секунд",
-        message: "Кулдаун активен",
+        title: "Твоя любимая ошибка",
+        message: "Подождите пару секунд",
     },
     "Not logged": {
         title: "Необходимо авторизоваться",
         message: "Вы не вошли в дискорд аккаунт",
     },
     "Game ended": {
-        title: "Ждите новой игры",
-        message: "Игра окончена",
+        title: "А вот и всё!",
+        message: "Больше не поиграешь, увы",
     },
 }

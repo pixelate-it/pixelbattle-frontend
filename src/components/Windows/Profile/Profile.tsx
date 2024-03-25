@@ -21,36 +21,39 @@ export function Profile() {
 
 
     const params = {
-        "Имя": profile.user.value?.username,
-        "Айди": profile.user.value?.userID,
-        "Тег": profile.user.value?.tag,
-        "Статус": profile.user.value?.banned ? `Забанен по причине "${profile.user.value?.banned.reason ?? "Не указано"}"` : null,
-        "Роль": {
+        "ФИО": profile.user.value?.username,
+        "Серия и номер": profile.user.value?.userID,
+        "Группировка": profile.user.value?.tag,
+        "Статус": {
             [UserRole.User]: null,
-            [UserRole.Moderator]: "Модератор",
-            [UserRole.Admin]: "Админ",
-        }[profile.user.value?.role ?? UserRole.User]
+            [UserRole.Moderator]: "Мондиратор",
+            [UserRole.Admin]: "Одмэн",
+        }[profile.user.value?.role ?? UserRole.User],
+        "Судимость": profile.user.value?.banned ? (profile.user.value?.banned.reason ?? "Не указана") : null,
+        "Соц. рейтинг": profile.user.value?.points || 0
     }
+
+    console.log(profile.user.value?.points.toString())
 
 
     return (
         profile.isAuthenticated.value
-            ? (<WindowBox title="Профиль">
+            ? (<WindowBox title="Паспорт">
                 <div class={styles.wrapper}>
                     <div className={styles.params}>
                         {Object.entries(params).map(([label, value]) => {
-                            if (!value) return null;
+                            if(!value && value !== 0) return null;
 
-                            return <Param value={value} label={label} />
+                            return <Param value={value.toString()} label={label} />
                             
                         })}
                     </div>
 
-                    <Button href="/logout">Выйти</Button>
+                    <Button href="/logout">Выпилиться</Button>
                 </div>
             </WindowBox>)
             : (<div class={styles.login}>
-                <Button href="/login">Войти</Button>
+                <Button href="/login">Впилиться</Button>
             </div>)
 
     )

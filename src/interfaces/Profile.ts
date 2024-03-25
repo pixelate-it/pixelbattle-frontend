@@ -7,6 +7,7 @@ export interface ProfileInfo {
 	banned: BanInfo | null;
 	username: string;
 	role: UserRole;
+    points: number;
 }
 
 export enum UserRole {

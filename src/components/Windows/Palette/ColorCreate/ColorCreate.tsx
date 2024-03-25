@@ -36,10 +36,10 @@ export function ColorCreate() {
                     <HexColorInput color={color} onChange={setColor} prefixed />
                     <div className={styles.buttons}>
                         <Button onClick={onSelect}>
-                            Готово
+                            Отмена
                         </Button>
                         <Button onClick={toggle} type="danger">
-                            Отмена
+                            Готово
                         </Button>
                     </div>
 

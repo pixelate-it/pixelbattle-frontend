@@ -27,8 +27,8 @@ export function ImageSelect() {
 
         if (isBiggerThatCanvas) {
             notifications.addNotification({
-                title: "Слишком большое изображение",
-                message: "Размер изображения больше игрового поля",
+                title: "О нет, он такой большой...",
+                message: "Картинка больше холста",
                 type: "error"
             })
 
@@ -80,7 +80,7 @@ export function ImageSelect() {
         onDragOver={hover}
         onDragLeave={unhover}
     >
-        <p class={styles.label}>Перетащите изображение</p>
+        <p class={styles.label}>Кладите деньги</p>
 
         <p class={styles.or}>или</p>
 
@@ -92,6 +92,6 @@ export function ImageSelect() {
             class={styles.input}
         />
 
-        <Button onClick={() => fileInputRef.current?.click()}>Выберите файл</Button>
+        <Button onClick={() => fileInputRef.current?.click()}>Взломать компьютер</Button>
     </div>
 }

@@ -29,11 +29,11 @@ export function Tags() {
 
 
     return (
-        <WindowBox title="Теги">
+        <WindowBox title="Группировки">
             <div className={styles.tags}>
                 {
                     tags.tags.value.length === 0
-                        ? <p className={styles.empty}>Нет тегов</p>
+                        ? <p className={styles.empty}>Даже перекати-поля нет...</p>
                         : tags.tags.value.map((tag, index) =>
                             <Tag
                                 key={tag.name}

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "preact/hooks";
+import { useContext } from "preact/hooks";
 import styles from "./Cooldown.module.css";
 import { CooldownContext } from "../../managers/cooldown";
 

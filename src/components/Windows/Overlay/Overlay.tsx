@@ -11,7 +11,7 @@ export function Overlay() {
         overlay.load()
     }, [])
 
-    return <WindowBox title="Изображение">
+    return <WindowBox title="Срисовать">
         {
             overlay.isSet.value
                 ? <OverlayTransform />

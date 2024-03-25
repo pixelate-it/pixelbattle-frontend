@@ -9,7 +9,7 @@ export function Coordinates() {
 
     return (
         <p className={styles.coordinates}>
-            {coordinates.coordinates.value.x + ", " + coordinates.coordinates.value.y}
+            {coordinates.coordinates.value.x + " x " + coordinates.coordinates.value.y}
         </p>
     )
 }

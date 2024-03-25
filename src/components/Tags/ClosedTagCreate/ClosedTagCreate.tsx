@@ -23,18 +23,18 @@ export function ClosedTagCreate() {
         tags.remove()
         NotificationsManager.addNotification({
             type: "success",
-            title: "Изменение тега",
-            message: "Тег был сброшен"
+            title: "Отшитие",
+            message: "Теперь вы воюете ни за кого"
         });
     }
 
 
     return (<div className={styles.form}>
         <Button onClick={openTagCreate}>
-            Новый тег
+            Пришиться
         </Button>
         <Button onClick={deleteTag} type="danger">
-            Убрать текущий
+            Отшиться
         </Button>
     </div>)
 }

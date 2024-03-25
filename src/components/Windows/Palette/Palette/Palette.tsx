@@ -16,13 +16,13 @@ export function Palette() {
     return (
         <div className={styles.palette}>
             <PaletteGroup>
-                {palette.palette.value.colors.map(color => <ColorSelect color={color} />)}
+                <ColorDelete />
+                <ColorCreate />
+                <ColorPick />
             </PaletteGroup>
             <hr className={styles.hr} />
             <PaletteGroup>
-                <ColorPick />
-                <ColorCreate />
-                <ColorDelete />
+                {palette.palette.value.colors.map(color => <ColorSelect color={color} />)}
             </PaletteGroup>
         </div>
     )
