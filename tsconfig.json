@@ -9,7 +9,10 @@
 		"jsx": "react-jsx",
 		"jsxImportSource": "preact",
         "strict": true,
-        "types": ["node"]
+        "types": [
+			"node",
+			"vite-plugin-pwa/client"
+		]
 	},
 	"include": ["node_modules/vite/client.d.ts", "**/*"]
 }

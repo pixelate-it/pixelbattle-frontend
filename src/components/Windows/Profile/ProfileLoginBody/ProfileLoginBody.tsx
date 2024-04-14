@@ -17,13 +17,15 @@ export function ProfileLoginBody() {
         <div class={styles.checkboxes}>
             <Checkbox
                 name="terms"
-                onChange={(val) => { agreement.value = { ...agreement.value, terms: val } }}>
-                Я согласен с <a href={config.media.help[0] + "/privacy"}>Политикой конфиденциальности</a>
+                onChange={(val) => {
+                    agreement.value = {...agreement.value, terms: val }
+                }}>
+                Я согласен с <a href={config.media.help[0] + "/privacy"} target="_blank">Политикой конфиденциальности</a> и <a href={config.media.help[0] + "/terms"} target="_blank">Условиями использования</a>
             </Checkbox>
             <Checkbox
                 name="rules"
                 onChange={(val) => { agreement.value = { ...agreement.value, rules: val } }}>
-                Я согласен с <a href="https://discord.com/channels/969933616090075216/969947487412555816">Правилами Pixelbattle</a>
+                Я согласен с <a href={config.media.help[0] + "/rules"} target="_blank">Правилами PixelBattle</a>
             </Checkbox>
         </div>
 

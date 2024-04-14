@@ -5,8 +5,7 @@ export const ModalManager = {
     modal: signal(null) as Signal<null | { title: string; children: ComponentChildren }>,
     isOpen: computed(() => false),
     open(title: string, children: ComponentChildren) {
-        console.log("Test modal")
-        ModalManager.modal.value = { title: title, children: children }
+        ModalManager.modal.value = { title: title, children: children };
     },
     close() {
         ModalManager.modal.value = null;
