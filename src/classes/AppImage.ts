@@ -11,7 +11,7 @@ export class AppImage {
     private _size!: Point;
 
     constructor(
-        private readonly _raw: ArrayBuffer,
+        private readonly _raw: Blob,
         private readonly bufferPixelDataSize: ImageFormat = ImageFormat.RGBA
     ) {}
 
@@ -27,7 +27,7 @@ export class AppImage {
     }
 
     async process() {
-        const bitmap = await createImageBitmap(new Blob([ this._raw ]));
+        const bitmap = await createImageBitmap(this._raw);
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d')!;
 
