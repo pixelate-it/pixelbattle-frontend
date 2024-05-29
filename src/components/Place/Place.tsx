@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef } from "preact/hooks";
 import { PlaceContext } from "../../managers/place";
 import { PlaceApp } from "./PlaceApp";
-import styles from "./Place.module.css"
+import styles from "./Place.module.css";
 
 
 export function Place() {

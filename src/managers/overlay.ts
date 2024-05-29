@@ -65,7 +65,7 @@ export const OverlayManager = {
                     x: OverlayManager.position.value!.x,
                     y: OverlayManager.position.value!.y
                 },
-                opacity: OverlayManager.opacity.value!
+                opacity: OverlayManager.opacity.value ?? config.overlay.defaultOpacity
             }
         );
     },
@@ -78,7 +78,7 @@ export const OverlayManager = {
         OverlayManager.image.value = await new AppImage(await stringToBlob(localStorageOverlay.data)).process();
         OverlayManager.position.value = new Point(localStorageOverlay.position.x, localStorageOverlay.position.y)
         OverlayManager.imageName.value = localStorageOverlay.name;
-        OverlayManager.opacity.value = localStorageOverlay.opacity;
+        OverlayManager.opacity.value = localStorageOverlay.opacity ?? config.overlay.defaultOpacity;
     }
 }
 

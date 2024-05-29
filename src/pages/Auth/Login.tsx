@@ -1,4 +1,3 @@
-import { useRoute } from "preact-iso"
 import { useEffect } from "preact/hooks"
 import { config } from "../../config";
 

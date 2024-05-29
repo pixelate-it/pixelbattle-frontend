@@ -7,7 +7,6 @@ import { WindowBox } from "../../WindowBox/WindowBox";
 import { TagsContext } from "../../../managers/tags";
 import { UserRole } from "../../../interfaces/Profile";
 import { ModalContext } from "../../../managers/modal";
-import { Checkbox } from "../../General/Checkbox/Checkbox";
 import { ProfileLoginBody } from "./ProfileLoginBody/ProfileLoginBody";
 
 

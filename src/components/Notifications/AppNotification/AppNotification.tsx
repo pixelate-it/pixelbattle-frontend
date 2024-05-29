@@ -8,7 +8,7 @@ import { config } from "../../../config";
 
 export function AppNotification({ notification }: { notification: NotificationInfo }) {
     const [className, setClassName] = useState("");
-    const [time, setTime] = useState<NodeJS.Timeout>(setTimeout(() => {}, 0))
+    const [_time, setTime] = useState<NodeJS.Timeout>(setTimeout(() => {}, 0))
 
 
     useEffect(() => {

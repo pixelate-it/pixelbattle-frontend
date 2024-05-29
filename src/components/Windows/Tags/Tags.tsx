@@ -14,7 +14,7 @@ import { isTagCreateOpened } from "../../Tags/OpenTagSignal";
 
 
 export function Tags() {
-    const [tagsInterval, setTagsInterval] = useState<NodeJS.Timeout>()
+    const [_tagsInterval, setTagsInterval] = useState<NodeJS.Timeout>()
     const tags = useContext(TagsContext)
     const profile = useContext(ProfileContext)
 

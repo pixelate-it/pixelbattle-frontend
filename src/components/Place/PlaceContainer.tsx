@@ -20,7 +20,6 @@ import { config } from "../../config";
 import { PlaceOverlay } from "./PlaceOverlay";
 import { FederatedPointerEvent } from "@pixi/events";
 import { OverlayManager } from "../../managers/overlay";
-import { Color } from "@pixi/color";
 
 type Reason = "Cooldown" | "Not logged" | "Game ended" | "Banned";
 

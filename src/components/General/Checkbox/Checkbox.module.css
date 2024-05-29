@@ -13,6 +13,7 @@
     outline: 1px solid var(--white);
     border-radius: 2px;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .input::after {

@@ -72,8 +72,6 @@ export class PlaceApp {
         const ws = new AppWebSocket();
         ws.connect()
 
-        this.canvasRef.current!.style.cursor = "crosshair";
-
         window.addEventListener('resize', this.onWindowResize.bind(this));
     }
 

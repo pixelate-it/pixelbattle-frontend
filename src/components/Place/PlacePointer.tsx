@@ -5,7 +5,6 @@ import { WHITE_TEXTURE } from "../../lib/WhiteTexture";
 import { PlaceManager } from "../../managers/place";
 import { PaletteManager } from "../../managers/palette";
 import { config } from "../../config";
-import { AppColor } from "../../classes/AppColor";
 
 function getRandomArbitrary(min: number, max: number) {
     return Math.random() * (max - min) + min;

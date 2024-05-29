@@ -2,7 +2,6 @@ import { ALPHA_MODES, FORMATS, SCALE_MODES, Texture } from "@pixi/core";
 import { Sprite } from "@pixi/sprite";
 import { OverlayManager } from "../../managers/overlay";
 import { WHITE_TEXTURE } from "../../lib/WhiteTexture";
-import { config } from "../../config";
 
 
 export class PlaceOverlay extends Sprite {

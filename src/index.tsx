@@ -23,7 +23,7 @@ export function App() {
                             src={'/images/meta/favicon.svg'}
                             alt={'Логотип Pixel Battle'}
                         />
-                        <p className={styles.message}>Loading...</p>
+                        <p className={styles.message}>Loading</p>
                     </div>
                 }>
                     <Route path="/" component={Home}/>

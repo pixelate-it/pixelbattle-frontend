@@ -10,7 +10,7 @@ import { Icon } from "../../General/Icon/Icon";
 export function TitleBar() {
     const info = useContext(InfoContext)
     const place = useContext(PlaceContext)
-    const [infoIntervalId, setInfoIntervalId] = useState<NodeJS.Timeout>()
+    const [_infoIntervalId, setInfoIntervalId] = useState<NodeJS.Timeout>()
 
     useEffect(() => {
         info.fetch();
