@@ -7,77 +7,76 @@ import { PaletteManager } from "../../managers/palette";
 import { config } from "../../config";
 
 function getRandomArbitrary(min: number, max: number) {
-    return Math.random() * (max - min) + min;
+	return Math.random() * (max - min) + min;
 }
 
 export class PlacePointer extends Container {
-    public border: Sprite;
-    public background: Sprite;
-    private isShaking: boolean = false;
+	public border: Sprite;
+	public background: Sprite;
+	private isShaking: boolean = false;
 
-    constructor() {
-        super()
-        this.border = new Sprite(WHITE_TEXTURE);
-        this.background = new Sprite(WHITE_TEXTURE);
+	constructor() {
+		super();
+		this.border = new Sprite(WHITE_TEXTURE);
+		this.background = new Sprite(WHITE_TEXTURE);
 
-        this.setup()
-    }
+		this.setup();
+	}
 
+	public startShake() {
+		const originalPosition = this.position.clone();
+		const startTime = Date.now();
 
-    public startShake() {
-        const originalPosition = this.position.clone();
-        const startTime = Date.now();
+		const shake = (time: number) => {
+			this.position.x = originalPosition.x + getRandomArbitrary(-config.shakeAmount, config.shakeAmount);
+			this.position.y = originalPosition.y + getRandomArbitrary(-config.shakeAmount, config.shakeAmount);
 
-        const shake = (time: number) => {
-            this.position.x = originalPosition.x + getRandomArbitrary(-config.shakeAmount, config.shakeAmount);
-            this.position.y = originalPosition.y + getRandomArbitrary(-config.shakeAmount, config.shakeAmount);
+			this.isShaking = true;
 
-            this.isShaking = true
+			if (Date.now() - startTime > config.time.shake) {
+				this.position.x = originalPosition.x;
+				this.position.y = originalPosition.y;
 
-            if (Date.now() - startTime > config.time.shake) {
-                this.position.x = originalPosition.x;
-                this.position.y = originalPosition.y;
+				this.isShaking = false;
+				return;
+			}
 
-                this.isShaking = false
-                return;
-            }
+			requestAnimationFrame(shake);
+		};
 
-            requestAnimationFrame(shake);
-        }
+		shake(0);
+	}
 
-        shake(0)
-    }
+	public setup() {
+		this.border.anchor.set(0.5, 0.5);
+		this.background.anchor.set(0.5, 0.5);
+		this.border.scale.set(1 + config.hover.outlineSize);
+		this.eventMode = "none";
+		this.visible = false;
+		this.zIndex = 9999;
 
-    public setup() {
-        this.border.anchor.set(0.5, 0.5)
-        this.background.anchor.set(0.5, 0.5)
-        this.border.scale.set(1 + config.hover.outlineSize)
-        this.eventMode = "none"
-        this.visible = false
-        this.zIndex = 9999
+		this.addChild(this.border, this.background);
+	}
 
-        this.addChild(this.border, this.background)
-    }
+	public hover(point: Point) {
+		this.visible = true;
 
-    public hover(point: Point) {
-        this.visible = true
+		if (this.isShaking) return;
 
-        if (this.isShaking) return
+		this.position.set(point.x + 0.5, point.y + 0.5);
+		this.scale.set(config.hover.scale);
 
-        this.position.set(point.x + 0.5, point.y + 0.5)
-        this.scale.set(config.hover.scale)
+		if (PlaceManager.image.value === null) {
+			return;
+		}
 
-        if (PlaceManager.image.value === null) {
-            return
-        }
+		const color = PaletteManager.palette.value.selected;
+		this.background.tint = color;
+		this.border.tint = color.getReadableColor();
+	}
 
-        const color = PaletteManager.palette.value.selected;
-        this.background.tint = color 
-        this.border.tint = color.getReadableColor()
-    }
-
-    public out() {
-        this.visible = false
-        this.scale.set(1)
-    }
+	public out() {
+		this.visible = false;
+		this.scale.set(1);
+	}
 }
