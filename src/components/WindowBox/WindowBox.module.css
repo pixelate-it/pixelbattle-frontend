@@ -1,58 +1,109 @@
 .window {
-    background-color: var(--window-background);
-    border-radius: 8px;
-    max-width: 100%;
-    pointer-events: auto;
-    transform-origin: top right;
+	background-color: var(--window-background);
+	border-radius: 8px;
+	max-width: 100%;
+	pointer-events: auto;
+	transform-origin: top right;
 }
 
-.window[open] {
-    animation: windowOpen 0.3s ease-out forwards;
+.opened {
+	animation: windowOpen 0.75s ease-out forwards;
 }
 
-.window:not([open]) {
-    animation: windowClose 0.5s ease-out forwards;
+.opened .content {
+	animation: windowContentOpen 0.75s ease-out forwards;
 }
 
-.window[open] .title {
-    font-weight: bold;
+.closed {
+	animation: windowClose 0.75s ease-out forwards;
+}
+
+.closed .content {
+	animation: windowContentClose 0.75s ease-out forwards;
 }
 
 .content,
 .title {
-    padding: 12px;
-    background-clip: border-box;
+	padding: 12px;
+	background-clip: border-box;
 }
 
 .content {
-    padding-top: 0;
+	padding-top: 0;
+	transform-origin: 50% 0;
+	overflow: hidden;
+	transition: height 0.5s ease;
+}
+
+.container {
+	padding-top: 10px;
 }
 
 .title {
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 20px;
-    transition: font-weight 0.15s ease-out;
+	cursor: pointer;
+	font-weight: 500;
+	font-size: 20px;
+	transition: font-weight 0.15s ease-out;
+	display: flex;
+	padding-top: 10px;
+	padding-bottom: 0;
 }
 
 .title::marker {
-    content: '';
+	content: "";
 }
 
-@keyframes windowClose {
-    0% {
-        background-color: var(--window-background-selected);
-    }
-    100% {
-        background-color: var(--window-background);
-    }
+@keyframes windowContentClose {
+	0% {
+		transform: scaleY(1);
+		max-height: 400px;
+		max-width: 400px;
+		background-color: var(--window-background-selected);
+	}
+	25% {
+		max-height: 0;
+	}
+	100% {
+		transform: scaleY(0);
+		max-height: 0;
+		max-width: 0;
+		background-color: var(--window-background);
+	}
+}
+
+@keyframes windowContentOpen {
+	0% {
+		background-color: var(--window-background);
+		max-width: 0;
+		max-height: 0;
+	}
+	50% {
+		max-height: 0;
+		transform: scaleY(0);
+	}
+	75% {
+		max-width: 400px;
+		transform: scaleY(1);
+	}
+	100% {
+		background-color: var(--window-background-selected);
+		max-height: 400px;
+	}
 }
 
 @keyframes windowOpen {
-    0% {
-        background-color: var(--window-background);
-    }
-    100% {
-        background-color: var(--window-background-selected);
-    }
+	0% {
+		background-color: var(--window-background);
+	}
+	100% {
+		background-color: var(--window-background-selected);
+	}
+}
+@keyframes windowClose {
+	0% {
+		background-color: var(--window-background-selected);
+	}
+	100% {
+		background-color: var(--window-background);
+	}
 }
