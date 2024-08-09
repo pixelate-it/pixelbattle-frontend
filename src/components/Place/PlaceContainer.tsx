@@ -1,5 +1,5 @@
 import { Container } from "@pixi/display";
-import { Point } from "@pixi/math"
+import { Point } from "@pixi/math";
 import { AppColor } from "../../classes/AppColor";
 import { PaletteManager } from "../../managers/palette";
 import { PlacePointer } from "./PlacePointer";
@@ -20,208 +20,203 @@ import { config } from "../../config";
 import { PlaceOverlay } from "./PlaceOverlay";
 import { FederatedPointerEvent } from "@pixi/events";
 import { OverlayManager } from "../../managers/overlay";
+import { SnapshotManager } from "../../managers/snapshot";
+import { PlaceSnapshot } from "./PlaceSnapshot";
 
 type Reason = "Cooldown" | "Not logged" | "Game ended" | "Banned";
 
-
-
 export class PlaceContainer extends Container {
-    private pointer = new PlacePointer();
-    private place = new PlaceView();
-    private overlay = new PlaceOverlay()
+	private pointer = new PlacePointer();
+	private place = new PlaceView();
+	private overlay = new PlaceOverlay();
+	private snapshot = new PlaceSnapshot();
 
-    private pixelInfo = {
-        lastPoint: new Point(-1, -1),
-        lastPointTimeout: -1,
-        timeoutId: -1,
-    }
+	private pixelInfo = {
+		lastPoint: new Point(-1, -1),
+		lastPointTimeout: -1,
+		timeoutId: -1,
+	};
 
-    constructor(private viewport: Viewport, private canvasRef: RefObject<HTMLCanvasElement>) {
-        super();
+	constructor(private viewport: Viewport, private canvasRef: RefObject<HTMLCanvasElement>) {
+		super();
 
-        this.setup();
-    }
+		this.setup();
+	}
 
-    public onClick(event: DragEvent) {
-        const ev = (event.event as FederatedPointerEvent)
-        const position = ev.getLocalPosition(this)
-        const placePoint = new Point(Math.floor(position.x), Math.floor(position.y))
-        const image = PlaceManager.image.value;
+	public onClick(event: DragEvent) {
+		const ev = event.event as FederatedPointerEvent;
+		const position = ev.getLocalPosition(this);
+		const placePoint = new Point(Math.floor(position.x), Math.floor(position.y));
+		const image = PlaceManager.image.value;
 
-        const overlayImage = OverlayManager.image.value;
-        const overlayPosition = OverlayManager.position.value;
+		const overlayImage = OverlayManager.image.value;
+		const overlayPosition = OverlayManager.position.value;
 
-        if (image === null) 
-            return;
+		if (image === null) return;
 
-        const isOutsideOfCanvas = placePoint.x < 0 || placePoint.x > image.size.x || placePoint.y < 0 || placePoint.y > image.size.y
-        if (isOutsideOfCanvas) {
-            return
-        }
+		const isOutsideOfCanvas = placePoint.x < 0 || placePoint.x > image.size.x || placePoint.y < 0 || placePoint.y > image.size.y;
+		if (isOutsideOfCanvas) {
+			return;
+		}
 
-        if (overlayPosition === null || overlayImage === null) {
-            this.place.onClick(placePoint, ev.button);
-            return
-        }
+		if (SnapshotManager.enable.value) {
+			ev.button === 2 ? SnapshotManager.stop() : SnapshotManager.onPointerClick(placePoint);
+			return;
+		}
 
+		if (overlayPosition === null || overlayImage === null) {
+			this.place.onClick(placePoint, ev.button);
+			return;
+		}
 
-        const isOnTopOfOverlay = placePoint.x <= (overlayImage.size.x + overlayPosition.x)
-            && placePoint.x >= overlayPosition.x
-            && placePoint.y <= (overlayImage.size.y + overlayPosition.y)
-            && placePoint.y >= overlayPosition.y
+		const isOnTopOfOverlay =
+			placePoint.x <= overlayImage.size.x + overlayPosition.x &&
+			placePoint.x >= overlayPosition.x &&
+			placePoint.y <= overlayImage.size.y + overlayPosition.y &&
+			placePoint.y >= overlayPosition.y;
 
+		if (!isOnTopOfOverlay) {
+			this.place.onClick(placePoint, ev.button);
+			return;
+		}
 
-        if (!isOnTopOfOverlay) {
-            this.place.onClick(placePoint, ev.button);
-            return
-        }
+		const overlayPoint = placePoint.clone().set(placePoint.x - overlayPosition.x, placePoint.y - overlayPosition.y);
+		const color = overlayImage.getPixel(overlayPoint);
 
-        const overlayPoint = placePoint.clone().set(placePoint.x - overlayPosition.x, placePoint.y - overlayPosition.y)
-        const color = overlayImage.getPixel(overlayPoint)
+		if (color.alpha === 0) {
+			this.place.onClick(placePoint, ev.button);
+			return;
+		}
 
-        if (color.alpha === 0) {
-            this.place.onClick(placePoint, ev.button);
-            return
-        }
+		if (ev.button === 0) {
+			if (ColorPickerManager.isEnabled.value) {
+				this.onWillColorPick(color);
+				return;
+			}
 
-        if (ev.button === 0) {
-            if (ColorPickerManager.isEnabled.value) {
-                this.onWillColorPick(color)
-                return;
-            }
+			return this.onWillPlace(placePoint);
+		}
 
-            return this.onWillPlace(placePoint)
-        }
+		if (ev.button === 2) {
+			return this.onWillColorPick(color);
+		}
+	}
 
+	public setup() {
+		this.on("cant-place", this.onCantPlace.bind(this));
 
-        if (ev.button === 2) {
-            return this.onWillColorPick(color)
-        }
+		this.viewport.on("drag-start", this.onDragStart.bind(this));
+		this.viewport.on("drag-end", this.onDragEnd.bind(this));
 
-        
-    }
+		this.place.on("will-place", this.onWillPlace.bind(this));
+		this.place.on("place", this.onPlace.bind(this));
+		this.place.on("will-color-pick", this.onWillColorPick.bind(this));
+		this.place.on("hover", this.onHover.bind(this));
+		this.place.on("out", this.onOut.bind(this));
 
+		this.addChild(this.place);
+		this.addChild(this.overlay);
+		this.addChild(this.snapshot);
+		this.addChild(this.pointer);
+	}
 
-    public setup() {
-        this.on("cant-place", this.onCantPlace.bind(this));
+	public onDragStart(event: DragEvent) {
+		if (this.canvasRef.current) this.canvasRef.current.style.cursor = "grabbing";
+	}
 
-        this.viewport.on("drag-start", this.onDragStart.bind(this));
-        this.viewport.on("drag-end", this.onDragEnd.bind(this));
+	public onDragEnd(event: DragEvent) {
+		if (this.canvasRef.current) this.canvasRef.current.style.cursor = "crosshair";
 
-        this.place.on("will-place", this.onWillPlace.bind(this));
-        this.place.on("place", this.onPlace.bind(this));
-        this.place.on("will-color-pick", this.onWillColorPick.bind(this));
-        this.place.on("hover", this.onHover.bind(this));
-        this.place.on("out", this.onOut.bind(this));
+		this.cursor = "default";
+	}
 
-        this.addChild(this.place);
-        this.addChild(this.overlay)
-        this.addChild(this.pointer);
+	public onCantPlace({ reason }: { reason: Reason }) {
+		NotificationsManager.addNotification({
+			...ClientNotificationMap[reason],
+			type: "error",
+		});
 
-    }
+		this.pointer.startShake();
+	}
 
-    public onDragStart(event: DragEvent) {
-        if (this.canvasRef.current)
-            this.canvasRef.current.style.cursor = "grabbing";
+	public onWillPlace(point: Point) {
+		if (CooldownManager.hasCooldown.peek()) {
+			return this.emit("cant-place", { reason: "Cooldown" });
+		}
 
-    }
+		if (ProfileManager.profile.peek() === null) {
+			return this.emit("cant-place", { reason: "Not logged" });
+		}
 
-    public onDragEnd(event: DragEvent) {
-        if (this.canvasRef.current)
-            this.canvasRef.current.style.cursor = "crosshair";
+		if (InfoManager.info.value === null || PlaceManager.image.value === null) {
+			return;
+		}
+		if (InfoManager.info.value.ended) {
+			return this.emit("cant-place", { reason: "Game ended" });
+		}
 
-        this.cursor = "default"
-    }
+		if (ProfileManager.isBanned.value) {
+			return this.emit("cant-place", { reason: "Banned" });
+		}
 
-    public onCantPlace({ reason }: { reason: Reason }) {
-        NotificationsManager.addNotification({
-            ...ClientNotificationMap[reason],
-            type: "error"
-        })
+		const color = PlaceManager.image.value.getPixel(point);
 
-        this.pointer.startShake();
-    }
+		this.place.setSquare(point, PaletteManager.palette.value.selected);
 
-    public onWillPlace(point: Point) {
-        if (CooldownManager.hasCooldown.peek()) {
-            return this.emit("cant-place", { reason: "Cooldown" });
-        };
+		AppFetch.putPixel({
+			color: PaletteManager.palette.value.selected.toHex(),
+			x: point.x,
+			y: point.y,
+		}).catch((r) => {
+			this.place.setSquare(point, color);
+		});
+	}
 
-        if (ProfileManager.profile.peek() === null) {
-            return this.emit("cant-place", { reason: "Not logged" });
-        };
+	public onPlace(point: Point) {
+		this.pointer.hover(point);
+		// if (ProfileManager.isMod.value) {
+		//     return
+		// };
+		CooldownManager.start();
+	}
 
-        if (InfoManager.info.value === null || PlaceManager.image.value === null) {
-            return
-        }
-        if (InfoManager.info.value.ended) {
-            return this.emit("cant-place", { reason: "Game ended" });
-        };
+	public onHover(point: Point) {
+		CoordinatesManager.setCoordinates(point);
+		this.pointer.hover(point);
 
-        if (ProfileManager.isBanned.value) {
-            return this.emit("cant-place", { reason: "Banned" });
-        };
+		if (SnapshotManager.captureMode.value) SnapshotManager.onPointerMove(point);
 
-        const color = PlaceManager.image.value.getPixel(point);
+		if (this.pixelInfo.lastPoint.equals(point)) return;
+		if (this.pixelInfo.timeoutId !== -1) {
+			window.clearTimeout(this.pixelInfo.timeoutId);
+			this.pixelInfo.timeoutId = -1;
+		}
 
-        this.place.setSquare(point, PaletteManager.palette.value.selected);
+		CoordinatesManager.info.value = "loading";
+		this.pixelInfo.lastPoint = point.clone();
+		this.pixelInfo.timeoutId = window.setTimeout(() => {
+			if (CoordinatesManager.coordinates.value.x === -1 || CoordinatesManager.coordinates.value.y === -1) {
+				return;
+			}
+			CoordinatesManager.fetchInfo();
+		}, config.time.pixelInfo);
+	}
 
-        AppFetch.putPixel({
-            color: PaletteManager.palette.value.selected.toHex(),
-            x: point.x,
-            y: point.y
-        }).catch((r) => {
-            this.place.setSquare(point, color);
-        })
-    }
+	public update() {
+		this.place.texture.update();
+	}
 
-    public onPlace(point: Point) {
-        this.pointer.hover(point);
-        // if (ProfileManager.isMod.value) {
-        //     return
-        // };
-        CooldownManager.start()
-    }
+	public onOut() {
+		CoordinatesManager.removeCoordinates();
+		this.pointer.out();
+	}
 
+	public onWillColorPick(color: AppColor) {
+		ColorPickerManager.isEnabled.value = false;
 
-    public onHover(point: Point) {
-        CoordinatesManager.setCoordinates(point);
-        this.pointer.hover(point);
+		this.pointer.background.tint = color;
+		this.pointer.border.tint = color.getReadableColor();
 
-        if(this.pixelInfo.lastPoint.equals(point)) return;
-        if(this.pixelInfo.timeoutId !== -1) {
-            window.clearTimeout(this.pixelInfo.timeoutId);
-            this.pixelInfo.timeoutId = -1;
-        }
-
-        CoordinatesManager.info.value = 'loading';
-        this.pixelInfo.lastPoint = point.clone();
-        this.pixelInfo.timeoutId = window.setTimeout(() => {
-            if(CoordinatesManager.coordinates.value.x === -1 || CoordinatesManager.coordinates.value.y === -1) {
-                return;
-            }
-            CoordinatesManager.fetchInfo();
-        }, config.time.pixelInfo);
-    }
-
-    public update() {
-        this.place.texture.update()
-    }
-
-    public onOut() {
-        CoordinatesManager.removeCoordinates();
-        CoordinatesManager.info.value = null;
-        window.clearTimeout(this.pixelInfo.timeoutId);
-        this.pixelInfo.lastPoint = new Point(-1, -1);
-        this.pointer.out();
-    }
-
-    public onWillColorPick(color: AppColor) {
-        ColorPickerManager.isEnabled.value = false
-
-        this.pointer.background.tint = color;
-        this.pointer.border.tint = color.getReadableColor()
-
-        PaletteManager.addAndSelect(color)
-    }
+		PaletteManager.addAndSelect(color);
+	}
 }
