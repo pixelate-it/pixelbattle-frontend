@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'preact/hooks'
 import { AppGame } from 'src/classes/AppGame'
 import { AppWebSocket } from 'src/classes/AppWebSocket/AppWebSocket'
+import { BottomBarStore } from 'src/stores/bottombar'
 
 export const Canvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -35,10 +36,11 @@ export const Canvas = () => {
       gameRef.current.onMouseDown
     )
     canvasRef.current?.addEventListener('mouseup', gameRef.current.onMouseUp)
-    canvasRef.current?.addEventListener(
-      'mousemove',
-      gameRef.current.onMouseMove
-    )
+    canvasRef.current?.addEventListener('mousemove', (e) => {
+      BottomBarStore.setState({
+        coordinates: gameRef.current!.onMouseMove(e)
+      })
+    })
     canvasRef.current?.addEventListener(
       'contextmenu',
       gameRef.current.onContextMenu

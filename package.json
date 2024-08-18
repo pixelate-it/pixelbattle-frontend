@@ -11,7 +11,8 @@
   "dependencies": {
     "@types/js-cookie": "^3.0.6",
     "js-cookie": "^3.0.5",
-    "preact": "^10.23.1"
+    "preact": "^10.23.1",
+    "unistore": "^3.5.2"
   },
   "devDependencies": {
     "@inthepocket/eslint-config-preact": "^1.2.13",

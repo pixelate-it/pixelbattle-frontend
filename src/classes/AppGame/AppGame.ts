@@ -78,6 +78,7 @@ export class AppGame {
     } else {
       this.movePointer(e)
     }
+    return [this.appPointer.x, this.appPointer.y]
   }
 
   onContextMenu = (e: Event) => {

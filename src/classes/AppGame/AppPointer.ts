@@ -17,8 +17,8 @@ export class AppPointer {
 
   updateColor(color: ColorArray) {
     this.color = `rgb(${color[0]},${color[1]},${color[2]})`
-    if (color[0] < 127 || color[1] < 127 || color[2] < 127)
-      this.outline = 'white'
+    const avg = (color[0] + color[1] + color[2]) / 3
+    if (avg < 127) this.outline = 'white'
     else this.outline = 'black'
   }
 }
