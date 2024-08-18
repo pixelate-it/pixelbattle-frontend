@@ -3,7 +3,9 @@ import { AppConfig } from '../AppConfig'
 import AppChunk from './AppChunk'
 
 export class AppCanvas {
-  chunks: Array<AppChunk> = []
+  private chunks: Array<AppChunk> = []
+  width = 0
+  height = 0
   empty = true
 
   async process(blob: Blob) {
@@ -12,8 +14,8 @@ export class AppCanvas {
     const ctx = canvas.getContext('2d')!
     this.empty = false
 
-    canvas.width = bitmap.width
-    canvas.height = bitmap.height
+    this.width = canvas.width = bitmap.width
+    this.height = canvas.height = bitmap.height
     ctx.drawImage(bitmap, 0, 0)
 
     for (let x = 0; x < canvas.width; x += AppConfig.chunks.chunkWidth) {
@@ -46,6 +48,14 @@ export class AppCanvas {
       if (this.chunks[i].itInside(x, y)) {
         this.chunks[i].putPixel(x, y, color)
         return
+      }
+    }
+  }
+
+  getPixel(x: number, y: number) {
+    for (const i in this.chunks) {
+      if (this.chunks[i].itInside(x, y)) {
+        return this.chunks[i].getPixel(x, y)
       }
     }
   }

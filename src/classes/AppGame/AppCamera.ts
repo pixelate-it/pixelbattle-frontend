@@ -1,5 +1,7 @@
+import { AppConfig } from '../AppConfig'
+
 export class AppCamera {
-  s = 2
+  s = 1.2
   x: number
   y: number
 
@@ -19,5 +21,20 @@ export class AppCamera {
 
   clear(ctx: CanvasRenderingContext2D) {
     ctx.resetTransform()
+  }
+
+  wheel(e: WheelEvent) {
+    const zoom = e.deltaY < 0 ? 1.15 : 0.85
+    const result = zoom * this.s
+    if (result < AppConfig.zoom.min) return
+    if (result > AppConfig.zoom.max) return
+    const rect = this.canvas.getBoundingClientRect()
+    const mouseX = e.clientX - rect.left
+    const mouseY = e.clientY - rect.top
+
+    this.x = mouseX - zoom * (mouseX - this.x)
+    this.y = mouseY - zoom * (mouseY - this.y)
+
+    this.s *= zoom
   }
 }

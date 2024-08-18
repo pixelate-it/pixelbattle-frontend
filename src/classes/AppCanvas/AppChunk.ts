@@ -42,8 +42,8 @@ export default class AppChunk {
     return (
       x >= this.x &&
       y >= this.y &&
-      x <= this.x + this.width &&
-      y <= this.y + this.height
+      x <= this.x + this.width - 1 &&
+      y <= this.y + this.height - 1
     )
   }
 
@@ -57,5 +57,12 @@ export default class AppChunk {
     Object.assign({ data }, this.imageData)
 
     if (!this.isUpdating) this.updateBitmap()
+  }
+
+  getPixel(x: number, y: number) {
+    const pos = (x - this.x + (y - this.y) * this.width) * 4
+
+    const data = this.imageData.data
+    return [data[pos], data[pos + 1], data[pos + 2]]
   }
 }

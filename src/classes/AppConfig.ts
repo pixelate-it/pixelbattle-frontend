@@ -35,5 +35,9 @@ export const AppConfig = {
     chunkWidth: 100,
     chunkHeight: 100,
     chunkUpdateCountdown: 200
+  },
+  zoom: {
+    max: 200,
+    min: 0.5
   }
 }

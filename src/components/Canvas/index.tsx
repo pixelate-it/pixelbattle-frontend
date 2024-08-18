@@ -39,6 +39,10 @@ export const Canvas = () => {
       'mousemove',
       gameRef.current.onMouseMove
     )
+    canvasRef.current?.addEventListener(
+      'contextmenu',
+      gameRef.current.onContextMenu
+    )
 
     return () => {
       window.onresize = null
@@ -55,6 +59,10 @@ export const Canvas = () => {
       canvasRef.current?.removeEventListener(
         'mousemove',
         gameRef.current!.onMouseMove
+      )
+      canvasRef.current?.removeEventListener(
+        'contextmenu',
+        gameRef.current!.onContextMenu
       )
     }
   }, [])

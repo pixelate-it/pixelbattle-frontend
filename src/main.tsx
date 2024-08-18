@@ -1,6 +1,7 @@
 import { render } from 'preact'
 import './styles/font.css'
 import './styles/index.css'
+import './styles/reset.css'
 import { Canvas } from './components/Canvas'
 
 const App = () => {
