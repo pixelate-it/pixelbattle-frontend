@@ -1,6 +1,5 @@
 import { PlaceContext, PlaceManager } from '../../managers/place';
 import { PaletteContext, PaletteManager } from '../../managers/palette';
-import { CursorContext, CursorManager } from "../../managers/cursor";
 import { InfoContext, InfoManager } from '../../managers/info';
 import { ProfileContext, ProfileManager } from '../../managers/profile';
 import { CooldownContext, CooldownManager } from '../../managers/cooldown';
@@ -14,7 +13,6 @@ import { ModalContext, ModalManager } from '../../managers/modal';
 
 import { lazy } from 'preact/compat';
 import { Modal } from '../../components/Modal/Modal';
-import { Cursor } from '../../components/Cursor/Cursor';
 
 const Snow = lazy(() => import("../../components/Snow/Snow").then(r => r.Snow))
 const Place = lazy(() => import("../../components/Place/Place").then(r => r.Place))
@@ -30,30 +28,27 @@ export function Home() {
             </SettingsContext.Provider>
             <InfoContext.Provider value={InfoManager}>
                 <ColorPickerContext.Provider value={ColorPickerManager}>
-                    <CursorContext.Provider value={CursorManager}>
-                        <Cursor />
-                        <PlaceContext.Provider value={PlaceManager}>
-                            <OverlayContext.Provider value={OverlayManager}>
-                                <Place />
-                                <NotificationsContext.Provider value={NotificationsManager}>
-                                    <TagsContext.Provider value={TagsManager}>
-                                        <ModalContext.Provider value={ModalManager}>
-                                            <Modal />
-                                            <ProfileContext.Provider value={ProfileManager}>
-                                                <CoordinatesContext.Provider value={CoordinatesManager}>
-                                                    <CooldownContext.Provider value={CooldownManager}>
-                                                        <PaletteContext.Provider value={PaletteManager}>
-                                                            <TopBar />
-                                                        </PaletteContext.Provider>
-                                                    </CooldownContext.Provider>
-                                                </CoordinatesContext.Provider>
-                                            </ProfileContext.Provider>
-                                        </ModalContext.Provider>
-                                    </TagsContext.Provider>
-                                </NotificationsContext.Provider>
-                            </OverlayContext.Provider>
-                        </PlaceContext.Provider>
-                    </CursorContext.Provider>
+                    <PlaceContext.Provider value={PlaceManager}>
+                        <OverlayContext.Provider value={OverlayManager}>
+                            <Place />
+                            <NotificationsContext.Provider value={NotificationsManager}>
+                                <TagsContext.Provider value={TagsManager}>
+                                    <ModalContext.Provider value={ModalManager}>
+                                        <Modal />
+                                        <ProfileContext.Provider value={ProfileManager}>
+                                            <CoordinatesContext.Provider value={CoordinatesManager}>
+                                                <CooldownContext.Provider value={CooldownManager}>
+                                                    <PaletteContext.Provider value={PaletteManager}>
+                                                        <TopBar />
+                                                    </PaletteContext.Provider>
+                                                </CooldownContext.Provider>
+                                            </CoordinatesContext.Provider>
+                                        </ProfileContext.Provider>
+                                    </ModalContext.Provider>
+                                </TagsContext.Provider>
+                            </NotificationsContext.Provider>
+                        </OverlayContext.Provider>
+                    </PlaceContext.Provider>
                 </ColorPickerContext.Provider>
             </InfoContext.Provider>
         </>
