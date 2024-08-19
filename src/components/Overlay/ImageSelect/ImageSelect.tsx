@@ -3,7 +3,7 @@ import { Button } from "../../General/Button/Button";
 import styles from "./ImageSelect.module.css";
 import React from "preact/compat";
 import { OverlayContext } from "../../../managers/overlay";
-import { AppImage } from "../../../classes/AppImage";
+import { AppImage, ImageFormat } from "../../../classes/AppImage";
 import { Point } from "@pixi/math";
 import { PlaceContext } from "../../../managers/place";
 import { NotificationsContext } from "../../../managers/notifications";
@@ -20,7 +20,7 @@ export function ImageSelect() {
 
 
     async function uploadImage(image: File) {
-        const decodedImage = new AppImage(await image.arrayBuffer(), 4);
+        const decodedImage = new AppImage(new Blob([await image.arrayBuffer()]), ImageFormat.RGBA);
         await decodedImage.process();
 
         const isBiggerThatCanvas = place.image.value!.size.x < decodedImage.size.x || place.image.value!.size.y < decodedImage.size.y;

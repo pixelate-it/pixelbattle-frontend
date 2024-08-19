@@ -1,19 +1,30 @@
 import { createContext } from "preact";
 import { Signal, computed, signal } from "@preact/signals";
-import { ApiInfo } from "../interfaces/Info";
-import { AppFetch } from "../classes/AppFetch";
 import { Point } from "@pixi/math";
 import { AppImage } from "../classes/AppImage";
 import { AppLocalStorage } from "../classes/AppLocalStorage";
 import { config } from "../config";
 
 
-function arrayBufferToString(buffer: ArrayBuffer): string {
-    return String.fromCharCode(...new Uint8ClampedArray(buffer));
+async function blobToString(image: Blob): Promise<string> {
+    const reader = new FileReader();
+
+    return new Promise((resolve, reject) => {
+        reader.onloadend = () => {
+            if(typeof reader.result === 'string') {
+                resolve(reader.result);
+            } else reject();
+        }
+
+        reader.onerror = () => reject();
+
+        reader.readAsDataURL(image);
+    });
 }
 
-function stringToArrayBuffer(str: string): ArrayBuffer {
-    return new Uint8ClampedArray(str.split('').map(c => c.charCodeAt(0))).buffer;
+async function stringToBlob(str: string): Promise<Blob> {
+    const fetchResponse = await fetch(str);
+    return fetchResponse.blob();
 }
 
 export const OverlayManager = {
@@ -29,7 +40,7 @@ export const OverlayManager = {
         OverlayManager.opacity.value = config.overlay.defaultOpacity;
 
 
-        OverlayManager.save()
+        OverlayManager.save();
     },
     unsetImage() {
         OverlayManager.image.value = null;
@@ -37,41 +48,41 @@ export const OverlayManager = {
         OverlayManager.position.value = null;
         OverlayManager.opacity.value = null;
 
-        OverlayManager.save()
+        OverlayManager.save();
     },
-    save() {
+    async save() {
         if (!OverlayManager.isSet.value) {
-            AppLocalStorage.reset("overlay")
+            AppLocalStorage.reset("overlay");
             return;
         }
 
         AppLocalStorage.set(
             "overlay",
             {
-                data: arrayBufferToString(OverlayManager.image.value!.raw),
+                data: await blobToString(OverlayManager.image.value!.raw),
                 name: OverlayManager.imageName.value!,
                 position: {
                     x: OverlayManager.position.value!.x,
                     y: OverlayManager.position.value!.y
                 },
-                opacity: OverlayManager.opacity.value!
+                opacity: OverlayManager.opacity.value ?? config.overlay.defaultOpacity
             }
-        )
+        );
     },
     async load() {
-        const localStorageOverlay = AppLocalStorage.get("overlay")
+        const localStorageOverlay = AppLocalStorage.get("overlay");
 
         if (!localStorageOverlay)
             return;
 
-        OverlayManager.image.value = await new AppImage(stringToArrayBuffer(localStorageOverlay.data)).process();
+        OverlayManager.image.value = await new AppImage(await stringToBlob(localStorageOverlay.data)).process();
         OverlayManager.position.value = new Point(localStorageOverlay.position.x, localStorageOverlay.position.y)
         OverlayManager.imageName.value = localStorageOverlay.name;
-        OverlayManager.opacity.value = localStorageOverlay.opacity;
+        OverlayManager.opacity.value = localStorageOverlay.opacity ?? config.overlay.defaultOpacity;
     }
 }
 
-OverlayManager.isSet = computed(() => OverlayManager.image.value !== null)
+OverlayManager.isSet = computed(() => OverlayManager.image.value !== null);
 
 
 export const OverlayContext = createContext({} as typeof OverlayManager);

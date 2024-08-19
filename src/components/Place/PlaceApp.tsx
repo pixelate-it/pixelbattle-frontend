@@ -15,8 +15,6 @@ export class PlaceApp {
     public container?: PlaceContainer;
 
     constructor(canvasRef: RefObject<HTMLCanvasElement>) {
-        const worldSize = 1000; // Idk what is this
-
         this.canvasRef = canvasRef;
 
         this.app = new Application({
@@ -33,9 +31,9 @@ export class PlaceApp {
         this.viewport = new Viewport({
             screenWidth: window.innerWidth,
             screenHeight: window.innerHeight,
-            worldWidth: worldSize,
+            worldWidth: window.innerWidth * 2,
+            worldHeight: window.innerHeight * 2,
             events: events,
-            worldHeight: worldSize,
             disableOnContextMenu: true
         });
     }
@@ -56,11 +54,10 @@ export class PlaceApp {
             .fit(true, size.x, size.y)
             .zoomPercent(-config.zoom.defaultLevel, true)
             .clampZoom({
-                maxScale: config.zoom.maxLevel,
-                // maxWidth: size.x * config.zoom.maxLevel,
-                // maxHeight: size.y * config.zoom.maxLevel,
-                minWidth: config.zoom.minLevelPx,
-                minHeight: config.zoom.minLevelPx
+                minWidth: this.viewport.worldWidth / 500,
+                minHeight: this.viewport.worldHeight / 500,
+                maxWidth: size.x * 5,
+                maxHeight: size.y * 5
             })
             .moveCenter(new Point(size.x / 2, size.y / 2))
             .on("clicked", this.container.onClick.bind(this.container))
@@ -74,8 +71,6 @@ export class PlaceApp {
 
         const ws = new AppWebSocket();
         ws.connect()
-
-        this.canvasRef.current!.style.cursor = "crosshair";
 
         window.addEventListener('resize', this.onWindowResize.bind(this));
     }

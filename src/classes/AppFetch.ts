@@ -10,34 +10,29 @@ import { ApiErrorResponse, ApiResponse } from "../interfaces/ApiResponse";
 import { ServerNotificationMap } from "../lib/notificationMap";
 
 export class AppFetch {
-    private static fetch<T extends {}>(options: { url: string, method: "POST" | "PUT" | "GET", withCredentials: boolean, body?: unknown }) {
-        const headers: HeadersInit = {
-            'Content-Type': 'application/json',
-        }
-
-        if (options.withCredentials) {
-            headers["Authorization"] = `Bearer ${ProfileManager.profile.value?.token}`
-        }
-
+    private static fetch<T extends {}>(options: { url: string, method: "POST" | "PUT" | "GET", body?: unknown }) {
         return fetch(config.url.api + options.url, {
+            credentials: 'include',
             method: options.method,
-            headers: options.method === "GET" ? undefined : headers,
-            body: options.body ? JSON.stringify(options.body) : undefined
+            body: options.body ? JSON.stringify(options.body) : undefined,
+            headers: options.method === "GET" ? undefined : {
+                'Content-Type': 'application/json'
+            }
         })
             .then(res => res.json() as Promise<T | ApiErrorResponse>)
-            .then(AppFetch.checkForErrors<T>)
+            .then(AppFetch.checkForErrors<T>);
     }
 
-    static async post<T extends {}>(url: string, body: unknown, withCredentials: boolean = false) {
-        return AppFetch.fetch<T>({ url, method: "POST", withCredentials, body })
+    static async post<T extends {}>(url: string, body: unknown) {
+        return AppFetch.fetch<T>({ url, method: "POST", body })
     }
 
-    static async put<T extends {}>(url: string, body: unknown, withCredentials: boolean = false) {
-        return AppFetch.fetch<T>({ url, method: "PUT", withCredentials, body })
+    static async put<T extends {}>(url: string, body: unknown) {
+        return AppFetch.fetch<T>({ url, method: "PUT", body })
     }
 
-    static async get<T extends {}>(url: string, withCredentials: boolean = false) {
-        return AppFetch.fetch<T>({ url, method: "GET", withCredentials })
+    static async get<T extends {}>(url: string) {
+        return AppFetch.fetch<T>({ url, method: "GET" })
     }
 
 
@@ -67,7 +62,7 @@ export class AppFetch {
 
     static async pixels() {
         return fetch(config.url.api + "/pixels.png")
-            .then(res => res.arrayBuffer())
+            .then(res => res.blob())
     }
 
 
@@ -88,10 +83,10 @@ export class AppFetch {
     }
 
     static async putPixel(pixel: ApiPixel) {
-        return AppFetch.put<ApiResponse>("/pixels", pixel, true)
+        return AppFetch.put<ApiResponse>("/pixels", pixel)
     }
 
     static async changeTag(tag: string): Promise<ApiResponse> {
-        return AppFetch.post<ApiResponse>(`/users/${ProfileManager.profile.value?.id}/tag`, { tag }, true)
+        return AppFetch.post<ApiResponse>(`/users/${ProfileManager.profile.value?.id}/tag`, { tag })
     }
 }

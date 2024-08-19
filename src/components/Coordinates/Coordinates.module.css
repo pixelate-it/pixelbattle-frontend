@@ -2,16 +2,8 @@
     background-color: var(--window-background);
     border-radius: 4px;
     padding: 5px 10px;
-    animation: appear 0.2s ease-in-out forwards;
-    
 }
 
-@keyframes appear {
-    from {
-        transform: scale(0.2);
-    }
-
-    to {
-        transform: scale(1);
-    }
+.empty {
+    opacity: 0;
 }

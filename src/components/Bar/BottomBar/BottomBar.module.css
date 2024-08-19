@@ -1,8 +1,5 @@
 .wrapper {
-    position: absolute;
-    left: 50%;
-    bottom: 10px;
-    transform: translateX(-50%);
+    margin-top: 12px;
     display: grid;
     grid-template-columns: 1fr auto;
     /* grid-template-rows: 1fr 1fr; */
@@ -10,11 +7,13 @@
         "Cooldown Coordinates"
         "Palette Palette";
     align-items: end;
-    /* justify-items: end; */
+    align-self: center;
 
     pointer-events: none;
     gap: 5px;
 }
+
+
 
 .cooldown {
     grid-area: Cooldown;
@@ -34,27 +33,15 @@
     grid-area: Palette;
 }
 
-.notifications {
-    /* position: absolute; */
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
 
-}
 
 @media screen and (max-width: 600px) {
     .wrapper {
-        left: 0;
-        bottom: 0;
-        transform: none;
-        right: 0;
+        align-self: stretch;
     }
 
-    .coordinates {
+    .coordinates, .cooldown {
         margin-right: 10px;
     }
 
-    .cooldown {
-        margin-left: 10px;
-    }
 }

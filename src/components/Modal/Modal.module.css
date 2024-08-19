@@ -1,0 +1,42 @@
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.modal {
+  background-color: var(--window-background);
+  padding: 12px;
+  position: relative;
+  border-radius: 8px;
+  margin: 0 12px;
+  max-width: 500px;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.close {
+  transform: rotateZ(45deg);
+}
+
+.body {
+  margin-top: 20px;
+}

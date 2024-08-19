@@ -1,5 +1,6 @@
 :root {
     --window-background: #000000;
+    --window-background-selected: #191919;
     --grey-text: rgba(255, 255, 255, 0.70);
     --primary: #154CB7;
     --danger: #F35151;
@@ -16,6 +17,9 @@ html {
     overflow: hidden;
 }
 
-/* * {
-    outline: 1px solid red;
-} */
+* {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}

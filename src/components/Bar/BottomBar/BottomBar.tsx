@@ -11,8 +11,8 @@ export function BottomBar() {
     return (
         <div className={styles.wrapper}>
             <div className={styles.coordinates}>
-                <PixelInfo />
                 <Coordinates />
+                <PixelInfo />
             </div>
 
             <div className={styles.cooldown}>

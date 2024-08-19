@@ -6,10 +6,15 @@ import { Param } from "../../General/Param/Param";
 import { WindowBox } from "../../WindowBox/WindowBox";
 import { TagsContext } from "../../../managers/tags";
 import { UserRole } from "../../../interfaces/Profile";
+import { ModalContext } from "../../../managers/modal";
+import { ProfileLoginBody } from "./ProfileLoginBody/ProfileLoginBody";
+
+
 
 export function Profile() {
     const profile = useContext(ProfileContext)
     const tags = useContext(TagsContext)
+    const modal = useContext(ModalContext)
 
     useEffect(() => {
         profile.load()
@@ -42,7 +47,6 @@ export function Profile() {
                             if (!value) return null;
 
                             return <Param value={value} label={label} />
-                            
                         })}
                     </div>
 
@@ -50,7 +54,7 @@ export function Profile() {
                 </div>
             </WindowBox>)
             : (<div class={styles.login}>
-                <Button href="/login">Войти</Button>
+                <Button onClick={() => modal.open("Вход", <ProfileLoginBody />)}>Войти</Button>
             </div>)
 
     )
