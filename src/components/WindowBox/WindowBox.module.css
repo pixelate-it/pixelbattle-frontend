@@ -56,7 +56,7 @@
 @keyframes windowContentClose {
 	0% {
 		transform: scaleY(1);
-		max-height: 400px;
+		max-height: 450px;
 		max-width: 400px;
 		background-color: var(--window-background-selected);
 	}
@@ -87,7 +87,7 @@
 	}
 	100% {
 		background-color: var(--window-background-selected);
-		max-height: 400px;
+		max-height: 450px;
 	}
 }
 

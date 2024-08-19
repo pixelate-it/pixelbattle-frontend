@@ -1,10 +1,17 @@
-import { useEffect } from "preact/hooks"
+import { useEffect } from "preact/hooks";
 import { config } from "../../config";
 
 export function Login() {
-    useEffect(() => {  
-        window.location.replace(config.url.api + '/login/discord');
-    })
+	const redirectUrl = new URLSearchParams({
+		client_id: config.discord.clientId,
+		redirect_uri: config.discord.redirectUri,
+		response_type: "code",
+		scope: config.discord.scope.join(" "),
+	});
 
-    return null;
+	useEffect(() => {
+		window.location.replace(`https://discord.com/api/oauth2/authorize?${redirectUrl}`);
+	});
+
+	return null;
 }
