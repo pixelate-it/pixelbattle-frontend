@@ -20,7 +20,7 @@ export function ProfileLoginBody() {
                 onChange={(val) => {
                     agreement.value = {...agreement.value, terms: val }
                 }}>
-                Я согласен с <a href={config.media.help[0] + "/privacy"} target="_blank">Политикой конфиденциальности</a> и <a href={config.media.help[0] + "/terms"} target="_blank">Условиями использования</a>
+                Я согласен с <a href={config.media.help[0] + "/legal/privacy"} target="_blank">Политикой конфиденциальности</a> и <a href={config.media.help[0] + "/legal/terms"} target="_blank">Условиями использования</a>
             </Checkbox>
             <Checkbox
                 name="rules"
