@@ -2,7 +2,6 @@ import { SnapshotManager } from "../../managers/snapshot";
 import { WHITE_TEXTURE } from "../../lib/WhiteTexture";
 import { Sprite } from "@pixi/sprite";
 import { PlaceManager } from "../../managers/place";
-import { config } from "../../config";
 import { Point } from "@pixi/math";
 
 export class PlaceSnapshot extends Sprite {
@@ -17,22 +16,24 @@ export class PlaceSnapshot extends Sprite {
 		this.visible = false;
 		this.alpha = 0.5;
 
-		SnapshotManager.enable.subscribe((v) => (this.visible = true));
-		SnapshotManager.offsetPoint.subscribe((v) => {
-			this.x = v.x;
-			this.y = v.y;
+		SnapshotManager.enable.subscribe((v) => (this.visible = v));
+		SnapshotManager.offsetPoint.subscribe((v: Point) => {
 			const ov = SnapshotManager.startPoint.value;
-			if (this.x === 0) {
+			if (Number.isNaN(v.x)) {
 				this.x = ov.x;
+			} else {
+				this.x = v.x;
 			}
-			if (this.y === 0) {
+			if (Number.isNaN(v.y)) {
 				this.y = ov.y;
+			} else {
+				this.y = v.y;
 			}
 		});
 		SnapshotManager.startPoint.subscribe((v) => {
 			const ov = SnapshotManager.offsetPoint.value;
-			this.x = v.x - ov.x;
-			this.y = v.y - ov.y;
+			this.x = !Number.isNaN(ov.x) ? v.x - ov.x : v.x;
+			this.y = !Number.isNaN(ov.y) ? v.y - ov.y : v.y;
 			const i = PlaceManager.image.value;
 			if (i) this.tint = i.getPixel(v).getReadableColor();
 		});

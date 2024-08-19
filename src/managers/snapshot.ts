@@ -23,7 +23,7 @@ export const SnapshotManager = {
 	captureMode: signal(false),
 
 	startPoint: signal(new Point()),
-	offsetPoint: signal(new Point()),
+	offsetPoint: signal(new Point(NaN, NaN)),
 	size: signal(new Point()),
 	scale: signal(4),
 
@@ -34,7 +34,7 @@ export const SnapshotManager = {
 
 	clear() {
 		this.startPoint.value = new Point();
-		this.offsetPoint.value = new Point();
+		this.offsetPoint.value = new Point(NaN, NaN);
 		this.size.value = new Point();
 		this.empty.value = true;
 		this.captureMode.value = false;
@@ -67,18 +67,20 @@ export const SnapshotManager = {
 			width = Math.abs(width);
 			changed = true;
 			offsetPoint.x = point.x;
-		} else if (offsetPoint.x !== 0) {
-			offsetPoint.x = 0;
+		} else if (!Number.isNaN(offsetPoint.x)) {
+			offsetPoint.x = NaN;
 			changed = true;
 		}
 		if (height < 0) {
 			height = Math.abs(height);
 			changed = true;
 			offsetPoint.y = point.y;
-		} else if (offsetPoint.y !== 0) {
-			offsetPoint.y = 0;
+		} else if (!Number.isNaN(offsetPoint.y)) {
+			offsetPoint.y = NaN;
 			changed = true;
 		}
+		width += Number.isNaN(offsetPoint.x) ? 1 : 0;
+		height += Number.isNaN(offsetPoint.y) ? 1 : 0;
 		if (changed) this.offsetPoint.value = offsetPoint;
 		const normalSize = new Point(width, height);
 		this.size.value = normalSize;
@@ -87,9 +89,9 @@ export const SnapshotManager = {
 	fullScreenshot() {
 		const image = PlaceManager.image.value;
 		if (!image) return;
-		this.clear();
+		this.stop();
 		this.size.value = new Point(image.size.x, image.size.y);
-		this.empty.value = false;
+		this.toClipboard();
 	},
 
 	async toClipboard(scaleLimit = 10) {
@@ -97,7 +99,7 @@ export const SnapshotManager = {
 		const startPoint = this.startPoint.value;
 		const offsetPoint = this.offsetPoint.value;
 		if (!image) return;
-		const pos = new Point(offsetPoint.x !== 0 ? offsetPoint.x : startPoint.x, offsetPoint.y !== 0 ? offsetPoint.y : startPoint.y);
+		const pos = new Point(!Number.isNaN(offsetPoint.x) ? offsetPoint.x : startPoint.x, !Number.isNaN(offsetPoint.y) ? offsetPoint.y : startPoint.y);
 		const size = this.size.value;
 		let scale = this.scale.value;
 		if (scale > scaleLimit) scale = scaleLimit;
