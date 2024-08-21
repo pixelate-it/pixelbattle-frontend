@@ -51,6 +51,7 @@ export const SnapshotManager = {
 			this.captureMode.value = false;
 			this.empty.value = false;
 			this.toClipboard();
+			return;
 		}
 		this.clear();
 		this.startPoint.value = startPoint;
@@ -66,7 +67,7 @@ export const SnapshotManager = {
 		if (width < 0) {
 			width = Math.abs(width);
 			changed = true;
-			offsetPoint.x = point.x;
+			offsetPoint.x = point.x + 1;
 		} else if (!Number.isNaN(offsetPoint.x)) {
 			offsetPoint.x = NaN;
 			changed = true;
@@ -74,7 +75,7 @@ export const SnapshotManager = {
 		if (height < 0) {
 			height = Math.abs(height);
 			changed = true;
-			offsetPoint.y = point.y;
+			offsetPoint.y = point.y + 1;
 		} else if (!Number.isNaN(offsetPoint.y)) {
 			offsetPoint.y = NaN;
 			changed = true;
@@ -136,8 +137,10 @@ export const SnapshotManager = {
 
 	async toFile(scaleLimit = 10) {
 		const image = PlaceManager.image.value;
+		const startPoint = this.startPoint.value;
+		const offsetPoint = this.offsetPoint.value;
 		if (!image) return;
-		const pos = new Point(this.startPoint.value.x - this.offsetPoint.value.x, this.startPoint.value.y - this.offsetPoint.value.y);
+		const pos = new Point(!Number.isNaN(offsetPoint.x) ? offsetPoint.x : startPoint.x, !Number.isNaN(offsetPoint.y) ? offsetPoint.y : startPoint.y);
 		const size = this.size.value;
 		let scale = this.scale.value;
 		if (scale > scaleLimit) scale = scaleLimit;
@@ -157,7 +160,9 @@ export const SnapshotManager = {
 		const dataURL = canvas.toDataURL("image/png");
 		const link = document.createElement("a");
 		link.href = dataURL;
-		link.download = `result.png`;
+		link.download = `pixelbattle_snapshot_${!Number.isNaN(offsetPoint.x) ? offsetPoint.x : startPoint.x}_${!Number.isNaN(offsetPoint.y) ? offsetPoint.y : startPoint.y}_${size.x}_${
+			size.y
+		}.png`;
 		link.click();
 	},
 };
