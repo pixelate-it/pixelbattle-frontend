@@ -8,11 +8,13 @@ export class AppPointer {
   inside = false
 
   render(ctx: CanvasRenderingContext2D) {
-    ctx.fillStyle = this.color
-    ctx.strokeStyle = this.outline
-    ctx.lineWidth = 0.1
-    ctx.strokeRect(this.x, this.y, 1, 1)
-    ctx.fillRect(this.x, this.y, 1, 1)
+    if (this.inside) {
+      ctx.fillStyle = this.color
+      ctx.strokeStyle = this.outline
+      ctx.lineWidth = 0.15
+      ctx.strokeRect(this.x - 0.1, this.y - 0.1, 1 + 0.2, 1 + 0.2)
+      ctx.fillRect(this.x - 0.1, this.y - 0.1, 1 + 0.2, 1 + 0.2)
+    }
   }
 
   updateColor(color: ColorArray) {

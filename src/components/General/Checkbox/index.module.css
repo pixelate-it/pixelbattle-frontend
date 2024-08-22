@@ -1,0 +1,32 @@
+.wrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.input {
+  appearance: none;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  outline: 1px solid var(--white);
+  border-radius: 2px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.input::after {
+  content: '';
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background-color: var(--white);
+  transform: scale(0);
+  transition: transform 100ms ease-in;
+}
+
+.input:checked::after {
+  transform: scale(1);
+}

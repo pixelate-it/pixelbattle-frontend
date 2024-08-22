@@ -8,6 +8,7 @@ export default class AppChunk {
   imageData: ImageData
   renderBitmap: ImageBitmap | undefined
   isUpdating = false
+  lastUpdateTime = 0
 
   constructor(
     x: number,
@@ -30,12 +31,19 @@ export default class AppChunk {
     this.isUpdating = false
   }
 
-  render(ctx: CanvasRenderingContext2D) {
+  render(ctx: CanvasRenderingContext2D, delta: number) {
     if (this.renderBitmap) {
       ctx.beginPath()
       ctx.drawImage(this.renderBitmap, this.x, this.y)
+      if (this.lastUpdateTime > 0) {
+        ctx.strokeStyle = `hsl(0, 100%, ${(this.lastUpdateTime / 100) * 50}%)`
+        ctx.lineWidth = 1
+        ctx.strokeRect(this.x, this.y, this.width, this.height)
+        ctx.lineWidth = 1
+      }
       ctx.closePath()
     }
+    if (this.lastUpdateTime > 0) this.lastUpdateTime -= delta / 10
   }
 
   itInside(x: number, y: number) {
@@ -57,6 +65,7 @@ export default class AppChunk {
     Object.assign({ data }, this.imageData)
 
     if (!this.isUpdating) this.updateBitmap()
+    this.lastUpdateTime = 100
   }
 
   getPixel(x: number, y: number) {

@@ -12,7 +12,6 @@ export class AppCanvas {
     const bitmap = await createImageBitmap(blob)
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')!
-    this.empty = false
 
     this.width = canvas.width = bitmap.width
     this.height = canvas.height = bitmap.height
@@ -40,6 +39,8 @@ export class AppCanvas {
         )
       }
     }
+    this.empty = false
+
     return this
   }
 
@@ -60,9 +61,9 @@ export class AppCanvas {
     }
   }
 
-  render(ctx: CanvasRenderingContext2D) {
+  render(ctx: CanvasRenderingContext2D, delta: number) {
     for (const i in this.chunks) {
-      this.chunks[i].render(ctx)
+      this.chunks[i].render(ctx, delta)
     }
     return this
   }

@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@types/js-cookie": "^3.0.6",
     "js-cookie": "^3.0.5",
     "preact": "^10.23.1",
     "unistore": "^3.5.2"
@@ -17,6 +16,7 @@
   "devDependencies": {
     "@inthepocket/eslint-config-preact": "^1.2.13",
     "@preact/preset-vite": "^2.9.0",
+    "@types/js-cookie": "^3.0.6",
     "commitlint": "^19.4.0",
     "eslint": "^9.9.0",
     "prettier": "^3.3.3",

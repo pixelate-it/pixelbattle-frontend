@@ -1,11 +1,21 @@
 import { useEffect } from 'preact/compat'
 import { useBuffer } from 'src/hooks/useBuffer'
-import { BottomBarManager } from 'src/stores/bottombar'
-import { BottomBarState } from 'src/types/stores/bottombar'
-import { connect } from 'unistore/preact'
+import { useStoreSelector } from 'src/hooks/useStoreSelector'
+import { BottomBarManager, CanvasStore } from 'src/stores/canvas'
+import { PixelInfo } from 'src/types/api'
+import { CanvasState } from 'src/types/stores'
 
-const BottomBar = (props: BottomBarState) => {
-  const coordinates = useBuffer(props.coordinates)
+interface BottomBarProps {
+  pointerCoordinates: number[]
+  pixelInfo: PixelInfo | null
+}
+
+export const BottomBar = () => {
+  const state = useStoreSelector<CanvasState, BottomBarProps>(CanvasStore, [
+    'pointerCoordinates',
+    'pixelInfo'
+  ])
+  const coordinates = useBuffer(state.pointerCoordinates)
 
   useEffect(() => {
     BottomBarManager.fetchPixel()
@@ -13,18 +23,13 @@ const BottomBar = (props: BottomBarState) => {
 
   return (
     <div style={{ position: 'absolute' }}>
-      {props.info && (
+      {state.pixelInfo && (
         <div>
-          {props.info.author}
-          {props.info.tag && '#' + props.info.tag}
+          {state.pixelInfo.author}
+          {state.pixelInfo.tag && '#' + state.pixelInfo.tag}
         </div>
       )}
-      {props.coordinates[0]}, {props.coordinates[1]}
+      {state.pointerCoordinates[0]}, {state.pointerCoordinates[1]}
     </div>
   )
 }
-
-export default connect<object, object, BottomBarState, BottomBarState>([
-  'coordinates',
-  'info'
-])((props) => <BottomBar {...props} />)

@@ -16,7 +16,14 @@ export class AppCamera {
   }
 
   apply(ctx: CanvasRenderingContext2D) {
-    ctx.setTransform(this.s, 0, 0, this.s, this.x, this.y)
+    ctx.setTransform(
+      Math.floor(this.s * 100) / 100,
+      0,
+      0,
+      Math.floor(this.s * 100) / 100,
+      Math.floor(this.x),
+      Math.floor(this.y)
+    )
   }
 
   clear(ctx: CanvasRenderingContext2D) {

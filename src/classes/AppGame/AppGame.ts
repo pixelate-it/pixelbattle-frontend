@@ -1,3 +1,4 @@
+import { CanvasStore } from 'src/stores/canvas'
 import { AppCanvas } from '../AppCanvas'
 import { AppConfig } from '../AppConfig'
 import { AppRequests } from '../AppRequests'
@@ -21,12 +22,13 @@ export class AppGame {
       this.appCanvas = await this.appCanvas.process(v)
       const i = await createImageBitmap(v)
       this.appCamera.centerOfImage(i.width, i.height)
+      CanvasStore.setState({ canvasPrepared: true })
     })
   }
 
   render(timestamp: number) {
     const ctx = this.ctx
-    // const delta = timestamp - this.lastTime!
+    const delta = timestamp - this.lastTime!
     this.lastTime = timestamp
     ctx.imageSmoothingEnabled = false
 
@@ -38,7 +40,7 @@ export class AppGame {
 
     this.appCamera.apply(ctx)
 
-    this.appCanvas.render(ctx)
+    this.appCanvas.render(ctx, delta)
 
     this.appPointer.render(ctx)
 
@@ -60,7 +62,6 @@ export class AppGame {
         this.appPointer.x,
         this.appPointer.y
       )
-      console.log(color, this.appPointer)
       if (!color) return
       this.appPointer.updateColor(color)
     }
@@ -72,13 +73,16 @@ export class AppGame {
   }
 
   onMouseMove = (e: MouseEvent) => {
+    const oldPx = this.appPointer.x + 0
+    const oldPy = this.appPointer.y + 0
     if (this.appMovement.mouseDown) {
       this.appCamera.x = e.clientX - this.appMovement.startX * this.appCamera.s
       this.appCamera.y = e.clientY - this.appMovement.startY * this.appCamera.s
     } else {
       this.movePointer(e)
     }
-    return [this.appPointer.x, this.appPointer.y]
+    if (oldPx !== this.appPointer.x || oldPy !== this.appPointer.y)
+      return [this.appPointer.x, this.appPointer.y]
   }
 
   onContextMenu = (e: Event) => {
