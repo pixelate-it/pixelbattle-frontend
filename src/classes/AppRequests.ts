@@ -60,7 +60,7 @@ export const AppRequests = {
 
   profile(): Promise<ProfileInfo> {
     return myFetch<ProfileInfo>({
-      url: `/users/${AppCookie.get('userId')}`,
+      url: `/users/${AppCookie.get('userid')}`,
       method: 'GET'
     })
   },
@@ -89,7 +89,7 @@ export const AppRequests = {
 
   changeTag(tag: string): Promise<ApiResponse> {
     return myFetch<ApiResponse>({
-      url: `/users/${AppCookie.get('userId')}/tag`,
+      url: `/users/${AppCookie.get('userid')}/tag`,
       method: 'POST',
       body: { tag }
     })

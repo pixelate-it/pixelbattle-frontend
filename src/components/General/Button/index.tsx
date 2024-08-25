@@ -1,5 +1,5 @@
 import { ComponentChildren } from 'preact'
-import styles from './Button.module.css'
+import styles from './index.module.css'
 
 interface BaseButton {
   children: ComponentChildren

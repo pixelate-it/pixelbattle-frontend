@@ -3,12 +3,11 @@ import { AppConfig } from '../AppConfig'
 import AppChunk from './AppChunk'
 
 export class AppCanvas {
-  private chunks: Array<AppChunk> = []
-  width = 0
-  height = 0
-  empty = true
+  private static chunks: Array<AppChunk> = []
+  static width = 0
+  static height = 0
 
-  async process(blob: Blob) {
+  static async process(blob: Blob) {
     const bitmap = await createImageBitmap(blob)
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')!
@@ -39,12 +38,11 @@ export class AppCanvas {
         )
       }
     }
-    this.empty = false
 
     return this
   }
 
-  putPixel(x: number, y: number, color: ColorArray) {
+  static putPixel(x: number, y: number, color: ColorArray) {
     for (const i in this.chunks) {
       if (this.chunks[i].itInside(x, y)) {
         this.chunks[i].putPixel(x, y, color)
@@ -53,7 +51,7 @@ export class AppCanvas {
     }
   }
 
-  getPixel(x: number, y: number) {
+  static getPixel(x: number, y: number) {
     for (const i in this.chunks) {
       if (this.chunks[i].itInside(x, y)) {
         return this.chunks[i].getPixel(x, y)
@@ -61,9 +59,12 @@ export class AppCanvas {
     }
   }
 
-  render(ctx: CanvasRenderingContext2D, delta: number) {
+  static render(ctx: CanvasRenderingContext2D) {
     for (const i in this.chunks) {
-      this.chunks[i].render(ctx, delta)
+      this.chunks[i].render(ctx)
+    }
+    for (const i in this.chunks) {
+      this.chunks[i].renderTools(ctx)
     }
     return this
   }

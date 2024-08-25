@@ -31,19 +31,30 @@ export default class AppChunk {
     this.isUpdating = false
   }
 
-  render(ctx: CanvasRenderingContext2D, delta: number) {
+  render(ctx: CanvasRenderingContext2D) {
     if (this.renderBitmap) {
       ctx.beginPath()
       ctx.drawImage(this.renderBitmap, this.x, this.y)
-      if (this.lastUpdateTime > 0) {
-        ctx.strokeStyle = `hsl(0, 100%, ${(this.lastUpdateTime / 100) * 50}%)`
-        ctx.lineWidth = 1
-        ctx.strokeRect(this.x, this.y, this.width, this.height)
-        ctx.lineWidth = 1
-      }
+
       ctx.closePath()
     }
-    if (this.lastUpdateTime > 0) this.lastUpdateTime -= delta / 10
+  }
+
+  renderTools(ctx: CanvasRenderingContext2D) {
+    const o = Date.now() - this.lastUpdateTime
+    if (o < 1000) {
+      ctx.strokeStyle = `#D80000`
+      ctx.globalAlpha = 1 - o / 1000
+      ctx.lineWidth = 1
+      ctx.moveTo(this.x - 0.5, this.y - 0.5)
+      ctx.lineTo(this.x - 0.5 + this.width, this.y - 0.5)
+      ctx.lineTo(this.x - 0.5 + this.width, this.y - 0.5 + this.height)
+      ctx.lineTo(this.x - 0.5, this.y - 0.5 + this.height)
+      ctx.lineTo(this.x - 0.5, this.y - 0.5)
+      ctx.stroke()
+      ctx.globalAlpha = 1
+      ctx.lineWidth = 1
+    }
   }
 
   itInside(x: number, y: number) {
@@ -65,7 +76,7 @@ export default class AppChunk {
     Object.assign({ data }, this.imageData)
 
     if (!this.isUpdating) this.updateBitmap()
-    this.lastUpdateTime = 100
+    this.lastUpdateTime = Date.now()
   }
 
   getPixel(x: number, y: number) {

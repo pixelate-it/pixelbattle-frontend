@@ -1,4 +1,5 @@
 import { AppConfig } from '../AppConfig'
+import { InfoStore } from 'src/managers/info'
 
 export class AppCamera {
   s = 1.2
@@ -8,6 +9,11 @@ export class AppCamera {
   constructor(private readonly canvas: HTMLCanvasElement) {
     this.x = canvas.width / 2
     this.y = canvas.height / 2
+    InfoStore.subscribe((v) => {
+      if (v)
+        if (!Number.isNaN(v.canvas.width) && !Number.isNaN(v.canvas.height))
+          this.centerOfImage(v.canvas.width, v.canvas.height)
+    })
   }
 
   centerOfImage(width: number, height: number) {

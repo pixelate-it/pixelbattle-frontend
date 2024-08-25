@@ -1,0 +1,144 @@
+.window {
+  background-color: var(--window-background);
+  border-radius: 8px;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  pointer-events: auto;
+}
+
+.opened {
+  animation: windowOpen 0.75s ease-out forwards;
+}
+
+.opened .title {
+  margin-left: 10px;
+}
+
+.opened .content {
+  animation: windowContentOpen 0.75s ease-out forwards;
+}
+
+.closed {
+  animation: windowClose 0.75s ease-out forwards;
+}
+
+.closed .content {
+  animation: windowContentClose 0.75s ease-out forwards;
+}
+
+.content,
+.title {
+  padding: 12px;
+  user-select: none;
+}
+
+.content {
+  padding-top: 0;
+  transform-origin: 50% 0;
+  overflow: hidden;
+  transition: height 0.5s ease;
+}
+
+.container {
+  padding-top: 10px;
+}
+
+.params {
+  padding-top: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.media {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.title {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 28px;
+  transition: margin 150ms ease-out;
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 0;
+}
+
+.title::marker {
+  content: '';
+}
+
+@media screen and (max-width: 600px) {
+  .window {
+    position: static;
+    width: 100%;
+    border-radius: 0;
+  }
+}
+
+.icons {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@keyframes windowContentClose {
+  0% {
+    transform: scaleY(1);
+    max-height: 400px;
+    max-width: 400px;
+    background-color: var(--window-background-selected);
+  }
+  25% {
+    max-height: 0;
+  }
+  100% {
+    transform: scaleY(0);
+    max-height: 0;
+    max-width: 0;
+    background-color: var(--window-background);
+  }
+}
+
+@keyframes windowContentOpen {
+  0% {
+    background-color: var(--window-background);
+    max-width: 0;
+    max-height: 0;
+  }
+  50% {
+    max-height: 0;
+    transform: scaleY(0);
+  }
+  75% {
+    max-width: 400px;
+    transform: scaleY(1);
+  }
+  100% {
+    background-color: var(--window-background-selected);
+    max-height: 400px;
+  }
+}
+
+@keyframes windowOpen {
+  0% {
+    background-color: var(--window-background);
+  }
+  100% {
+    background-color: var(--window-background-selected);
+  }
+}
+@keyframes windowClose {
+  0% {
+    background-color: var(--window-background-selected);
+  }
+  100% {
+    background-color: var(--window-background);
+  }
+}

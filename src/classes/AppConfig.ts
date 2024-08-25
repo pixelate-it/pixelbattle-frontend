@@ -1,3 +1,5 @@
+import { AppColor } from './AppCanvas/AppColor'
+
 export const AppConfig = {
   discord: {
     clientId: import.meta.env.VITE_DISCORD_BOT_ID,
@@ -20,9 +22,15 @@ export const AppConfig = {
     colors: {
       background: '#282828',
       palette: {
-        colors: ['#ff0000', '#00ff00', '#0000ff', '#000000', '#ffffff']
-      },
-      selected: '#ffffff'
+        colors: [
+          new AppColor('#ff0000'),
+          new AppColor('#00ff00'),
+          new AppColor('#0000ff'),
+          new AppColor('#000000'),
+          new AppColor('#ffffff')
+        ],
+        selected: new AppColor('#ffffff')
+      }
     }
   },
   media: {

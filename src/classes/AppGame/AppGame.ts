@@ -1,13 +1,10 @@
-import { CanvasStore } from 'src/stores/canvas'
 import { AppCanvas } from '../AppCanvas'
 import { AppConfig } from '../AppConfig'
-import { AppRequests } from '../AppRequests'
 import { AppCamera } from './AppCamera'
 import { AppMovement } from './AppMovement'
 import { AppPointer } from './AppPointer'
 
 export class AppGame {
-  appCanvas = new AppCanvas()
   appMovement = new AppMovement()
   appPointer = new AppPointer()
   lastTime = 0
@@ -16,19 +13,10 @@ export class AppGame {
     private readonly canvas: HTMLCanvasElement,
     private readonly ctx: CanvasRenderingContext2D = canvas.getContext('2d')!,
     private appCamera = new AppCamera(canvas)
-  ) {
-    this.canvas.style.cursor = 'crosshair'
-    AppRequests.pixels().then(async (v) => {
-      this.appCanvas = await this.appCanvas.process(v)
-      const i = await createImageBitmap(v)
-      this.appCamera.centerOfImage(i.width, i.height)
-      CanvasStore.setState({ canvasPrepared: true })
-    })
-  }
+  ) {}
 
   render(timestamp: number) {
     const ctx = this.ctx
-    const delta = timestamp - this.lastTime!
     this.lastTime = timestamp
     ctx.imageSmoothingEnabled = false
 
@@ -40,7 +28,7 @@ export class AppGame {
 
     this.appCamera.apply(ctx)
 
-    this.appCanvas.render(ctx, delta)
+    AppCanvas.render(ctx)
 
     this.appPointer.render(ctx)
 
@@ -58,10 +46,7 @@ export class AppGame {
     this.canvas.style.cursor = 'grabbing'
 
     if (e.button == 2) {
-      const color = this.appCanvas.getPixel(
-        this.appPointer.x,
-        this.appPointer.y
-      )
+      const color = AppCanvas.getPixel(this.appPointer.x, this.appPointer.y)
       if (!color) return
       this.appPointer.updateColor(color)
     }
@@ -73,16 +58,12 @@ export class AppGame {
   }
 
   onMouseMove = (e: MouseEvent) => {
-    const oldPx = this.appPointer.x + 0
-    const oldPy = this.appPointer.y + 0
     if (this.appMovement.mouseDown) {
       this.appCamera.x = e.clientX - this.appMovement.startX * this.appCamera.s
       this.appCamera.y = e.clientY - this.appMovement.startY * this.appCamera.s
     } else {
       this.movePointer(e)
     }
-    if (oldPx !== this.appPointer.x || oldPy !== this.appPointer.y)
-      return [this.appPointer.x, this.appPointer.y]
   }
 
   onContextMenu = (e: Event) => {
@@ -99,15 +80,14 @@ export class AppGame {
     if (
       pointerX < 0 ||
       pointerY < 0 ||
-      pointerX > this.appCanvas.width - 1 ||
-      pointerY > this.appCanvas.height - 1
+      pointerX > AppCanvas.width - 1 ||
+      pointerY > AppCanvas.height - 1
     ) {
       this.appPointer.inside = false
       return
     }
     this.appPointer.inside = true
 
-    this.appPointer.x = pointerX
-    this.appPointer.y = pointerY
+    this.appPointer.setPos(pointerX, pointerY)
   }
 }

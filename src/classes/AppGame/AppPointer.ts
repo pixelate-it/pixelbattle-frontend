@@ -1,4 +1,7 @@
+import { PaletteManager } from 'src/managers/palette'
+import { PointerManager } from 'src/managers/pointer'
 import { ColorArray } from 'src/types/canvas'
+import { AppColor } from '../AppCanvas/AppColor'
 
 export class AppPointer {
   x = 0
@@ -22,5 +25,13 @@ export class AppPointer {
     const avg = (color[0] + color[1] + color[2]) / 3
     if (avg < 127) this.outline = 'white'
     else this.outline = 'black'
+
+    PaletteManager.setCurrentColor(new AppColor(color))
+  }
+
+  setPos(x: number, y: number) {
+    if (x !== this.x || y !== this.y) PointerManager.setCoordinates([x, y])
+    this.x = x
+    this.y = y
   }
 }

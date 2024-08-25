@@ -1,4 +1,4 @@
-import styles from './Param.module.css'
+import styles from './index.module.css'
 
 interface ParamProps {
   label: string

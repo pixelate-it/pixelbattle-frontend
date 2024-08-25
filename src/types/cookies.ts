@@ -1,4 +1,4 @@
 export interface CookieMap {
-  userId: string
+  userid: string
   token: string
 }
