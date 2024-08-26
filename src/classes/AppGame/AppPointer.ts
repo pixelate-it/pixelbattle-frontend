@@ -1,14 +1,24 @@
-import { PaletteManager } from 'src/managers/palette'
+import { PaletteManager, PaletteStore } from 'src/managers/palette'
 import { PointerManager } from 'src/managers/pointer'
 import { ColorArray } from 'src/types/canvas'
 import { AppColor } from '../AppCanvas/AppColor'
+import { AppLogic } from '../AppLogic'
 
 export class AppPointer {
   x = 0
   y = 0
   color = 'black'
+  colorOriginal: AppColor | undefined
   outline = 'white'
   inside = false
+
+  constructor() {
+    PaletteStore.subscribe(
+      (v) => (
+        (this.color = v.selected.toRGB()), (this.colorOriginal = v.selected)
+      )
+    )
+  }
 
   render(ctx: CanvasRenderingContext2D) {
     if (this.inside) {
@@ -26,12 +36,16 @@ export class AppPointer {
     if (avg < 127) this.outline = 'white'
     else this.outline = 'black'
 
-    PaletteManager.setCurrentColor(new AppColor(color))
+    PaletteManager.addAndSelect(new AppColor(color))
   }
 
   setPos(x: number, y: number) {
     if (x !== this.x || y !== this.y) PointerManager.setCoordinates([x, y])
     this.x = x
     this.y = y
+  }
+
+  putPixel() {
+    AppLogic.putPixel(this.x, this.y)
   }
 }

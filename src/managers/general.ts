@@ -5,6 +5,7 @@ import { AppRequests } from 'src/classes/AppRequests'
 import { AppCanvas } from 'src/classes/AppCanvas'
 import { InfoManager } from './info'
 import { ProfileManager } from './profile'
+import { TagsManager } from './tags'
 
 export const GeneralStore = createStore<GeneralState>({
   canvasLoaded: false,
@@ -25,5 +26,6 @@ export const GeneralManager = {
     PaletteManager.load()
     ProfileManager.load()
     ProfileManager.fetch()
+    TagsManager.fetch()
   }
 }

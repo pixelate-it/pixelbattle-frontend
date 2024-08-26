@@ -36,6 +36,8 @@ export const useGame = (canvas: MutableRef<HTMLCanvasElement | null>) => {
       'contextmenu',
       gameRef.current.onContextMenu
     )
+    canvas.current?.addEventListener('mouseleave', gameRef.current.onMouseLeave)
+    canvas.current?.addEventListener('mouseenter', gameRef.current.onMouseEnter)
 
     return () => {
       window.onresize = null
@@ -53,6 +55,14 @@ export const useGame = (canvas: MutableRef<HTMLCanvasElement | null>) => {
       canvas.current?.removeEventListener(
         'contextmenu',
         gameRef.current!.onContextMenu
+      )
+      canvas.current?.removeEventListener(
+        'mouseleave',
+        gameRef.current!.onMouseLeave
+      )
+      canvas.current?.removeEventListener(
+        'mouseenter',
+        gameRef.current!.onMouseEnter
       )
     }
   }, [])

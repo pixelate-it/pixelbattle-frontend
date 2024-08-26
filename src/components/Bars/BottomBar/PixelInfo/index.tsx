@@ -1,18 +1,9 @@
-import { useEffect } from 'preact/hooks'
-import { useBuffer } from 'src/hooks/useBuffer'
-import { useStore } from 'src/hooks/useStore'
-import { PointerStore, PointerManager } from 'src/managers/pointer'
-import { PointerState } from 'src/types/managers'
 import { Coordinates } from './Coordinates'
 import { Info } from './Info'
+import { usePointer } from 'src/hooks/usePointer'
 
 export const PixelInfo = () => {
-  const state = useStore<PointerState>(PointerStore)
-  const coordinates = useBuffer(state.coordinates)
-
-  useEffect(() => {
-    PointerManager.fetchPixel()
-  }, [coordinates])
+  const state = usePointer()
 
   return (
     <>

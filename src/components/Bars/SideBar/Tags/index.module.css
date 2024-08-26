@@ -1,0 +1,12 @@
+.tags {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  /* max-width: 100%; */
+  width: 100%;
+}
+
+.empty {
+  color: var(--grey-text);
+}

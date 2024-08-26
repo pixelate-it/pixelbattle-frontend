@@ -1,0 +1,7 @@
+.notifications {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-end;
+}

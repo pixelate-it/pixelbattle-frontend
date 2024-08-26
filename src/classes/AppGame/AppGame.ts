@@ -44,23 +44,31 @@ export class AppGame {
     this.appMovement.startX = (e.clientX - this.appCamera.x) / this.appCamera.s
     this.appMovement.startY = (e.clientY - this.appCamera.y) / this.appCamera.s
     this.canvas.style.cursor = 'grabbing'
-
-    if (e.button == 2) {
-      const color = AppCanvas.getPixel(this.appPointer.x, this.appPointer.y)
-      if (!color) return
-      this.appPointer.updateColor(color)
-    }
   }
 
-  onMouseUp = () => {
+  onMouseUp = (e: MouseEvent) => {
     this.appMovement.mouseDown = false
     this.canvas.style.cursor = 'crosshair'
+
+    if (!this.appMovement.canvasDragged && this.appPointer.inside) {
+      if (e.button === 2) {
+        const color = AppCanvas.getPixel(this.appPointer.x, this.appPointer.y)
+        if (!color) return
+        this.appPointer.updateColor(color)
+      }
+      if (e.button === 0) {
+        this.appPointer.putPixel()
+      }
+    }
+
+    this.appMovement.canvasDragged = false
   }
 
   onMouseMove = (e: MouseEvent) => {
     if (this.appMovement.mouseDown) {
       this.appCamera.x = e.clientX - this.appMovement.startX * this.appCamera.s
       this.appCamera.y = e.clientY - this.appMovement.startY * this.appCamera.s
+      this.appMovement.canvasDragged = true
     } else {
       this.movePointer(e)
     }
@@ -68,6 +76,14 @@ export class AppGame {
 
   onContextMenu = (e: Event) => {
     e.preventDefault()
+  }
+
+  onMouseEnter = () => {}
+
+  onMouseLeave = () => {
+    this.appMovement.mouseDown = false
+    this.appMovement.canvasDragged = false
+    this.appPointer.inside = false
   }
 
   movePointer(e: MouseEvent) {

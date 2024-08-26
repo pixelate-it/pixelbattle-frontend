@@ -31,11 +31,13 @@ export const useStoreSelector = <I extends object, O extends object>(
   const [state, setState] = useState<O>(() => selector(store.getState()))
 
   useEffect(() => {
+    let oldState = state
+
     const sub = (state: I) => {
       const selectedState = selector(state)
-      // I will in future make her more smart algorithm for checking is update something
-      if (!arraysEqual(Object.values(state), Object.values(selectedState)))
+      if (!arraysEqual(Object.values(oldState), Object.values(selectedState)))
         setState(selectedState)
+      oldState = selectedState
     }
 
     store.subscribe(sub)

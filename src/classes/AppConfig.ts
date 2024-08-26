@@ -47,5 +47,9 @@ export const AppConfig = {
   zoom: {
     max: 200,
     min: 0.5
+  },
+  cooldown: {
+    offset: 50,
+    staff: 50
   }
 }

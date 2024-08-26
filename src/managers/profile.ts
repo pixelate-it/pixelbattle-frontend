@@ -35,10 +35,7 @@ export const ProfileManager = {
     if (token && id) ProfileStore.setState({ profile: { token, id } })
   },
   fetch() {
-    AppRequests.profile().then((user) => {
-      ProfileStore.setState({ user })
-      console.log(user)
-    })
+    AppRequests.profile().then((user) => ProfileStore.setState({ user }))
   },
   login(token: string, id: string) {
     ProfileStore.setState({ profile: { token, id } })

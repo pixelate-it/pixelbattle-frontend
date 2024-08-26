@@ -11,6 +11,7 @@
   "dependencies": {
     "js-cookie": "^3.0.5",
     "preact": "^10.23.1",
+    "react-colorful": "^5.6.1",
     "unistore": "^3.5.2"
   },
   "devDependencies": {

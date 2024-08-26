@@ -1,33 +1,47 @@
 import { ApiErrorResponse, ApiResponse } from 'src/types/response'
 import { AppConfig } from './AppConfig'
-import { ApiInfo, ApiPixel, PixelInfo, ProfileInfo } from 'src/types/api'
+import {
+  ApiInfo,
+  ApiPixel,
+  ApiTags,
+  PixelInfo,
+  ProfileInfo
+} from 'src/types/api'
 import { AppCookie } from './AppCookie'
+import { ProfileStore } from 'src/managers/profile'
+import { ServerNotificationMap } from './AppNotifications'
+import { NotificationsManager } from 'src/managers/notifications'
 // import { NotificationActions } from 'src/stores/notifications'
 
 const myFetch = <T extends object>(options: {
   url: string
   method: 'POST' | 'PUT' | 'GET'
+  withCredentials: boolean
   body?: unknown
-}) =>
-  fetch(AppConfig.url.api + options.url, {
-    credentials: 'include',
+}) => {
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json'
+  }
+
+  if (options.withCredentials) {
+    headers['Authorization'] =
+      `Bearer ${ProfileStore.getState().profile!.token}`
+  }
+
+  return fetch(AppConfig.url.api + options.url, {
     method: options.method,
-    body: options.body ? JSON.stringify(options.body) : undefined,
-    headers:
-      options.method === 'GET'
-        ? undefined
-        : {
-            'Content-Type': 'application/json'
-          }
+    headers: options.method === 'GET' ? undefined : headers,
+    body: options.body ? JSON.stringify(options.body) : undefined
   })
     .then((res) => res.json() as Promise<T | ApiErrorResponse>)
     .then(checkForErrors<T>)
+}
 
 const checkForErrors = <T extends object | ApiErrorResponse>(
   res: T | ApiErrorResponse
 ) => {
   if ('error' in res && res.error) {
-    // processError(res)
+    processError(res)
 
     return Promise.reject(res)
   }
@@ -35,16 +49,37 @@ const checkForErrors = <T extends object | ApiErrorResponse>(
   return res as T
 }
 
-// const processError = (error: ApiErrorResponse) => {
-//   // const notification = ServerNotificationMap[error.reason] ?? {
-//   //   title: 'Неизвестная ошибка (С)',
-//   //   message: error.reason
-//   // }
-//   // NotificationActions.add({
-//   //   ...notification,
-//   //   type: 'error'
-//   // })
-// }
+const processError = (error: ApiErrorResponse) => {
+  const notification = ServerNotificationMap[error.reason] ?? {
+    title: 'Неизвестная ошибка (С)',
+    message: error.reason
+  }
+  NotificationsManager.addNotification({
+    ...notification,
+    type: 'error'
+  })
+}
+
+const post = <T extends object>(
+  url: string,
+  body: unknown,
+  withCredentials: boolean = false
+) => myFetch<T>({ url, method: 'POST', withCredentials, body })
+
+const put = <T extends object>(
+  url: string,
+  body: unknown,
+  withCredentials: boolean = false
+) => {
+  return myFetch<T>({ url, method: 'PUT', withCredentials, body })
+}
+
+const get = <T extends object>(
+  url: string,
+  withCredentials: boolean = false
+) => {
+  return myFetch<T>({ url, method: 'GET', withCredentials })
+}
 
 export const AppRequests = {
   async pixels() {
@@ -52,46 +87,30 @@ export const AppRequests = {
   },
 
   info(): Promise<ApiInfo> {
-    return myFetch<ApiInfo>({
-      url: '/game',
-      method: 'GET'
-    })
+    return get('/game')
   },
 
   profile(): Promise<ProfileInfo> {
-    return myFetch<ProfileInfo>({
-      url: `/users/${AppCookie.get('userid')}`,
-      method: 'GET'
-    })
+    return get<ProfileInfo>(`/users/${AppCookie.get('userid')}`)
   },
 
   getPixel(x: number, y: number): Promise<PixelInfo> {
-    return myFetch<PixelInfo>({
-      url: `/pixels?x=${x}&y=${y}`,
-      method: 'GET'
-    })
+    return get<PixelInfo>(`/pixels?x=${x}&y=${y}`)
   },
 
   putPixel(pixel: ApiPixel) {
-    return myFetch<PixelInfo>({
-      url: `/pixels`,
-      method: 'PUT',
-      body: pixel
-    })
+    return put(`/pixels`, pixel, true)
   },
 
-  tags(): Promise<PixelInfo> {
-    return myFetch<PixelInfo>({
-      url: `/pixels/tag`,
-      method: 'GET'
-    })
+  tags(): Promise<ApiTags> {
+    return get(`/pixels/tag`)
   },
 
   changeTag(tag: string): Promise<ApiResponse> {
-    return myFetch<ApiResponse>({
-      url: `/users/${AppCookie.get('userid')}/tag`,
-      method: 'POST',
-      body: { tag }
-    })
+    return post(
+      `/users/${ProfileStore.getState().profile!.id}/tag`,
+      { tag },
+      true
+    )
   }
 }
