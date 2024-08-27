@@ -24,8 +24,9 @@ const myFetch = <T extends object>(options: {
   }
 
   if (options.withCredentials) {
-    headers['Authorization'] =
-      `Bearer ${ProfileStore.getState().profile!.token}`
+    if (ProfileStore.getState().profile!)
+      headers['Authorization'] =
+        `Bearer ${ProfileStore.getState().profile!.token}`
   }
 
   return fetch(AppConfig.url.api + options.url, {

@@ -1,4 +1,5 @@
 import { ColorArray } from 'src/types/canvas'
+import { AppColor } from './AppColor'
 
 export default class AppChunk {
   x: number
@@ -83,6 +84,6 @@ export default class AppChunk {
     const pos = (x - this.x + (y - this.y) * this.width) * 4
 
     const data = this.imageData.data
-    return [data[pos], data[pos + 1], data[pos + 2]]
+    return new AppColor([data[pos], data[pos + 1], data[pos + 2]])
   }
 }

@@ -1,4 +1,3 @@
-import { Notifications } from '../Notifications'
 import { BottomBar } from './BottomBar'
 import styles from './index.module.css'
 import { SideBar } from './SideBar'
@@ -11,8 +10,6 @@ export const Bars = () => {
         <TitleBar />
         <SideBar />
         <BottomBar />
-
-        <Notifications />
       </div>
     </>
   )

@@ -38,4 +38,13 @@ export class AppColor {
       this.color[2] !== c.color[2]
     )
   }
+
+  getReadableColor() {
+    const [red, green, blue] = this.color
+
+    // https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color/3943023#3943023
+    const isBlack = red * 0.299 + green * 0.587 + blue * 0.114 > 186
+
+    return isBlack ? new AppColor('#000000') : new AppColor('#ffffff')
+  }
 }
