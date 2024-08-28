@@ -1,6 +1,6 @@
-import { ColorArray } from 'src/types/canvas'
 import { AppConfig } from '../AppConfig'
 import AppChunk from './AppChunk'
+import { AppColor } from './AppColor'
 
 export class AppCanvas {
   private static chunks: Array<AppChunk> = []
@@ -42,7 +42,7 @@ export class AppCanvas {
     return this
   }
 
-  static putPixel(x: number, y: number, color: ColorArray) {
+  static putPixel(x: number, y: number, color: AppColor) {
     for (const i in this.chunks) {
       if (this.chunks[i].itInside(x, y)) {
         this.chunks[i].putPixel(x, y, color)

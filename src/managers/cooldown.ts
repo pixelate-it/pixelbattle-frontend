@@ -5,6 +5,7 @@ import { ComputedProfileStore } from './profile'
 import { InfoStore } from './info'
 
 export const CooldownStore = createStore<CooldownState>({
+  startRequestTime: 0,
   progress: 0,
   reqId: 0,
   startTime: 0,
@@ -12,11 +13,16 @@ export const CooldownStore = createStore<CooldownState>({
 })
 
 export const CooldownManager = {
+  preStart() {
+    CooldownStore.setState({
+      hasCooldown: true,
+      startRequestTime: Date.now()
+    })
+  },
   start() {
     CooldownStore.setState({
       startTime: performance.now(),
-      reqId: requestAnimationFrame(this.update),
-      hasCooldown: true
+      reqId: requestAnimationFrame(this.update)
     })
   },
   update(time: number) {
@@ -26,10 +32,12 @@ export const CooldownManager = {
     if (!info) return
 
     const currentTime = time - cooldown.startTime
+    const differenceOfTime = cooldown.startRequestTime - Date.now()
 
     const cooldownDuration =
       AppConfig.cooldown.offset +
-      (profile.isStaff ? AppConfig.cooldown.staff : info.cooldown)
+      (profile.isStaff ? AppConfig.cooldown.staff : info.cooldown) -
+      differenceOfTime / 2
 
     const progress = currentTime / cooldownDuration
 

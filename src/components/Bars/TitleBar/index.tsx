@@ -22,7 +22,10 @@ export const TitleBar = () => {
   })
   const [opened, setOpened] = useState<boolean>(false)
 
-  if (info === null) {
+  if (info.name === 'Загрузка...') {
+    /*
+     * Mirdukkkkk please make styles for this!
+     */
     return <div>Загрузка...</div>
   }
 

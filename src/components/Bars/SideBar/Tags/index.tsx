@@ -24,20 +24,29 @@ export const Tags = () => {
   return (
     <WindowBox title='Теги'>
       <div className={styles.tags}>
-        {tags.tags.length === 0 ? (
-          <p className={styles.empty}>Нет тегов</p>
+        {tags.loaded ? (
+          <>
+            {tags.tags.length === 0 ? (
+              <p className={styles.empty}>Нет тегов</p>
+            ) : (
+              tags.tags.map((tag) => (
+                <Tag key={tag.name} tag={tag} selectedTag={tags.selectedTag} />
+              ))
+            )}
+            {profile.isAuthenticated ? (
+              tags.isTagCreateOpened ? (
+                <OpenedTagCreate />
+              ) : (
+                <ClosedTagCreate />
+              )
+            ) : null}
+          </>
         ) : (
-          tags.tags.map((tag) => (
-            <Tag key={tag.name} tag={tag} selectedTag={tags.selectedTag} />
-          ))
+          <>
+            {/* Mirdukkkkk please make styles for this! */}
+            <p>Загрузка тегов...</p>
+          </>
         )}
-        {profile.isAuthenticated ? (
-          tags.isTagCreateOpened ? (
-            <OpenedTagCreate />
-          ) : (
-            <ClosedTagCreate />
-          )
-        ) : null}
       </div>
     </WindowBox>
   )

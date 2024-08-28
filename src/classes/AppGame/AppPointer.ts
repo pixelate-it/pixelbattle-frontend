@@ -3,7 +3,6 @@ import { AppColor } from '../AppCanvas/AppColor'
 export class AppPointer {
   x = 0
   y = 0
-  color: AppColor | undefined
   fillColor = 'black'
   strokeColor = 'white'
   isItInsideCanvas = false
@@ -17,7 +16,6 @@ export class AppPointer {
   }
 
   onChangeColor(color: AppColor) {
-    this.color = color
     this.fillColor = color.toRGB()
     this.strokeColor = color.getReadableColor().toRGB()
   }

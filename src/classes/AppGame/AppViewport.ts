@@ -1,12 +1,9 @@
 import { AppCanvas } from '../AppCanvas'
-import { AppConfig } from '../AppConfig'
 
 export class AppViewport {
   static scale = 1.2
   static x: number = 0
   static y: number = 0
-
-  constructor(private readonly canvas: HTMLCanvasElement) {}
 
   static centerOfImage(
     canvas: HTMLCanvasElement,

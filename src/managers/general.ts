@@ -27,5 +27,10 @@ export const GeneralManager = {
     ProfileManager.load()
     ProfileManager.fetch()
     TagsManager.fetch()
+  },
+
+  reload() {
+    ProfileManager.destroy()
+    this.loadAll()
   }
 }

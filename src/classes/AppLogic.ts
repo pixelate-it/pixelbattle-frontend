@@ -21,6 +21,7 @@ export class AppLogic {
       return
     }
 
+    CooldownManager.preStart()
     AppRequests.putPixel({
       x,
       y,

@@ -3,22 +3,28 @@ import { TagsState } from 'src/types/managers/tags'
 import createStore from 'unistore'
 import { ComputedProfileStore, ProfileManager, ProfileStore } from './profile'
 
-export const TagsStore = createStore<TagsState>({
+const initialState = {
   tags: [],
+  loaded: false,
   selectedTag: '',
   isTagCreateOpened: false
-})
+}
+
+export const TagsStore = createStore<TagsState>(initialState)
 
 export const TagsManager = {
   async fetch() {
     const response = await AppRequests.tags()
 
+    const tags = response.tags.map((tag, index) => ({
+      name: tag[0],
+      pixels: tag[1],
+      place: index
+    }))
+
     TagsStore.setState({
-      tags: response.tags.map((tag, index) => ({
-        name: tag[0],
-        pixels: tag[1],
-        place: index
-      }))
+      tags,
+      loaded: true
     })
 
     const profile = {
@@ -38,14 +44,11 @@ export const TagsManager = {
     if (!hasUserSelectedTag) {
       return
     }
+    const selectedTag = profile.user.tag ?? ''
 
-    const tags = TagsStore.getState()
+    TagsStore.setState({ selectedTag })
 
-    TagsStore.setState({ selectedTag: profile.user.tag ?? '' })
-
-    const isUserSelectedTagFake = !tags.tags.some(
-      (tag) => tag.name === tags.selectedTag
-    )
+    const isUserSelectedTagFake = !tags.some((tag) => tag.name === selectedTag)
     if (isUserSelectedTagFake) {
       TagsManager.pushFakeTag(profile.user.tag ?? '???')
     }

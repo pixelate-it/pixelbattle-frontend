@@ -16,7 +16,10 @@ export const AppConfig = {
     },
     ws: 2000,
     notificationRemoved: 3000,
-    pixelInfo: 500
+    pixelInfo: 500,
+    palette: {
+      deleteButtonPress: 2000
+    }
   },
   defaults: {
     colors: {
@@ -45,7 +48,7 @@ export const AppConfig = {
     chunkUpdateCountdown: 200
   },
   zoom: {
-    max: 200,
+    max: 300,
     min: 0.5
   },
   cooldown: {

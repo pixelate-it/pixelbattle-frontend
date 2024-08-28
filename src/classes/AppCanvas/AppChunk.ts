@@ -1,4 +1,3 @@
-import { ColorArray } from 'src/types/canvas'
 import { AppColor } from './AppColor'
 
 export default class AppChunk {
@@ -67,13 +66,13 @@ export default class AppChunk {
     )
   }
 
-  putPixel(x: number, y: number, color: ColorArray) {
+  putPixel(x: number, y: number, color: AppColor) {
     const pos = (x - this.x + (y - this.y) * this.width) * 4
 
     const data = this.imageData.data
-    data[pos] = color[0]
-    data[pos + 1] = color[1]
-    data[pos + 2] = color[2]
+    data[pos] = color.color[0]
+    data[pos + 1] = color.color[0]
+    data[pos + 2] = color.color[0]
     Object.assign({ data }, this.imageData)
 
     if (!this.isUpdating) this.updateBitmap()

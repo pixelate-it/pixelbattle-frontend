@@ -27,15 +27,24 @@ export const Profile = () => {
   return profileComputed.isAuthenticated ? (
     <WindowBox title='Профиль'>
       <div class={styles.wrapper}>
-        <div className={styles.params}>
-          {Object.entries(params).map(([label, value]) => {
-            if (!value) return null
+        {profile.user !== null ? (
+          <>
+            <div className={styles.params}>
+              {Object.entries(params).map(([label, value]) => {
+                if (!value) return null
 
-            return <Param value={value} label={label} />
-          })}
-        </div>
+                return <Param value={value} label={label} />
+              })}
+            </div>
 
-        <Button href='/logout'>Выйти</Button>
+            <Button href='/logout'>Выйти</Button>
+          </>
+        ) : (
+          <>
+            {/* Mirdukkkkk please make styles for this! */}
+            <p>Загрузка профиля...</p>
+          </>
+        )}
       </div>
     </WindowBox>
   ) : (

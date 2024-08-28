@@ -13,8 +13,8 @@ export const useGame = (canvas: MutableRef<HTMLCanvasElement | null>) => {
     canvas.current.height = window.innerHeight
   }
 
-  const render = (timestamp: number) => {
-    gameRef.current!.render(timestamp)
+  const render = () => {
+    gameRef.current!.render()
     frameRef.current = requestAnimationFrame(render)
   }
 
@@ -38,6 +38,13 @@ export const useGame = (canvas: MutableRef<HTMLCanvasElement | null>) => {
     )
     canvas.current?.addEventListener('mouseleave', gameRef.current.onMouseLeave)
     canvas.current?.addEventListener('mouseenter', gameRef.current.onMouseEnter)
+    canvas.current?.addEventListener('touchstart', gameRef.current.onTouchStart)
+    canvas.current?.addEventListener('touchend', gameRef.current.onTouchEnd)
+    canvas.current?.addEventListener(
+      'touchcancel',
+      gameRef.current.onTouchCancel
+    )
+    canvas.current?.addEventListener('touchmove', gameRef.current.onTouchMove)
 
     return () => {
       window.onresize = null
@@ -63,6 +70,22 @@ export const useGame = (canvas: MutableRef<HTMLCanvasElement | null>) => {
       canvas.current?.removeEventListener(
         'mouseenter',
         gameRef.current!.onMouseEnter
+      )
+      canvas.current?.removeEventListener(
+        'touchstart',
+        gameRef.current!.onTouchStart
+      )
+      canvas.current?.removeEventListener(
+        'touchend',
+        gameRef.current!.onTouchEnd
+      )
+      canvas.current?.removeEventListener(
+        'touchcancel',
+        gameRef.current!.onTouchCancel
+      )
+      canvas.current?.removeEventListener(
+        'touchmove',
+        gameRef.current!.onTouchMove
       )
     }
   }, [])

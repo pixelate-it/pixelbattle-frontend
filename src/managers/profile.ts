@@ -12,19 +12,23 @@ interface ProfileComputedActions extends ComputedActions<ProfileState> {
   isAuthenticated: (state: ProfileState) => boolean
   isBanned: (state: ProfileState) => boolean
   isStaff: (state: ProfileState) => boolean
+  isLoaded: (state: ProfileState) => boolean
 }
 
-export const ProfileStore = createStore<ProfileState>({
+const initialState = {
   user: null,
   profile: null
-})
+}
+
+export const ProfileStore = createStore<ProfileState>(initialState)
 export const ComputedProfileStore = createComputedStore<
   ProfileState,
   ProfileComputedActions
 >(ProfileStore, {
   isAuthenticated: (state) => !!state.profile,
   isBanned: (state) => !!state.user?.banned,
-  isStaff: (state) => (state.user?.role ?? UserRole.User) >= UserRole.Moderator
+  isStaff: (state) => (state.user?.role ?? UserRole.User) >= UserRole.Moderator,
+  isLoaded: (state) => state.profile !== null || state.user !== null
 })
 
 export const ProfileManager = {
@@ -43,5 +47,8 @@ export const ProfileManager = {
   logout() {
     ProfileStore.setState({ profile: null, user: null })
     AppCookie.clear()
+  },
+  destroy() {
+    ProfileStore.setState(initialState)
   }
 }

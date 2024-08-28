@@ -4,6 +4,7 @@ import { AppRender } from './AppRender'
 import { PaletteStore } from 'src/managers/palette'
 import { AppViewport } from './AppViewport'
 import { AppMovement } from './AppMovement'
+import { PointerManager } from 'src/managers/pointer'
 
 export class AppGame {
   constructor(
@@ -52,9 +53,27 @@ export class AppGame {
     this.canvas.style.cursor = 'crosshair'
   }
 
+  onTouchStart = (e: TouchEvent) => {
+    AppMovement.onTouchStart(e)
+  }
+  onTouchEnd = (e: TouchEvent) => {
+    AppMovement.onTouchEnd(e)
+  }
+  onTouchCancel = (e: TouchEvent) => {
+    AppMovement.onTouchCancel(e)
+  }
+  onTouchMove = (e: TouchEvent) => {
+    AppMovement.onTouchMove(e)
+  }
+
   onMouseMove = (e: MouseEvent) => {
     const result = AppMovement.onMouseMove(e)
     if (result) {
+      if (
+        this.renderer.pointer.x !== result[0] ||
+        this.renderer.pointer.y !== result[1]
+      )
+        PointerManager.setCoordinates([result[0], result[1]])
       this.renderer.pointer.x = result[0]
       this.renderer.pointer.y = result[1]
     }
