@@ -43,14 +43,14 @@ export default class AppChunk {
   renderTools(ctx: CanvasRenderingContext2D) {
     const o = Date.now() - this.lastUpdateTime
     if (o < 1000) {
-      ctx.strokeStyle = `#D80000`
+      ctx.strokeStyle = `#DF0000`
       ctx.globalAlpha = 1 - o / 1000
       ctx.lineWidth = 1
-      ctx.moveTo(this.x - 0.5, this.y - 0.5)
-      ctx.lineTo(this.x - 0.5 + this.width, this.y - 0.5)
+      ctx.moveTo(this.x + 1, this.y + 0.5)
+      ctx.lineTo(this.x - 0.5 + this.width, this.y + 0.5)
       ctx.lineTo(this.x - 0.5 + this.width, this.y - 0.5 + this.height)
-      ctx.lineTo(this.x - 0.5, this.y - 0.5 + this.height)
-      ctx.lineTo(this.x - 0.5, this.y - 0.5)
+      ctx.lineTo(this.x + 0.5, this.y - 0.5 + this.height)
+      ctx.lineTo(this.x + 0.5, this.y)
       ctx.stroke()
       ctx.globalAlpha = 1
       ctx.lineWidth = 1

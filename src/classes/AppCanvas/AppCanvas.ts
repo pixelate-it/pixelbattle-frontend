@@ -32,7 +32,7 @@ export class AppCanvas {
             x,
             y,
             ctx.getImageData(x, y, realWidth, realHeight),
-            realHeight,
+            realWidth,
             realHeight
           )
         )

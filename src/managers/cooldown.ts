@@ -16,7 +16,7 @@ export const CooldownManager = {
   preStart() {
     CooldownStore.setState({
       hasCooldown: true,
-      startRequestTime: Date.now()
+      startRequestTime: performance.now()
     })
   },
   start() {
@@ -32,14 +32,15 @@ export const CooldownManager = {
     if (!info) return
 
     const currentTime = time - cooldown.startTime
-    const differenceOfTime = cooldown.startRequestTime - Date.now()
+    const differenceOfTime = cooldown.startTime - cooldown.startRequestTime
 
     const cooldownDuration =
       AppConfig.cooldown.offset +
-      (profile.isStaff ? AppConfig.cooldown.staff : info.cooldown) -
-      differenceOfTime / 2
+      (profile.isStaff ? AppConfig.cooldown.staff : info.cooldown)
 
-    const progress = currentTime / cooldownDuration
+    const adjustedDuration = Math.max(1, cooldownDuration - differenceOfTime)
+
+    const progress = currentTime / adjustedDuration
 
     if (progress >= 1) {
       CooldownStore.setState({ progress: 0, hasCooldown: false })
