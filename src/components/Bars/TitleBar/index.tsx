@@ -4,6 +4,8 @@ import { InfoState } from 'src/types/managers'
 import styles from './index.module.css'
 import { Param } from 'src/components/General/Param'
 import { ComputedActions, useStoreComputed } from 'src/hooks/useStoreComputed'
+import { AppConfig } from '../../../classes/AppConfig.ts'
+import { Icon } from '../../General/Icon'
 
 interface ComputedValues<T> extends ComputedActions<T> {
   name: (value: T) => string
@@ -25,6 +27,8 @@ export const TitleBar = () => {
   if (info.name === 'Загрузка...') {
     /*
      * Mirdukkkkk please make styles for this!
+     *
+     * oke, it will be done!
      */
     return <div>Загрузка...</div>
   }
@@ -39,8 +43,8 @@ export const TitleBar = () => {
         className={`${styles.window} ${opened ? styles.opened : styles.closed}`}
         onClick={click}
       >
-        <label for={styles.window} className={styles.title}>
-          {name} {icon}
+        <label htmlFor={styles.window} className={styles.title}>
+          {icon} {name}
         </label>
         <div className={styles.content}>
           {show && (
@@ -55,22 +59,16 @@ export const TitleBar = () => {
               </div>
               <div className={styles.icons}>
                 <div className={styles.media}>
-                  {/* {Object.entries(config.media).map(([name, url]) => (
+                  {Object.entries(AppConfig.media).map(([name, url]) => (
                     <a
                       href={url[0]}
                       target='_blank'
                       rel='noopener noreferrer'
                       key={name}
                     >
-                      <Icon
-                        icon={name}
-                        alt={url[1]}
-                        size={35}
-                        viewBoxSize={256}
-                      />
-                      {/* <img src={`/images/icons/${name}.svg`} alt={name} width={35} height={35}/> }
+                      <Icon icon={name} alt={url[1]} size={35} viewBoxSize={256} />
                     </a>
-                  ))} */}
+                  ))}
                 </div>
               </div>
             </div>
