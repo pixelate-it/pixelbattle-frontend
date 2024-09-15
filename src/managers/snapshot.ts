@@ -67,7 +67,7 @@ export const SnapshotManager = {
 		if (width < 0) {
 			width = Math.abs(width);
 			changed = true;
-			offsetPoint.x = point.x + 1;
+			offsetPoint.x = point.x;
 		} else if (!Number.isNaN(offsetPoint.x)) {
 			offsetPoint.x = NaN;
 			changed = true;
@@ -75,7 +75,7 @@ export const SnapshotManager = {
 		if (height < 0) {
 			height = Math.abs(height);
 			changed = true;
-			offsetPoint.y = point.y + 1;
+			offsetPoint.y = point.y;
 		} else if (!Number.isNaN(offsetPoint.y)) {
 			offsetPoint.y = NaN;
 			changed = true;
@@ -93,6 +93,7 @@ export const SnapshotManager = {
 		this.stop();
 		this.size.value = new Point(image.size.x, image.size.y);
 		this.toClipboard();
+		this.empty.value = false;
 	},
 
 	async toClipboard(scaleLimit = 10) {

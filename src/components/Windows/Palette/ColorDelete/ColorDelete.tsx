@@ -6,6 +6,7 @@ import { Icon } from "../../../General/Icon/Icon";
 export function ColorDelete() {
 	const palette = useContext(PaletteContext);
 	const [shift, setShift] = useState<boolean>(false);
+	const touchTimerRef = useRef<NodeJS.Timeout>();
 
 	function onClick(event: MouseEvent) {
 		if (event.shiftKey) {
@@ -21,6 +22,19 @@ export function ColorDelete() {
 		setShift(event.shiftKey);
 	}
 
+	function onTouchStart(event: TouchEvent) {
+		event.preventDefault();
+		if (touchTimerRef.current) clearTimeout(touchTimerRef.current);
+		touchTimerRef.current = setTimeout(() => {
+			palette.reset();
+		}, 500);
+	}
+
+	function onTouchEnd(event: TouchEvent) {
+		event.preventDefault();
+		if (touchTimerRef.current) clearTimeout(touchTimerRef.current);
+	}
+
 	useEffect(() => {
 		document.addEventListener("keydown", onKeyEvent);
 		document.addEventListener("keyup", onKeyEvent);
@@ -32,7 +46,14 @@ export function ColorDelete() {
 	}, []);
 
 	return (
-		<button className={styles.button} onClick={onClick} disabled={!(shift || !palette.isDefaultColor(palette.palette.value.selected))}>
+		<button
+			className={styles.button}
+			onClick={onClick}
+			// disabled={!(shift || !palette.isDefaultColor(palette.palette.value.selected))}
+			onTouchStart={onTouchStart}
+			onTouchCancel={onTouchEnd}
+			onTouchEnd={onTouchEnd}
+		>
 			<Icon icon="plus" className={styles.icon} alt={"Удалить выбранный цвет"} />
 		</button>
 	);
