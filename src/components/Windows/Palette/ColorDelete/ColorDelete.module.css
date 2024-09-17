@@ -33,7 +33,7 @@
     fill: red; */
 }
 
-.button:disabled {
+.buttonDisabled {
     cursor: not-allowed;
     opacity: 0.5;
 }

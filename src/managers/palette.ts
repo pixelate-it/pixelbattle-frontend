@@ -19,6 +19,9 @@ export const PaletteManager = {
 
 		PaletteManager.save();
 	},
+	isDefaultColors: () => {
+		return PaletteManager.palette.value.colors.length === config.defaults.colors.palette.colors.length
+	},
 	removeColor(color: AppColor) {
 		PaletteManager.palette.value = {
 			selected: PaletteManager.palette.value.colors.at(-2) ?? PaletteManager.palette.value.selected,

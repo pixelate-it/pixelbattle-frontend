@@ -80,8 +80,8 @@ export const SnapshotManager = {
 			offsetPoint.y = NaN;
 			changed = true;
 		}
-		width += Number.isNaN(offsetPoint.x) ? 1 : 0;
-		height += Number.isNaN(offsetPoint.y) ? 1 : 0;
+		width += 1;
+		height += 1;
 		if (changed) this.offsetPoint.value = offsetPoint;
 		const normalSize = new Point(width, height);
 		this.size.value = normalSize;

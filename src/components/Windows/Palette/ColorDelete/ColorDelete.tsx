@@ -7,32 +7,40 @@ export function ColorDelete() {
 	const palette = useContext(PaletteContext);
 	const [shift, setShift] = useState<boolean>(false);
 	const touchTimerRef = useRef<NodeJS.Timeout>();
-
-	function onClick(event: MouseEvent) {
-		if (event.shiftKey) {
-			palette.reset();
-
-			return;
-		}
-
-		if (!palette.isDefaultColor(palette.palette.value.selected)) palette.removeColor(palette.palette.value.selected);
-	}
+	const [disabled, setDisabled] = useState<boolean>(true);
 
 	function onKeyEvent(event: KeyboardEvent) {
 		setShift(event.shiftKey);
 	}
 
-	function onTouchStart(event: TouchEvent) {
+	function onClickStart(event: MouseEvent | TouchEvent) {
 		event.preventDefault();
 		if (touchTimerRef.current) clearTimeout(touchTimerRef.current);
-		touchTimerRef.current = setTimeout(() => {
-			palette.reset();
-		}, 500);
+		if (!palette.isDefaultColors()) {
+			touchTimerRef.current = setTimeout(() => {
+				palette.reset();
+			}, 500);
+			setDisabled(false);
+		}
 	}
 
-	function onTouchEnd(event: TouchEvent) {
+	function onClickEnd(event: MouseEvent | TouchEvent) {
 		event.preventDefault();
 		if (touchTimerRef.current) clearTimeout(touchTimerRef.current);
+		if (event.shiftKey) {
+			palette.reset();
+			return;
+		}
+		if (!palette.isDefaultColor(palette.palette.value.selected)) {
+			palette.removeColor(palette.palette.value.selected);
+		}
+		setDisabled(true);
+	}
+
+	function onClickCancel(event: MouseEvent | TouchEvent) {
+		event.preventDefault();
+		if (touchTimerRef.current) clearTimeout(touchTimerRef.current);
+		setDisabled(true);
 	}
 
 	useEffect(() => {
@@ -47,12 +55,12 @@ export function ColorDelete() {
 
 	return (
 		<button
-			className={styles.button}
-			onClick={onClick}
-			// disabled={!(shift || !palette.isDefaultColor(palette.palette.value.selected))}
-			onTouchStart={onTouchStart}
-			onTouchCancel={onTouchEnd}
-			onTouchEnd={onTouchEnd}
+			className={[styles.button, (!disabled || shift || !palette.isDefaultColor(palette.palette.value.selected)) ? "" : styles.buttonDisabled].join(" ")}
+			onMouseDown={onClickStart}
+			onMouseUp={onClickEnd}
+			onTouchStart={onClickStart}
+			onTouchEnd={onClickEnd}
+			onTouchCancel={onClickCancel}
 		>
 			<Icon icon="plus" className={styles.icon} alt={"Удалить выбранный цвет"} />
 		</button>
