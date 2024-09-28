@@ -1,6 +1,6 @@
+import { usePointer } from 'src/hooks/usePointer'
 import { Coordinates } from './Coordinates'
 import { Info } from './Info'
-import { usePointer } from 'src/hooks/usePointer'
 
 export const PixelInfo = () => {
   const state = usePointer()

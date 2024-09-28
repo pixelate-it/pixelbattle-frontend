@@ -1,25 +1,12 @@
-import { useEffect } from 'preact/hooks'
-import { AppConfig } from 'src/classes/AppConfig'
 import { WindowBox } from 'src/components/General/WindowBox'
-import { useStore } from 'src/hooks/useStore'
-import { ComputedProfileStore } from 'src/managers/profile'
-import { TagsManager, TagsStore } from 'src/managers/tags'
 import styles from './index.module.css'
 import { Tag } from './Tag'
 import { ClosedTagCreate } from './ClosedTagCreate'
 import { OpenedTagCreate } from './OpenedTagCreate'
+import { useTags } from 'src/hooks/tag/useTags'
 
 export const Tags = () => {
-  const profile = useStore(ComputedProfileStore)
-  const tags = useStore(TagsStore)
-
-  useEffect(() => {
-    const id = setInterval(TagsManager.fetch, AppConfig.time.update.tags)
-
-    return () => {
-      clearInterval(id)
-    }
-  }, [])
+  const { tags, profile } = useTags()
 
   return (
     <WindowBox title='Теги'>

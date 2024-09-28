@@ -1,26 +1,9 @@
 import { Button } from 'src/components/General/Button'
 import styles from './index.module.css'
-import { TagsManager, TagsStore } from 'src/managers/tags'
-import { ProfileStore } from 'src/managers/profile'
-import { NotificationsManager } from 'src/managers/notifications'
+import { useClosedTagCreate } from 'src/hooks/tag/useClosedTagCreate'
 
 export const ClosedTagCreate = () => {
-  function openTagCreate() {
-    TagsStore.setState({ isTagCreateOpened: true })
-  }
-
-  function deleteTag() {
-    if (!ProfileStore.getState().user?.tag) {
-      return
-    }
-
-    TagsManager.remove()
-    NotificationsManager.addNotification({
-      type: 'success',
-      title: 'Изменение тега',
-      message: 'Тег был сброшен'
-    })
-  }
+  const { openTagCreate, deleteTag } = useClosedTagCreate()
 
   return (
     <div className={styles.form}>

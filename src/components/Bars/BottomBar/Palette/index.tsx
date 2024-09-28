@@ -1,10 +1,10 @@
 import styles from './index.module.css'
 import { PaletteGroup } from './PaletteGroup'
 import { ColorSelect } from './ColorSelect'
-import { usePalette } from 'src/hooks/usePalette'
 import { ColorPick } from './ColorPick'
 import { ColorDelete } from './ColorDelete'
 import { ColorCreate } from './ColorCreate'
+import { usePalette } from 'src/hooks/palette/usePalette'
 
 export const Palette = () => {
   const palette = usePalette()
@@ -18,9 +18,9 @@ export const Palette = () => {
       </PaletteGroup>
       <hr className={styles.hr} />
       <PaletteGroup>
+        <ColorCreate />
         <ColorPick />
         <ColorDelete />
-        <ColorCreate />
       </PaletteGroup>
     </div>
   )

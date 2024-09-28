@@ -1,10 +1,9 @@
-import { useStore } from 'src/hooks/useStore'
-import { PickerManager, PickerStore } from 'src/managers/picker'
 import styles from './index.module.css'
 import { Icon } from 'src/components/General/Icon'
+import { useColorPick } from 'src/hooks/palette/useColorPick'
 
 export const ColorPick = () => {
-  const picker = useStore(PickerStore)
+  const picker = useColorPick()
 
   return (
     <div className={styles.wrapper}>
@@ -12,8 +11,8 @@ export const ColorPick = () => {
         type='checkbox'
         name='color-pick'
         className={styles.input}
-        onInput={() => PickerManager.toggle()}
-        checked={picker.isEnabled}
+        onInput={() => picker.toggle()}
+        checked={picker.pickerIsEnabled}
       />
       <Icon
         icon='color-picker'

@@ -1,37 +1,13 @@
-import { useState } from 'preact/hooks'
-import { AppColor } from 'src/classes/AppCanvas/AppColor'
-import { useStoreSelector } from 'src/hooks/useStoreSelector'
-import { PaletteManager, PaletteStore } from 'src/managers/palette'
-import { PaletteState } from 'src/types/managers'
 import styles from './index.module.css'
 import './index.css'
 import { HexColorInput, HexColorPicker } from 'react-colorful'
 import { Button } from 'src/components/General/Button'
 import { Icon } from 'src/components/General/Icon'
+import { useColorCreate } from 'src/hooks/palette/useColorCreate'
 
 export const ColorCreate = () => {
-  const { selected } = useStoreSelector<PaletteState, { selected: AppColor }>(
-    PaletteStore,
-    ['selected']
-  )
-  const [color, setColor] = useState(selected.toHex())
-  const [open, setOpen] = useState(false)
-
-  function onSelect() {
-    setOpen(!open)
-
-    PaletteManager.addAndSelect(new AppColor(color))
-  }
-
-  function toggle() {
-    setOpen(!open)
-  }
-
-  function openPicker() {
-    setColor(selected.toHex())
-
-    toggle()
-  }
+  const { open, color, setColor, toggle, onSelect, openPicker } =
+    useColorCreate()
 
   return (
     <div className={styles.wrapper}>

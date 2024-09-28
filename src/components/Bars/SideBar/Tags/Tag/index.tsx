@@ -1,7 +1,6 @@
-import { ComputedProfileStore } from 'src/managers/profile'
+import { FormattedTag } from 'src/core/classes/api/types'
 import styles from './index.module.css'
-import { TagsManager } from 'src/managers/tags'
-import { FormattedTag } from 'src/types/api'
+import { useTag } from 'src/hooks/tag/useTag'
 
 interface TagProps {
   tag: FormattedTag
@@ -14,18 +13,7 @@ export const Tag = ({ tag, selectedTag }: TagProps) => {
     tag.name === selectedTag ? styles.selected : ''
   ].join(' ')
 
-  function onClick() {
-    if (!ComputedProfileStore.getState().isAuthenticated) {
-      return
-    }
-
-    TagsManager.selectAndFetch(tag.name)
-    // NotificationsManager.addNotification({
-    //   type: 'success',
-    //   title: 'Изменение тега',
-    //   message: `Ваш новый тег: ${tag.name}`
-    // })
-  }
+  const { onClick } = useTag(tag)
 
   return (
     <button className={className} onClick={onClick}>

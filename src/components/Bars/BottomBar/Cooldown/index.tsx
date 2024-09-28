@@ -1,9 +1,8 @@
-import { CooldownStore } from 'src/managers/cooldown'
 import styles from './index.module.css'
-import { useStore } from 'src/hooks/useStore'
+import { useCooldown } from 'src/hooks/useCooldown'
 
 export const Cooldown = () => {
-  const cooldown = useStore(CooldownStore)
+  const cooldown = useCooldown()
 
   if (!cooldown.hasCooldown) return null
 

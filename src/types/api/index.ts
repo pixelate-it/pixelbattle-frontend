@@ -1,5 +1,0 @@
-export * from './tag'
-export * from './info'
-export * from './pixels'
-export * from './profile'
-export * from './notification'

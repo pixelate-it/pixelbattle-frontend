@@ -1,30 +1,13 @@
-import { AppConfig } from 'src/classes/AppConfig'
+import { NotificationInfo } from 'src/core/daemons/types'
 import styles from './index.module.css'
-import { useEffect, useState } from 'preact/hooks'
-import { NotificationsManager } from 'src/managers/notifications'
-import { NotificationInfo } from 'src/types/api'
+import { useNotification } from 'src/hooks/useNotification'
 
 export const Notification = ({
   notification
 }: {
   notification: NotificationInfo
 }) => {
-  const [className, setClassName] = useState('')
-  const [, setTime] = useState<NodeJS.Timeout>(setTimeout(() => {}, 0))
-
-  useEffect(() => {
-    setTime(
-      setTimeout(() => {
-        const animationTime = 200
-
-        setClassName(styles.animate)
-        setTimeout(
-          () => NotificationsManager.removeNotification(notification.id),
-          animationTime
-        )
-      }, AppConfig.time.notificationRemoved)
-    )
-  }, [])
+  const { className } = useNotification(notification, styles.animate)
 
   return (
     <div

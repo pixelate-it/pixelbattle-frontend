@@ -1,11 +1,11 @@
 import { useEffect } from 'preact/hooks'
 import { Bars } from 'src/components/Bars'
 import { Canvas } from 'src/components/Canvas'
-import { GeneralManager } from 'src/managers/general'
+import { GeneralDaemon } from 'src/core/daemons/general'
 
 export const Home = () => {
   useEffect(() => {
-    GeneralManager.loadAll()
+    GeneralDaemon.run()
   }, [])
 
   return (

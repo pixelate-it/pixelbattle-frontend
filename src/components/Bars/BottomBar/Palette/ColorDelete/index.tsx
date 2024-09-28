@@ -1,42 +1,20 @@
 import { Icon } from 'src/components/General/Icon'
 import styles from './index.module.css'
-import { PaletteManager, PaletteStore } from 'src/managers/palette'
-import { useRef } from 'preact/hooks'
-import { AppConfig } from 'src/classes/AppConfig'
+import { useColorDelete } from 'src/hooks/palette/useColorDelete'
 
 export const ColorDelete = () => {
-  const timeRef = useRef<NodeJS.Timeout>()
-
-  const onClick = (event: MouseEvent) => {
-    if (event.shiftKey) {
-      PaletteManager.reset()
-      return
-    }
-
-    if (!PaletteManager.isDefaultColor(PaletteStore.getState().selected))
-      PaletteManager.removeColor(PaletteStore.getState().selected)
-  }
-
-  const onPress = () => {
-    timeRef.current = setTimeout(
-      () => PaletteManager.reset(),
-      AppConfig.time.palette.deleteButtonPress
-    )
-  }
-
-  const onUnPress = () => {
-    if (timeRef.current) clearTimeout(timeRef.current)
-  }
+  const { onClickStart, onClickCancel, onClickEnd, disabled } = useColorDelete()
 
   return (
     <button
-      className={styles.button}
-      onClick={onClick}
-      onMouseDown={onPress}
-      onMouseUp={onUnPress}
-      onTouchStart={onPress}
-      onTouchEnd={onPress}
-      onTouchCancel={onUnPress}
+      className={[styles.button, disabled ? styles.buttonDisabled : ''].join(
+        ' '
+      )}
+      onMouseDown={onClickStart}
+      onMouseUp={onClickEnd}
+      onTouchStart={onClickStart}
+      onTouchEnd={onClickEnd}
+      onTouchCancel={onClickCancel}
     >
       <Icon
         icon='plus'

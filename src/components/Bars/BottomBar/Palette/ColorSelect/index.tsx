@@ -1,10 +1,10 @@
+import Color from 'src/core/classes/primitives/Color'
 import styles from './index.module.css'
-import { PaletteManager } from 'src/managers/palette'
-import { AppColor } from 'src/classes/AppCanvas/AppColor'
+import { PaletteDaemon } from 'src/core/daemons/palette'
 
 interface ColorSelectProps {
-  color: AppColor
-  selected: AppColor
+  color: Color
+  selected: Color
 }
 
 export const ColorSelect = ({ color, selected }: ColorSelectProps) => {
@@ -18,7 +18,7 @@ export const ColorSelect = ({ color, selected }: ColorSelectProps) => {
         backgroundColor: color.toRGB()
       }}
       checked={color.equals(selected)}
-      onChange={() => PaletteManager.setCurrentColor(color)}
+      onChange={() => PaletteDaemon.setCurrentColor(color)}
     />
   )
 }

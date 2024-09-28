@@ -1,10 +1,10 @@
-import { NotificationsStore } from '../../managers/notifications'
+import { NotificationDaemon } from 'src/core/daemons/notifications'
 import styles from './index.module.css'
-import { useStore } from 'src/hooks/useStore'
 import { Notification } from './Notification'
+import { useDaemon } from 'src/hooks/util/useDaemon'
 
 export const Notifications = () => {
-  const notifications = useStore(NotificationsStore)
+  const notifications = useDaemon(NotificationDaemon)
 
   return (
     <div className={styles.notifications}>

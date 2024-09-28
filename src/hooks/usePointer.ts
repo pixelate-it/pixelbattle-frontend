@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'preact/hooks'
-import { PointerManager, PointerStore } from 'src/managers/pointer'
-import { PointerState } from 'src/types/managers'
-import { arraysEqual } from './useStore'
-import { AppConfig } from 'src/classes/AppConfig'
+import { arraysEqual } from './util/useDaemon'
+import { PointerDaemon } from 'src/core/daemons/pointer'
+import { PointerState } from 'src/core/daemons/types'
+import { config } from 'src/config'
 
 export const usePointer = (): PointerState => {
-  const [state, setState] = useState(PointerStore.getState())
+  const [state, setState] = useState(PointerDaemon.getState())
 
   useEffect(() => {
     let oldState = state
@@ -16,9 +16,9 @@ export const usePointer = (): PointerState => {
           clearTimeout(timerId)
         }
         timerId = setTimeout(() => {
-          PointerManager.fetchPixel()
+          PointerDaemon.fetchPixel()
           timerId = null
-        }, AppConfig.time.pixelInfo)
+        }, config.time.pixelInfo)
       }
 
       if (
@@ -30,10 +30,10 @@ export const usePointer = (): PointerState => {
       oldState = state
     }
 
-    PointerStore.subscribe(sub)
+    PointerDaemon.on(sub)
 
     return () => {
-      PointerStore.unsubscribe(sub)
+      PointerDaemon.off(sub)
       if (timerId !== null) {
         clearTimeout(timerId)
       }
