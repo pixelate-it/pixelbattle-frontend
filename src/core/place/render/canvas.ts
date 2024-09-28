@@ -4,6 +4,9 @@ import { CanvasChunk } from '../storage/chunk'
 export class CanvasRender {
   static render(ctx: CanvasRenderingContext2D) {
     const chunk = CanvasStorage.getChunks()
+    ctx.beginPath()
+    ctx.fillRect(0, 0, CanvasStorage.width, CanvasStorage.height)
+    ctx.closePath()
     for (const i in chunk) {
       if (chunk[i].renderBitmap) {
         ctx.beginPath()

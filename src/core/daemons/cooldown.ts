@@ -20,6 +20,12 @@ export class CooldownDaemon {
     })
   }
 
+  static stop() {
+    CooldownDaemon.setState({
+      hasCooldown: false
+    })
+  }
+
   static start() {
     CooldownDaemon.setState({
       startTime: performance.now(),

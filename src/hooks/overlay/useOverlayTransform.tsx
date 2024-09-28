@@ -13,9 +13,8 @@ export const useImageTransform = () => {
     const fileInput = document.createElement('input')
     fileInput.type = 'file'
     fileInput.accept = 'image/*'
-    fileInput.oninput = function (event: React.ChangeEvent<HTMLInputElement>) {
-      const files = event.currentTarget!.files
-
+    fileInput.oninput = (event: Event) => {
+      const files = (event.currentTarget! as HTMLInputElement).files
       if (files && files.length) {
         uploadImage(files[0])
       }
@@ -51,11 +50,14 @@ export const useImageTransform = () => {
   }
 
   function changeCoords(type: 'x' | 'y', value: number) {
-    const newPosition = overlay.position!
+    const newPosition = {
+      x: OverlaysDaemon.image!.x,
+      y: OverlaysDaemon.image!.y
+    }
 
     newPosition[type] = value
 
-    OverlaysDaemon.setPosition(newPosition)
+    OverlaysDaemon.setPosition(newPosition.x, newPosition.y)
   }
 
   function changeOpacity(opacity: string) {

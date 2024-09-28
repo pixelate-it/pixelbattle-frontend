@@ -33,11 +33,11 @@ export interface NotificationState {
 }
 
 export interface OverlaysState {
-  image: OverlayImage | null
-  imageName: string | null
-  position: { x: number; y: number } | null
-  opacity: number | null
+  images: Array<OverlayImage>
   currentId: number
+  prevActive: boolean
+  nextActive: boolean
+  mode: 0 | 1 | 2
 }
 
 export interface ProfileState {

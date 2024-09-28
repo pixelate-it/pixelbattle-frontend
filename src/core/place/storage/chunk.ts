@@ -57,7 +57,6 @@ export class CanvasChunk {
     const pos = (x - this.x + (y - this.y) * this.width) * 4
 
     const data = this.imageData.data
-    console.log(data[pos], data[pos + 1], data[pos + 2])
     return new Color([data[pos], data[pos + 1], data[pos + 2]])
   }
 }

@@ -37,8 +37,6 @@ export class ApiWebSocket {
         ? await new Response(event.data).json()
         : JSON.parse(event.data)
 
-    // if (!GeneralDaemon.getState().canvasLoaded) return
-
     switch (data.op) {
       case 'PLACE': {
         CanvasStorage.putPixel(data.x, data.y, new Color(data.color))
@@ -51,7 +49,7 @@ export class ApiWebSocket {
 
   private static onOpen() {}
 
-  private static onError(error: Event) {}
+  private static onError(_: Event) {}
 
-  private static onClose(event: CloseEvent) {}
+  private static onClose(_: CloseEvent) {}
 }

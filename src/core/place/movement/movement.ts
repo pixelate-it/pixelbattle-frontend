@@ -4,7 +4,7 @@ import { PaletteDaemon } from 'src/core/daemons/palette'
 import { CanvasStorage } from '../storage'
 import { ApiPlace } from '../api'
 import { ToolsDaemon } from 'src/core/daemons/tools'
-import { OverlaysDaemon } from 'src/core/daemons/overlays'
+import { OverlaysControl } from './overlays'
 
 export class Movement {
   static startX = 0
@@ -52,19 +52,14 @@ export class Movement {
     if (ToolsDaemon.getState().pickerIsEnabled) {
       const color = CanvasStorage.getPixel(x, y)
       ToolsDaemon.togglePicker()
+      if (OverlaysControl.processColorPick(x, y)) return
       if (color) PaletteDaemon.addAndSelect(color)
       return
     }
 
     if (!this.canvasDragged && Viewport.checkPointInside(x, y)) {
       if (event.button === 2) {
-        const overlays = OverlaysDaemon.getState()
-        if (overlays.image)
-          if (overlays.image.checkPointInside(x, y)) {
-            const color = overlays.image.getPixel(x, y)
-            if (color) PaletteDaemon.addAndSelect(color)
-            return
-          }
+        if (OverlaysControl.processColorPick(x, y)) return
         const color = CanvasStorage.getPixel(x, y)
         if (!color) return
         PaletteDaemon.addAndSelect(color)
@@ -101,7 +96,7 @@ export class Movement {
     if (event.touches.length === 0) this.isPinching = false
   }
 
-  static onTouchCancel(event: TouchEvent) {}
+  static onTouchCancel(_: TouchEvent) {}
 
   static onTouchMove(event: TouchEvent) {
     const touches = event.changedTouches
