@@ -56,6 +56,10 @@ export const config = {
     staff: 50
   },
   overlay: {
-    defaultOpacity: 60
+    defaultOpacity: 60,
+    pressToEditModeDelay: 1000
+  },
+  picker: {
+    pressDelay: 500
   }
 }

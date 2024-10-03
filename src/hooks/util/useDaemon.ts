@@ -12,7 +12,7 @@ export function arraysEqual<T>(arr1: T[], arr2: T[]): boolean {
 }
 
 export const useDaemon = <T extends object>(store: Daemon<T>): T => {
-  const [state, setState] = useState<T>(store.getState)
+  const [state, setState] = useState<T>(store.state)
 
   useEffect(() => {
     let oldState = state

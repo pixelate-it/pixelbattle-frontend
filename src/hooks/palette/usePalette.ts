@@ -4,7 +4,7 @@ import { PaletteDaemon } from 'src/core/daemons/palette'
 import { PaletteState } from 'src/core/daemons/types'
 
 export const usePalette = (): PaletteState => {
-  const [state, setState] = useState(PaletteDaemon.getState())
+  const [state, setState] = useState(PaletteDaemon.state)
 
   useEffect(() => {
     let oldState = state

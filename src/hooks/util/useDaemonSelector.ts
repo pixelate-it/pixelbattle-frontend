@@ -28,7 +28,7 @@ export const useDaemonSelector = <I extends object, O extends object>(
   properties: string[]
 ): O => {
   const selector = select<I, O>(properties)
-  const [state, setState] = useState<O>(() => selector(store.getState()))
+  const [state, setState] = useState<O>(() => selector(store.state))
 
   useEffect(() => {
     let oldState = state

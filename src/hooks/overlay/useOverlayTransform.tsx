@@ -26,7 +26,7 @@ export const useImageTransform = () => {
     const imageBlob = new Blob([await image.arrayBuffer()])
     const imageBitmap = await createImageBitmap(imageBlob)
 
-    const info = InfoDaemon.getState()
+    const info = InfoDaemon.state
 
     const isBiggerThatCanvas =
       info.canvas.width < imageBitmap.width ||

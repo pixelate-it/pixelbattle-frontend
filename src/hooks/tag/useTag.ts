@@ -5,7 +5,7 @@ import { TagsDaemon } from 'src/core/daemons/tags'
 
 export const useTag = (tag: FormattedTag) => {
   function onClick() {
-    if (!ProfileDaemon.getState().isAuthenticated) {
+    if (!ProfileDaemon.state.isAuthenticated) {
       NotificationDaemon.addNotification({
         type: 'error',
         title: 'Необходимо авторизоваться',

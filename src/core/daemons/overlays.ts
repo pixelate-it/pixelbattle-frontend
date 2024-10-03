@@ -10,22 +10,17 @@ export class OverlaysDaemon {
     currentId: -1,
     prevActive: false,
     nextActive: false,
-    mode: 0
+    mode: 0,
+    editing: false
   })
 
   static get image(): OverlayImage | undefined {
-    const s = OverlaysDaemon.getState()
+    const s = OverlaysDaemon.state
     return s.images[s.currentId]
   }
 
-  static get images(): Array<OverlayImage> {
-    const s = OverlaysDaemon.getState()
-    return s.images
-  }
-
-  static get mode(): 0 | 1 | 2 {
-    const s = OverlaysDaemon.getState()
-    return s.mode
+  static get state(): OverlaysState {
+    return OverlaysDaemon.store.getState()
   }
 
   static async addImage(
@@ -35,7 +30,7 @@ export class OverlaysDaemon {
   ) {
     OverlaysDaemon.setState({
       images: [
-        ...OverlaysDaemon.getState().images,
+        ...OverlaysDaemon.state.images,
         await new OverlayImage().process({
           data: imageBlob,
           name: imageName,
@@ -43,14 +38,14 @@ export class OverlaysDaemon {
           opacity: config.overlay.defaultOpacity
         })
       ],
-      currentId: OverlaysDaemon.getState().currentId + 1
+      currentId: OverlaysDaemon.state.currentId + 1
     })
 
     OverlaysDaemon.save()
   }
 
   static remImage() {
-    const state = OverlaysDaemon.getState()
+    const state = OverlaysDaemon.state
     const overlays = LocalStorage.get('overlays')
 
     if (!overlays) return
@@ -83,46 +78,37 @@ export class OverlaysDaemon {
 
   static prevImage() {
     const currentId = LocalStorage.get('currentOverlay')
-    const state = OverlaysDaemon.getState()
-    if (currentId !== undefined && currentId > 0) {
-      LocalStorage.set('currentOverlay', currentId - 1)
-      OverlaysDaemon.setState({
-        currentId: currentId - 1,
-        prevActive: currentId - 1 > 0,
-        nextActive: currentId - 1 < state.images.length - 1
-      })
-    }
+    if (currentId !== undefined && currentId > 0)
+      OverlaysDaemon.setCurrentId(currentId - 1)
   }
 
   static nextImage() {
     const currentId = LocalStorage.get('currentOverlay')
     const overlays = LocalStorage.get('overlays')
-    const state = OverlaysDaemon.getState()
     if (
       overlays !== undefined &&
       currentId !== undefined &&
       currentId < overlays.length - 1
-    ) {
-      LocalStorage.set('currentOverlay', currentId + 1)
-      OverlaysDaemon.setState({
-        currentId: currentId + 1,
-        prevActive: currentId + 1 > 0,
-        nextActive: currentId + 1 < state.images.length - 1
-      })
-    }
+    )
+      OverlaysDaemon.setCurrentId(currentId + 1)
   }
 
   static nextMode() {
-    const oldMode = OverlaysDaemon.getState().mode
+    const oldMode = OverlaysDaemon.state.mode
     const mode = oldMode + 1 === 3 ? 0 : oldMode + 1
     OverlaysDaemon.setState({ mode })
     LocalStorage.set('overlayMode', mode)
   }
 
-  static getAllOverlays() {}
+  static setName(name: string) {
+    const state = OverlaysDaemon.state
+    state.images[state.currentId].imageName = name
+    OverlaysDaemon.setState({ images: state.images })
+    OverlaysDaemon.save()
+  }
 
   static setPosition(x: number, y: number) {
-    const state = OverlaysDaemon.getState()
+    const state = OverlaysDaemon.state
     state.images[state.currentId].x = x
     state.images[state.currentId].y = y
     OverlaysDaemon.setState({ images: state.images })
@@ -130,15 +116,29 @@ export class OverlaysDaemon {
   }
 
   static setOpacity(opacity: number) {
-    const state = OverlaysDaemon.getState()
+    const state = OverlaysDaemon.state
     state.images[state.currentId].opacity = opacity
     OverlaysDaemon.setState({ images: state.images })
     OverlaysDaemon.save()
   }
 
-  static async save() {
+  static setEditing(editing: boolean) {
+    OverlaysDaemon.setState({ editing })
+  }
+
+  private static setCurrentId(id: number) {
+    const state = OverlaysDaemon.state
+    LocalStorage.set('currentOverlay', id)
+    OverlaysDaemon.setState({
+      currentId: id,
+      prevActive: id > 0,
+      nextActive: id < state.images.length - 1
+    })
+  }
+
+  private static async save() {
     const overlays = LocalStorage.get('overlays')
-    const state = OverlaysDaemon.getState()
+    const state = OverlaysDaemon.state
 
     if (!overlays && state.images[state.currentId]) {
       LocalStorage.set('overlays', [state.images[state.currentId].dump()])
@@ -184,10 +184,6 @@ export class OverlaysDaemon {
     OverlaysDaemon.store.setState(
       state as Pick<OverlaysState, keyof OverlaysState>
     )
-  }
-
-  static getState(): OverlaysState {
-    return OverlaysDaemon.store.getState()
   }
 
   static on(f: Listener<OverlaysState>) {

@@ -10,7 +10,7 @@ export class PointerDaemon {
   })
 
   static fetchPixel() {
-    const state = PointerDaemon.getState()
+    const state = PointerDaemon.state
     if (!state.coordinates[0] || !state.coordinates[1]) return
     PointerDaemon.setState({ info: 'loading' })
 
@@ -20,7 +20,7 @@ export class PointerDaemon {
   }
 
   static setCoordinates(coordinates: [number, number]) {
-    if (PointerDaemon.getState().empty)
+    if (PointerDaemon.state.empty)
       PointerDaemon.setState({ coordinates, empty: false })
     else PointerDaemon.setState({ coordinates })
   }
@@ -31,7 +31,7 @@ export class PointerDaemon {
     )
   }
 
-  static getState(): PointerState {
+  public static get state(): PointerState {
     return PointerDaemon.store.getState()
   }
 

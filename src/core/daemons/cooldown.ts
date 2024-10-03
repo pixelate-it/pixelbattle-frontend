@@ -34,9 +34,9 @@ export class CooldownDaemon {
   }
 
   private static update(time: number) {
-    const cooldown = CooldownDaemon.getState()
-    const info = InfoDaemon.getState()
-    const profile = ProfileDaemon.getState()
+    const cooldown = CooldownDaemon.state
+    const info = InfoDaemon.state
+    const profile = ProfileDaemon.state
     if (!info) return
 
     const currentTime = time - cooldown.startTime
@@ -67,7 +67,7 @@ export class CooldownDaemon {
     )
   }
 
-  static getState(): CooldownState {
+  static get state(): CooldownState {
     return CooldownDaemon.store.getState()
   }
 

@@ -40,7 +40,7 @@ export default class ApiRequest {
 
   public static changeTag(tag: string): Promise<ApiResponse> {
     return ApiRequest.post(
-      `/users/${ProfileDaemon.getState().profile!.id}/tag`,
+      `/users/${ProfileDaemon.state.profile!.id}/tag`,
       { tag },
       true
     )
@@ -74,9 +74,9 @@ export default class ApiRequest {
     }
 
     if (options.withCredentials) {
-      if (ProfileDaemon.getState().profile!)
+      if (ProfileDaemon.state.profile!)
         headers['Authorization'] =
-          `Bearer ${ProfileDaemon.getState().profile!.token}`
+          `Bearer ${ProfileDaemon.state.profile!.token}`
     }
 
     return fetch(config.url.api + options.url, {

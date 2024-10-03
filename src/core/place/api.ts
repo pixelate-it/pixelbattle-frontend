@@ -6,18 +6,18 @@ import { ProfileDaemon } from '../daemons/profile'
 
 export class ApiPlace {
   public static putPixel(x: number, y: number) {
-    if (CooldownDaemon.getState().hasCooldown) {
+    if (CooldownDaemon.state.hasCooldown) {
       return
     }
-    if (CooldownDaemon.getState() === null) {
+    if (CooldownDaemon.state === null) {
       return
     }
-    const info = InfoDaemon.getState()
+    const info = InfoDaemon.state
     if (info === null || info.ended) {
       return
     }
 
-    if (ProfileDaemon.getState().isBanned) {
+    if (ProfileDaemon.state.isBanned) {
       return
     }
 
@@ -25,7 +25,7 @@ export class ApiPlace {
     ApiRequest.putPixel({
       x,
       y,
-      color: PaletteDaemon.getState().selected.toHex()
+      color: PaletteDaemon.state.selected.toHex()
     })
       .then(() => CooldownDaemon.start())
       .catch(() => CooldownDaemon.stop)

@@ -5,7 +5,7 @@ export class NotificationDaemon {
   private static store = createStore<NotificationState>({ list: [] })
 
   static addNotification(notification: Omit<NotificationInfo, 'id'>) {
-    const notifications = NotificationDaemon.getState().list
+    const notifications = NotificationDaemon.state.list
     if (notifications.length >= 5) {
       NotificationDaemon.setState({ list: notifications.slice(1) })
     }
@@ -23,7 +23,7 @@ export class NotificationDaemon {
 
   static removeNotification(id: string) {
     NotificationDaemon.setState({
-      list: NotificationDaemon.getState().list.filter((n) => n.id !== id)
+      list: NotificationDaemon.state.list.filter((n) => n.id !== id)
     })
   }
 
@@ -33,7 +33,7 @@ export class NotificationDaemon {
     )
   }
 
-  static getState(): NotificationState {
+  static get state(): NotificationState {
     return NotificationDaemon.store.getState()
   }
 

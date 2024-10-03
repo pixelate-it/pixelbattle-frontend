@@ -27,7 +27,7 @@ export class TagsDaemon {
       loaded: true
     })
 
-    const profile = ProfileDaemon.getState()
+    const profile = ProfileDaemon.state
 
     if (!profile.isAuthenticated) {
       return
@@ -52,7 +52,7 @@ export class TagsDaemon {
   }
 
   private static pushFakeTag(name: string) {
-    const tags = TagsDaemon.getState()
+    const tags = TagsDaemon.state
     TagsDaemon.setState({
       tags: [
         ...tags.tags,
@@ -67,12 +67,12 @@ export class TagsDaemon {
 
   static purgeFakeTags() {
     TagsDaemon.setState({
-      tags: TagsDaemon.getState().tags.filter((tag) => tag.pixels !== -1)
+      tags: TagsDaemon.state.tags.filter((tag) => tag.pixels !== -1)
     })
   }
 
   static select(name: string) {
-    const tags = TagsDaemon.getState()
+    const tags = TagsDaemon.state
 
     if (tags.selectedTag === name) {
       return
@@ -112,7 +112,7 @@ export class TagsDaemon {
     TagsDaemon.store.setState(state as Pick<TagsState, keyof TagsState>)
   }
 
-  static getState(): TagsState {
+  static get state(): TagsState {
     return TagsDaemon.store.getState()
   }
 

@@ -9,6 +9,10 @@ export class PaletteDaemon {
     config.defaults.colors.palette
   )
 
+  public static get state(): PaletteState {
+    return PaletteDaemon.store.getState()
+  }
+
   static reset() {
     PaletteDaemon.setState(config.defaults.colors.palette)
 
@@ -16,12 +20,12 @@ export class PaletteDaemon {
   }
 
   static setCurrentColor(color: Color) {
-    PaletteDaemon.setState({ ...PaletteDaemon.getState(), selected: color })
+    PaletteDaemon.setState({ ...PaletteDaemon.state, selected: color })
     PaletteDaemon.save()
   }
 
   static removeColor(color: Color) {
-    const palette = PaletteDaemon.getState()
+    const palette = PaletteDaemon.state
     PaletteDaemon.setState({
       selected: palette.colors.at(-2) ?? palette.selected,
       colors: palette.colors.filter((c) => !c.equals(color))
@@ -32,7 +36,7 @@ export class PaletteDaemon {
 
   static isDefaultColors() {
     return (
-      PaletteDaemon.getState().colors.length ===
+      PaletteDaemon.state.colors.length ===
       config.defaults.colors.palette.colors.length
     )
   }
@@ -42,7 +46,7 @@ export class PaletteDaemon {
   }
 
   private static addColor(color: Color) {
-    const palette = PaletteDaemon.getState()
+    const palette = PaletteDaemon.state
     PaletteDaemon.setState({
       ...palette,
       colors: [...palette.colors, color]
@@ -52,7 +56,7 @@ export class PaletteDaemon {
   }
 
   static addAndSelect(color: Color) {
-    const isColorInPalette = PaletteDaemon.getState().colors.some((c) =>
+    const isColorInPalette = PaletteDaemon.state.colors.some((c) =>
       c.equals(color)
     )
 
@@ -66,7 +70,7 @@ export class PaletteDaemon {
   }
 
   static save() {
-    const palette = PaletteDaemon.getState()
+    const palette = PaletteDaemon.state
     LocalStorage.set(
       'palette',
       {
@@ -100,10 +104,6 @@ export class PaletteDaemon {
     PaletteDaemon.store.setState(
       state as Pick<PaletteState, keyof PaletteState>
     )
-  }
-
-  static getState(): PaletteState {
-    return PaletteDaemon.store.getState()
   }
 
   static on(f: Listener<PaletteState>) {

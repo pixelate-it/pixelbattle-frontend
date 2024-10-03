@@ -24,8 +24,8 @@ export const useColorDelete = () => {
       PaletteDaemon.reset()
       return
     }
-    if (!PaletteDaemon.isDefaultColor(PaletteDaemon.getState().selected)) {
-      PaletteDaemon.removeColor(PaletteDaemon.getState().selected)
+    if (!PaletteDaemon.isDefaultColor(PaletteDaemon.state.selected)) {
+      PaletteDaemon.removeColor(PaletteDaemon.state.selected)
     }
     setDisabled(true)
   }

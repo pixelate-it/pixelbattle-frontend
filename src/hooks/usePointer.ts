@@ -5,7 +5,7 @@ import { PointerState } from 'src/core/daemons/types'
 import { config } from 'src/config'
 
 export const usePointer = (): PointerState => {
-  const [state, setState] = useState(PointerDaemon.getState())
+  const [state, setState] = useState(PointerDaemon.state)
 
   useEffect(() => {
     let oldState = state

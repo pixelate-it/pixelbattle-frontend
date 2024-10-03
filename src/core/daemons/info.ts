@@ -25,7 +25,7 @@ export class InfoDaemon {
     InfoDaemon.store.setState(state as Pick<InfoState, keyof InfoState>)
   }
 
-  static getState(): InfoState {
+  static get state(): InfoState {
     return InfoDaemon.store.getState()
   }
 

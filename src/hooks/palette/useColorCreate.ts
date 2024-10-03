@@ -3,7 +3,7 @@ import Color from 'src/core/classes/primitives/Color'
 import { PaletteDaemon } from 'src/core/daemons/palette'
 
 export const useColorCreate = () => {
-  const [color, setColor] = useState(PaletteDaemon.getState().selected.toHex())
+  const [color, setColor] = useState(PaletteDaemon.state.selected.toHex())
   const [open, setOpen] = useState(false)
 
   function onSelect() {
@@ -17,7 +17,7 @@ export const useColorCreate = () => {
   }
 
   function openPicker() {
-    setColor(PaletteDaemon.getState().selected.toHex())
+    setColor(PaletteDaemon.state.selected.toHex())
 
     toggle()
   }

@@ -1,4 +1,4 @@
-import { CanvasStorage } from '../storage'
+import { CanvasStorage } from './canvas'
 
 export class Viewport {
   static scale = 1.2
@@ -7,18 +7,6 @@ export class Viewport {
 
   static slideTo: number = 0
   static startSlideTime: number = 0
-
-  static centerOfImage(
-    canvas: HTMLCanvasElement,
-    width: number,
-    height: number
-  ) {
-    let scale = canvas.width / width
-    if (scale > canvas.height / height) scale = canvas.height / height
-    this.apply(scale)
-    this.x = canvas.width / 2 - (width / 2) * this.scale
-    this.y = canvas.height / 2 - (height / 2) * this.scale
-  }
 
   static applyTransform(ctx: CanvasRenderingContext2D) {
     // this.scale = (this.slideTo - this.scale) * 0.1

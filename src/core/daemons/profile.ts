@@ -55,7 +55,7 @@ export class ProfileDaemon {
     )
   }
 
-  static getState(): ProfileState {
+  static get state(): ProfileState {
     return ProfileDaemon.store.getState()
   }
 

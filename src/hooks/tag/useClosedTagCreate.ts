@@ -8,7 +8,7 @@ export const useClosedTagCreate = () => {
   }
 
   function deleteTag() {
-    if (!ProfileDaemon.getState().user?.tag) {
+    if (!ProfileDaemon.state.user?.tag) {
       return
     }
 

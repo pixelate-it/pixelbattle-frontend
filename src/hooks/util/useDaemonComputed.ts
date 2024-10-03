@@ -21,9 +21,9 @@ export const useDaemonComputed = <T, A extends ComputedActions<T>>(
     return result as ComputedValues<T, A>
   }
 
-  const [state, setState] = useState<T>(store.getState)
+  const [state, setState] = useState<T>(store.state)
   const [computedValues, setComputedValues] = useState<ComputedValues<T, A>>(
-    () => updateComputedValue(store.getState())
+    () => updateComputedValue(store.state)
   )
 
   useEffect(() => {

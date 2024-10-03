@@ -1,6 +1,6 @@
 import createStore, { Listener } from 'unistore'
 import ApiRequest from '../classes/api/request'
-import { CanvasStorage } from '../place/storage'
+import { CanvasStorage } from '../place/storage/canvas'
 import { InfoDaemon } from './info'
 import { PaletteDaemon } from './palette'
 import { ProfileDaemon } from './profile'
@@ -42,7 +42,7 @@ export class GeneralDaemon {
     )
   }
 
-  static getState(): GeneralState {
+  static get state(): GeneralState {
     return GeneralDaemon.store.getState()
   }
 

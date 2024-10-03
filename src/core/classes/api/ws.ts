@@ -1,6 +1,6 @@
 import { config } from 'src/config'
 import { MessageData } from './types'
-import { CanvasStorage } from 'src/core/place/storage'
+import { CanvasStorage } from 'src/core/place/storage/canvas'
 import Color from '../primitives/Color'
 
 export class ApiWebSocket {

@@ -27,7 +27,6 @@ export class OverlayImage {
     if (overlay.data instanceof Blob)
       this.data = await blobToString(overlay.data)
     else this.data = await blobToString(this.blob)
-    console.log(this.data)
     createImageBitmap(this.blob).then((v) => {
       this.bitmap = v
 

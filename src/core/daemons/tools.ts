@@ -8,7 +8,7 @@ export class ToolsDaemon {
 
   static togglePicker() {
     ToolsDaemon.setState({
-      pickerIsEnabled: !ToolsDaemon.getState().pickerIsEnabled
+      pickerIsEnabled: !ToolsDaemon.state.pickerIsEnabled
     })
   }
 
@@ -16,7 +16,7 @@ export class ToolsDaemon {
     ToolsDaemon.store.setState(state as Pick<ToolsState, keyof ToolsState>)
   }
 
-  static getState(): ToolsState {
+  static get state(): ToolsState {
     return ToolsDaemon.store.getState()
   }
 

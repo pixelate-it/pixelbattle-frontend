@@ -38,6 +38,7 @@ export interface OverlaysState {
   prevActive: boolean
   nextActive: boolean
   mode: 0 | 1 | 2
+  editing: boolean
 }
 
 export interface ProfileState {
