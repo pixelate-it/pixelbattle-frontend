@@ -13,7 +13,8 @@ export const OverlayTransform = () => {
     unsetImage,
     addImage,
     nextImage,
-    prevImage
+    prevImage,
+    reuploadImage
   } = useImageTransform()
 
   return (
@@ -22,6 +23,9 @@ export const OverlayTransform = () => {
         <p class={styles.imageName}>
           {overlay.images[overlay.currentId].imageName}
         </p>
+        <Button onClick={reuploadImage} type='primary'>
+          <Icon icon='open-folder' />
+        </Button>
       </div>
       <div class={styles.image}>
         <Button

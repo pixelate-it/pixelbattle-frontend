@@ -37,9 +37,11 @@ export interface OverlaysState {
   currentId: number
   prevActive: boolean
   nextActive: boolean
-  mode: 0 | 1 | 2
+  mode: BruhOverlayMode
   editing: boolean
 }
+
+export type BruhOverlayMode = 0 | 1 | 2
 
 export interface ProfileState {
   isAuthenticated: boolean

@@ -1,5 +1,5 @@
 import createStore, { Listener } from 'unistore'
-import { OverlaysState } from './types'
+import { BruhOverlayMode, OverlaysState } from './types'
 import { config } from 'src/config'
 import { LocalStorage } from '../classes/storage/local'
 import { OverlayImage } from '../classes/primitives/OverlayImage'
@@ -21,6 +21,19 @@ export class OverlaysDaemon {
 
   static get state(): OverlaysState {
     return OverlaysDaemon.store.getState()
+  }
+
+  static async setImage(imageBlob: Blob, imageName: string) {
+    const images = OverlaysDaemon.state.images
+    const currentImage = images[OverlaysDaemon.state.currentId]
+    await images[OverlaysDaemon.state.currentId].process({
+      data: imageBlob,
+      name: imageName,
+      position: { x: currentImage.x, y: currentImage.y },
+      opacity: currentImage.opacity
+    })
+    OverlaysDaemon.setState({ images })
+    OverlaysDaemon.save()
   }
 
   static async addImage(
@@ -96,7 +109,7 @@ export class OverlaysDaemon {
   static nextMode() {
     const oldMode = OverlaysDaemon.state.mode
     const mode = oldMode + 1 === 3 ? 0 : oldMode + 1
-    OverlaysDaemon.setState({ mode })
+    OverlaysDaemon.setState({ mode: mode as BruhOverlayMode })
     LocalStorage.set('overlayMode', mode)
   }
 
@@ -175,7 +188,7 @@ export class OverlaysDaemon {
         currentId: currentId,
         prevActive: currentId > 0,
         nextActive: currentId < overlays.length - 1,
-        mode: LocalStorage.get('overlayMode') ?? 0
+        mode: (LocalStorage.get('overlayMode') ?? 0) as BruhOverlayMode
       })
     }
   }

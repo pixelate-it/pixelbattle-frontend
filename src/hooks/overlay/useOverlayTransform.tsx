@@ -8,6 +8,7 @@ export const useImageTransform = () => {
   const overlay = useDaemon(OverlaysDaemon)
   const info = useDaemon(InfoDaemon)
   const [fileInput, setFileInput] = useState<HTMLInputElement>()
+  const [reuploadInput, setReuploadInput] = useState<HTMLInputElement>()
 
   useEffect(() => {
     const fileInput = document.createElement('input')
@@ -16,13 +17,23 @@ export const useImageTransform = () => {
     fileInput.oninput = (event: Event) => {
       const files = (event.currentTarget! as HTMLInputElement).files
       if (files && files.length) {
-        uploadImage(files[0])
+        uploadImage(files[0], false)
       }
     }
     setFileInput(fileInput)
+    const fileInput2 = document.createElement('input')
+    fileInput2.type = 'file'
+    fileInput2.accept = 'image/*'
+    fileInput2.oninput = (event: Event) => {
+      const files = (event.currentTarget! as HTMLInputElement).files
+      if (files && files.length) {
+        uploadImage(files[0], true)
+      }
+    }
+    setReuploadInput(fileInput2)
   }, [])
 
-  async function uploadImage(image: File) {
+  async function uploadImage(image: File, sets: boolean) {
     const imageBlob = new Blob([await image.arrayBuffer()])
     const imageBitmap = await createImageBitmap(imageBlob)
 
@@ -42,7 +53,13 @@ export const useImageTransform = () => {
       return
     }
 
-    OverlaysDaemon.addImage(imageBlob, image.name, { x: 0, y: 0 })
+    sets
+      ? OverlaysDaemon.setImage(imageBlob, image.name)
+      : OverlaysDaemon.addImage(imageBlob, image.name, { x: 0, y: 0 })
+  }
+
+  function reuploadImage() {
+    reuploadInput?.click()
   }
 
   function addImage() {
@@ -84,6 +101,7 @@ export const useImageTransform = () => {
     unsetImage,
     addImage,
     prevImage,
-    nextImage
+    nextImage,
+    reuploadImage
   }
 }
