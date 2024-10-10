@@ -9,14 +9,15 @@ import {
 } from '../../utils/movement/primitive'
 import { generateEvent } from '../../utils/generators'
 import { PluginsEvents } from '../../buses/pluginsEvents'
+import { useValerator } from '../../utils/variables'
 
-export const mousePlugin = (canDrag: boolean) => {
+export const mousePlugin = () => {
   let mouseDown = false
-  let dragged = false
   let startX = 0
   let startY = 0
   let startClientX = 0
   let startClientY = 0
+  let dragged = useValerator(false, PluginsEvents.draggedEvents)
 
   useWheel((event) => {
     const zoom = event.deltaY < 0 ? 1.15 : 0.85
@@ -26,6 +27,7 @@ export const mousePlugin = (canDrag: boolean) => {
     Viewport.x = event.clientX - zoom * (event.clientX - Viewport.x)
     Viewport.y = event.clientY - zoom * (event.clientY - Viewport.y)
     Viewport.scale *= zoom
+    Viewport.fix()
   })
 
   useMouseDown((event) => {
@@ -33,12 +35,12 @@ export const mousePlugin = (canDrag: boolean) => {
     const { x, y } = Viewport.transformCoords(event.clientX, event.clientY)
     startX = x
     startY = y
-    startClientX = event.clientX
-    startClientY = event.clientY
     generateEvent(
       Viewport.transformCoordsWithFloor(event.clientX, event.clientY),
       PluginsEvents.clickStartEvents
     )
+    startClientX = event.clientX
+    startClientY = event.clientY
   })
 
   useMouseUp((event) => {
@@ -48,24 +50,32 @@ export const mousePlugin = (canDrag: boolean) => {
       event.clientX,
       event.clientY
     )
-    if (!dragged)
+    if (!dragged && !Viewport.locked)
       generateEvent(
         { x, y, button: event.button },
         PluginsEvents.clickEndEvents
       )
+    generateEvent(
+      { x, y, button: event.button },
+      PluginsEvents.clickGuarantiedEndEvents
+    )
     dragged = false
   })
 
   useMouseMove((event) => {
     if (mouseDown)
-      if (canDrag) {
+      if (!Viewport.locked) {
         const x = event.clientX - startX * Viewport.scale
         const y = event.clientY - startY * Viewport.scale
-        const { x: oldX, y: oldY } = Viewport
-        if (startClientX - oldX > 10 || startClientY - oldY > 10) dragged = true
+        if (
+          Math.abs(startClientX - event.clientX) > 10 ||
+          Math.abs(startClientY - event.clientY) > 10
+        )
+          dragged = true
         if (dragged) {
           Viewport.x = x
           Viewport.y = y
+          Viewport.fix()
         }
       }
 

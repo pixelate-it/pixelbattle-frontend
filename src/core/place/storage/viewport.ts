@@ -5,18 +5,24 @@ export class Viewport {
   static x: number = 0
   static y: number = 0
 
-  static slideTo: number = 0
+  static locked = false
+
+  static realScale: number = 0
+  static realX: number = 0
+  static realY: number = 0
   static startSlideTime: number = 0
 
   static applyTransform(ctx: CanvasRenderingContext2D) {
-    // this.scale = (this.slideTo - this.scale) * 0.1
+    this.realScale += (this.scale - this.realScale) * 0.3
+    this.realX += (this.x - this.realX) * 0.3
+    this.realY += (this.y - this.realY) * 0.3
     ctx.setTransform(
-      this.scale,
+      this.realScale,
       0,
       0,
-      this.scale,
-      Math.floor(this.x),
-      Math.floor(this.y)
+      this.realScale,
+      this.realX,
+      this.realY
     )
   }
 
@@ -45,5 +51,11 @@ export class Viewport {
     )
       return false
     return true
+  }
+
+  static fix() {
+    this.scale = Math.round(this.scale * 100) / 100
+    this.x = Math.round(this.x * 100) / 100
+    this.y = Math.round(this.y * 100) / 100
   }
 }

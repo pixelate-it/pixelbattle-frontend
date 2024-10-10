@@ -1,7 +1,14 @@
 import { BasicPointerEvent } from '../../buses/types'
 import { ClearEvent, DependenciesCallback } from '../types'
-import { useClick } from './useClick'
+import { useClick, useGuarantiedClick } from './useClick'
+import { useDragged } from './useDragged'
 
+/**
+ * Subs on press event
+ * @param callback event accepter callback
+ * @param delay in milliseconds
+ * @param dependencies function with array like conditions
+ */
 export const usePress = (
   callback: ClearEvent<BasicPointerEvent>,
   delay: number,
@@ -20,11 +27,11 @@ export const usePress = (
     dependencies
   )
 
-  useClick(
-    'end',
-    () => {
-      clearTimeout(timeoutId)
-    },
-    dependencies
-  )
+  useDragged(({ current }) => {
+    if (current) clearInterval(timeoutId)
+  })
+
+  useGuarantiedClick(() => {
+    clearTimeout(timeoutId)
+  }, dependencies)
 }

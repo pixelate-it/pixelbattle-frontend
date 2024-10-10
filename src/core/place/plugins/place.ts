@@ -8,10 +8,12 @@ export const placePlugin = () => {
     let scale = event.canvasWidth / event.placeWidth
     if (scale > event.canvasHeight / event.placeHeight)
       scale = event.canvasHeight / event.placeHeight
-    Viewport.scale = scale
-    Viewport.x = event.canvasWidth / 2 - (event.placeWidth / 2) * Viewport.scale
-    Viewport.y =
+    Viewport.realScale = Viewport.scale = scale
+    Viewport.realX = Viewport.x =
+      event.canvasWidth / 2 - (event.placeWidth / 2) * Viewport.scale
+    Viewport.realY = Viewport.y =
       event.canvasHeight / 2 - (event.placeHeight / 2) * Viewport.scale
+    Viewport.fix()
   })
 
   useRender(({ ctx, canvasWidth, canvasHeight }) => {

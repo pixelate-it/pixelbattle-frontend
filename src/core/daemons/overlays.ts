@@ -68,7 +68,7 @@ export class OverlaysDaemon {
       LocalStorage.reset('currentOverlay')
       OverlaysDaemon.setState({
         images: [],
-        currentId: 0
+        currentId: -1
       })
       return
     }

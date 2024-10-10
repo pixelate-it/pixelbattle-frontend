@@ -41,14 +41,40 @@ export class OverlayImage {
     return this
   }
 
-  public getPixel(x: number, y: number) {
+  public getPixel(x: number, y: number): undefined | Color {
     if (!this.bitmap || !this.raw) return
     x -= this.x
     y -= this.y
     const index = x + y * this.bitmap.width
     const [r, g, b, ...rest] = this.raw.slice(index * 4, index * 4 + 4)
 
-    return new Color([r, g, b, rest.length === 0 ? 255 : rest[0]])
+    if (rest.length !== 0 && rest[0] === 0) return
+
+    if (rest.length !== 0 && rest[0] === 255)
+      return new Color([r, g, b, rest.length === 0 ? 255 : rest[0]])
+
+    const base = [255, 255, 255, 1]
+    const added = [r, g, b, rest[0] / 255]
+
+    const mix = []
+    mix[3] = 1 - (1 - added[3]) * (1 - base[3])
+    mix[0] = Math.round(
+      (added[0] * added[3]) / mix[3] +
+        (base[0] * base[3] * (1 - added[3])) / mix[3]
+    ) // red
+    mix[1] = Math.round(
+      (added[1] * added[3]) / mix[3] +
+        (base[1] * base[3] * (1 - added[3])) / mix[3]
+    ) // green
+    mix[2] = Math.round(
+      (added[2] * added[3]) / mix[3] +
+        (base[2] * base[3] * (1 - added[3])) / mix[3]
+    )
+    mix[3] = 255
+
+    console.log(mix)
+
+    return new Color(mix)
   }
 
   public checkPointInside(x: number, y: number) {

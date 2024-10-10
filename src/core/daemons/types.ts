@@ -72,6 +72,7 @@ export interface TagsState {
 
 export interface ToolsState {
   pickerIsEnabled: boolean
+  lockedPaletteGrowing: boolean
 }
 
 export interface NotificationInfo {

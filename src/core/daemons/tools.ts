@@ -3,12 +3,18 @@ import { ToolsState } from './types'
 
 export class ToolsDaemon {
   private static store = createStore<ToolsState>({
-    pickerIsEnabled: false
+    pickerIsEnabled: false,
+    lockedPaletteGrowing: false
   })
 
   static togglePicker() {
     ToolsDaemon.setState({
       pickerIsEnabled: !ToolsDaemon.state.pickerIsEnabled
+    })
+  }
+  static toggleLock() {
+    ToolsDaemon.setState({
+      lockedPaletteGrowing: !ToolsDaemon.state.lockedPaletteGrowing
     })
   }
 

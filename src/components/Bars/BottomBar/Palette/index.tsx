@@ -5,6 +5,7 @@ import { ColorPick } from './ColorPick'
 import { ColorDelete } from './ColorDelete'
 import { ColorCreate } from './ColorCreate'
 import { usePalette } from 'src/hooks/palette/usePalette'
+import { GrowthLock } from './GrowthLock'
 
 export const Palette = () => {
   const palette = usePalette()
@@ -21,6 +22,7 @@ export const Palette = () => {
         <ColorCreate />
         <ColorPick />
         <ColorDelete />
+        <GrowthLock />
       </PaletteGroup>
     </div>
   )

@@ -1,10 +1,13 @@
 import { OverlaysDaemon } from 'src/core/daemons/overlays'
 import { PaletteDaemon } from 'src/core/daemons/palette'
 import { ApiPlace } from '../api'
-import { useClick } from '../utils/movement/useClick'
+import { useClick, useGuarantiedClick } from '../utils/movement/useClick'
 import { OverlayImage } from 'src/core/classes/primitives/OverlayImage'
 import { ToolsDaemon } from 'src/core/daemons/tools'
 import { useRender } from '../utils/render/premitive'
+import { usePress } from '../utils/movement/usePress'
+import { useMove } from '../utils/movement/useMove'
+import { Viewport } from '../storage/viewport'
 
 export const overlaysPlugin = () => {
   overlaysMovementPlugin()
@@ -58,6 +61,62 @@ const overlaysMovementPlugin = () => {
       checkPointInsideOverlays(x, y)
     ]
   )
+
+  usePress(
+    () => {
+      OverlaysDaemon.setEditing(true)
+    },
+    100,
+    ({ x, y }) => [
+      OverlaysDaemon.image !== undefined,
+      checkPointInsideOverlays(x, y)
+    ]
+  )
+
+  let clickStarted = false
+  let startX = 0
+  let startY = 0
+  let overlayStartX = 0
+  let overlayStartY = 0
+
+  useClick(
+    'start',
+    ({ x, y }) => {
+      clickStarted = true
+      startX = x
+      startY = y
+      overlayStartX = OverlaysDaemon.image!.x
+      overlayStartY = OverlaysDaemon.image!.y
+      Viewport.locked = true
+    },
+    ({ x, y }) => [
+      OverlaysDaemon.state.editing,
+      OverlaysDaemon.image !== undefined,
+      checkPointInsideOverlays(x, y)
+    ]
+  )
+  useGuarantiedClick(
+    () => {
+      clickStarted = false
+      Viewport.locked = false
+    },
+    () => [OverlaysDaemon.state.editing, OverlaysDaemon.image !== undefined]
+  )
+
+  useMove(
+    ({ x, y }) => {
+      OverlaysDaemon.setPosition(
+        x - startX + overlayStartX,
+        y - startY + overlayStartY
+      )
+    },
+    ({ x, y }) => [
+      OverlaysDaemon.state.editing,
+      OverlaysDaemon.image !== undefined,
+      clickStarted,
+      checkPointInsideOverlays(x, y)
+    ]
+  )
 }
 
 const overlaysRenderPlugin = () => {
@@ -85,8 +144,8 @@ const overlaysRenderPlugin = () => {
       ctx.globalAlpha = image.opacity / 100
       if (image.bitmap) {
         ctx.drawImage(OverlaysDaemon.image.bitmap!, image.x, image.y)
-        // if (OverlaysDaemon.state.editing)
-        //   this.renderUi(ctx, OverlaysDaemon.image)
+        //if (OverlaysDaemon.state.editing)
+        //  this.renderUi(ctx, OverlaysDaemon.image)
       }
       ctx.globalAlpha = 1
       ctx.closePath()
@@ -94,11 +153,15 @@ const overlaysRenderPlugin = () => {
   })
 }
 
-export const checkPointInsideOverlays = (x: number, y: number) => {
+export const checkPointInsideOverlays = (x: number, y: number): boolean => {
   if (OverlaysDaemon.state.mode === 0)
     return OverlaysDaemon.image!.checkPointInside(x, y)
   else if (OverlaysDaemon.state.mode === 1)
     for (let i = 0; i < OverlaysDaemon.state.images.length; i++)
-      if (OverlaysDaemon.state.images[i].checkPointInside(x, y)) return true
+      if (
+        OverlaysDaemon.state.images[i].checkPointInside(x, y) &&
+        OverlaysDaemon.state.images[i].getPixel(x, y)?.color[3] !== 0
+      )
+        return true
   return false
 }
