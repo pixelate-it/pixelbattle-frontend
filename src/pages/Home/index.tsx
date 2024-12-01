@@ -22,10 +22,8 @@ const TopBar = lazy(() => import("../../components/Bar/TopBar/TopBar").then(r =>
 export function Home() {
     // Should probably refactor this somehow
     return (
-        <>
-            <SettingsContext.Provider value={SettingsManager}>
-                <Snow />
-            </SettingsContext.Provider>
+        <SettingsContext.Provider value={SettingsManager}>
+            <Snow />
             <InfoContext.Provider value={InfoManager}>
                 <ColorPickerContext.Provider value={ColorPickerManager}>
                     <PlaceContext.Provider value={PlaceManager}>
@@ -51,6 +49,6 @@ export function Home() {
                     </PlaceContext.Provider>
                 </ColorPickerContext.Provider>
             </InfoContext.Provider>
-        </>
+        </SettingsContext.Provider>
     );
 }
