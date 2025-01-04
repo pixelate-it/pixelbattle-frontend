@@ -1,3 +1,5 @@
+import { WebGlGraphics } from '../webgl'
+
 export type EventBus<EventT> = Array<BasicEvent<EventT>>
 
 export type BasicEvent<EventT> = (event: EventT) => boolean
@@ -9,9 +11,8 @@ export interface BasicPointerEvent {
 }
 
 export interface BasicRenderEvent {
-  ctx: CanvasRenderingContext2D
-  canvasWidth: number
-  canvasHeight: number
+  graphics: WebGlGraphics
+  delta: number
 }
 
 export interface CanvasLoadedEvent {

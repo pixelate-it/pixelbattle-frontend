@@ -5,35 +5,30 @@ export class Viewport {
   static x: number = 0
   static y: number = 0
 
+  static renderScale = 1.2
+  static renderX = 0
+  static renderY = 0
+
   static locked = false
 
-  static realScale: number = 0
-  static realX: number = 0
-  static realY: number = 0
-  static startSlideTime: number = 0
+  static smoothMove(delta: number) {
+    // in future
+    // const smoothingFactor = 2.5
+    // const timeFix = Math.min(delta / 1000 / 30, 1)
 
-  static applyTransform(ctx: CanvasRenderingContext2D) {
-    this.realScale += (this.scale - this.realScale) * 0.3
-    this.realX += (this.x - this.realX) * 0.3
-    this.realY += (this.y - this.realY) * 0.3
-    ctx.setTransform(
-      this.realScale,
-      0,
-      0,
-      this.realScale,
-      this.realX,
-      this.realY
-    )
-  }
-
-  static clearTransform(ctx: CanvasRenderingContext2D) {
-    ctx.resetTransform()
+    // this.renderScale +=
+    //   (this.scale - this.renderScale) * smoothingFactor * timeFix
+    // this.renderX += (this.x - this.renderX) * smoothingFactor * timeFix
+    // this.renderY += (this.y - this.renderY) * smoothingFactor * timeFix
+    this.renderScale = this.scale
+    this.renderX = this.x
+    this.renderY = this.y
   }
 
   static transformCoords(x: number, y: number) {
     return {
-      x: (x - this.x) / this.scale,
-      y: (y - this.y) / this.scale
+      x: x / Viewport.scale - Viewport.x,
+      y: y / Viewport.scale - Viewport.y
     }
   }
 
@@ -51,11 +46,5 @@ export class Viewport {
     )
       return false
     return true
-  }
-
-  static fix() {
-    this.scale = Math.round(this.scale * 100) / 100
-    this.x = Math.round(this.x * 100) / 100
-    this.y = Math.round(this.y * 100) / 100
   }
 }

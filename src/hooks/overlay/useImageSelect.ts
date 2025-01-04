@@ -27,7 +27,7 @@ export const useImageSelect = () => {
       return
     }
 
-    OverlaysDaemon.addImage(imageBlob, image.name, { x: 0, y: 0 })
+    OverlaysDaemon.addOverlay(imageBlob, image.name, { x: 0, y: 0 })
   }
 
   function onDrop(event: DragEvent) {

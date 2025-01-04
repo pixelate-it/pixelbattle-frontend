@@ -1,6 +1,6 @@
 import { ProfileInfo, PixelInfo, FormattedTag } from '../classes/api/types'
 import Color from '../classes/primitives/Color'
-import { OverlayImage } from '../classes/primitives/OverlayImage'
+import { Overlay } from '../classes/primitives/Overlay'
 
 export interface CooldownState {
   startRequestTime: number
@@ -24,8 +24,14 @@ export interface InfoState {
 export interface NotificationInfo {
   message: string
   title: string
-  type: 'error' | 'success'
+  type: NotificationType
   id: string
+}
+
+export enum NotificationType {
+  ERROR,
+  SUCCESS,
+  DEBUG
 }
 
 export interface NotificationState {
@@ -33,15 +39,15 @@ export interface NotificationState {
 }
 
 export interface OverlaysState {
-  images: Array<OverlayImage>
-  currentId: number
-  prevActive: boolean
-  nextActive: boolean
-  mode: BruhOverlayMode
-  editing: boolean
+  overlays: Array<Overlay>
+  currentOverlay: number
+  prevOverlayButtonActive: boolean
+  nextOverlayButtonActive: boolean
+  viewMode: OverlayViewMode
+  editingMode: boolean
 }
 
-export type BruhOverlayMode = 0 | 1 | 2
+export type OverlayViewMode = 0 | 1 | 2
 
 export interface ProfileState {
   isAuthenticated: boolean
@@ -73,13 +79,6 @@ export interface TagsState {
 export interface ToolsState {
   pickerIsEnabled: boolean
   lockedPaletteGrowing: boolean
-}
-
-export interface NotificationInfo {
-  message: string
-  title: string
-  type: 'error' | 'success'
-  id: string
 }
 
 export interface GeneralState {

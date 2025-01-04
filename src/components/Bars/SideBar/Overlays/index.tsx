@@ -10,15 +10,14 @@ export const Overlays = () => {
 
   return (
     <WindowBox title='Изображения'>
-      {overlay.images.length !== 0 &&
-      overlay.images[overlay.currentId] !== undefined ? (
+      {overlay.currentOverlay !== -1 ? (
         <>
           <OverlayTransform />
           <div className={styles.group}>
             <Button onClick={nextMode}>
-              {overlay.mode === 0
+              {overlay.viewMode === 0
                 ? 'Режим одного изображения'
-                : overlay.mode === 1
+                : overlay.viewMode === 1
                   ? 'Режим всех изображений'
                   : 'Изображения скрыты'}
             </Button>

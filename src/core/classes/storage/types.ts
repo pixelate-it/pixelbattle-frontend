@@ -41,5 +41,5 @@ export interface LocalStorageMap {
   palette: PaletteRaw
   overlays?: Overlays
   currentOverlay?: number
-  overlayMode?: number
+  overlayViewMode?: number
 }

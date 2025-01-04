@@ -1,9 +1,9 @@
 import { config } from 'src/config'
-import { MessageData } from './types'
+import { MessageData } from '../api/types'
 import { CanvasStorage } from 'src/core/place/storage/canvas'
 import Color from '../primitives/Color'
 
-export class ApiWebSocket {
+export class WsConnection {
   private static ws: WebSocket
 
   static get closed() {

@@ -32,7 +32,7 @@ export class GeneralDaemon {
     PaletteDaemon.load()
     ProfileDaemon.load()
     ProfileDaemon.fetch()
-    OverlaysDaemon.load()
+    OverlaysDaemon.loadOverlays()
     TagsDaemon.fetch()
   }
 

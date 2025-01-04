@@ -1,6 +1,6 @@
 import { MutableRef, useEffect, useRef } from 'preact/hooks'
-import { ApiWebSocket } from 'src/core/classes/api/ws'
 import { PlaceIntegration } from 'src/core/place/integration'
+import { ApiWebSocket } from 'src/core/ws/ws'
 
 export const useGame = (canvas: MutableRef<HTMLCanvasElement | null>) => {
   const placeRef = useRef<PlaceIntegration>()

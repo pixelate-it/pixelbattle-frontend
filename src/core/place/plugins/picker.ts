@@ -1,8 +1,6 @@
 import { PaletteDaemon } from 'src/core/daemons/palette'
 import { useClick } from '../utils/movement/useClick'
 import { ToolsDaemon } from 'src/core/daemons/tools'
-import { OverlaysDaemon } from 'src/core/daemons/overlays'
-import { checkPointInsideOverlays } from './overlays'
 import { CanvasStorage } from '../storage/canvas'
 import { Viewport } from '../storage/viewport'
 
@@ -19,10 +17,6 @@ export const pickerPlugin = () => {
       ToolsDaemon.togglePicker()
       return pickHandler(x, y)
     },
-    ({ x, y }) => [
-      ToolsDaemon.state.pickerIsEnabled,
-      !OverlaysDaemon.image,
-      !checkPointInsideOverlays(x, y)
-    ]
+    () => [ToolsDaemon.state.pickerIsEnabled]
   )
 }

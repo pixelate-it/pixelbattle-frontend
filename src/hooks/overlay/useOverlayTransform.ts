@@ -54,8 +54,8 @@ export const useImageTransform = () => {
     }
 
     sets
-      ? OverlaysDaemon.setImage(imageBlob, image.name)
-      : OverlaysDaemon.addImage(imageBlob, image.name, { x: 0, y: 0 })
+      ? OverlaysDaemon.setOverlayImage(imageBlob, image.name)
+      : OverlaysDaemon.addOverlay(imageBlob, image.name, { x: 0, y: 0 })
   }
 
   function reuploadImage() {
@@ -68,29 +68,29 @@ export const useImageTransform = () => {
 
   function changeCoords(type: 'x' | 'y', value: number) {
     const newPosition = {
-      x: OverlaysDaemon.image!.x,
-      y: OverlaysDaemon.image!.y
+      x: OverlaysDaemon.currentOverlay!.x,
+      y: OverlaysDaemon.currentOverlay!.y
     }
 
     newPosition[type] = value
 
-    OverlaysDaemon.setPosition(newPosition.x, newPosition.y)
+    OverlaysDaemon.setOverlayPosition(newPosition.x, newPosition.y)
   }
 
   function changeOpacity(opacity: string) {
-    OverlaysDaemon.setOpacity(parseInt(opacity))
+    OverlaysDaemon.setOverlayOpacity(parseInt(opacity))
   }
 
   function unsetImage() {
-    OverlaysDaemon.remImage()
+    OverlaysDaemon.removeCurrentOverlay()
   }
 
   function prevImage() {
-    OverlaysDaemon.prevImage()
+    OverlaysDaemon.prevOverlay()
   }
 
   function nextImage() {
-    OverlaysDaemon.nextImage()
+    OverlaysDaemon.nextOverlay()
   }
 
   return {

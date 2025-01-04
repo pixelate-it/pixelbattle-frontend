@@ -9,13 +9,14 @@ import { pickerPlugin } from './plugins/picker'
 import { placePlugin } from './plugins/place'
 import { pointerPlugin } from './plugins/pointer'
 import { generateEvent } from './utils/generators'
+import { WebGlGraphics } from './webgl'
 
 export class PlaceIntegration {
   private animationFrameRef = 0
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
-    private readonly ctx: CanvasRenderingContext2D = canvas.getContext('2d')!
+    private readonly graphics = new WebGlGraphics(canvas)
   ) {
     movementPlugin()
     placePlugin()
@@ -44,12 +45,11 @@ export class PlaceIntegration {
     )
   }
 
-  private render = () => {
+  private render = (delta: number) => {
     generateEvent(
       {
-        ctx: this.ctx,
-        canvasWidth: this.canvas.width,
-        canvasHeight: this.canvas.height
+        graphics: this.graphics,
+        delta: delta
       },
       RenderEvents.renderEvent
     )

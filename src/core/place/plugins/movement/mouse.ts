@@ -22,12 +22,23 @@ export const mousePlugin = () => {
   useWheel((event) => {
     const zoom = event.deltaY < 0 ? 1.15 : 0.85
     const result = zoom * Viewport.scale
+
     if (result < config.zoom.min) return
     if (result > config.zoom.max) return
-    Viewport.x = event.clientX - zoom * (event.clientX - Viewport.x)
-    Viewport.y = event.clientY - zoom * (event.clientY - Viewport.y)
-    Viewport.scale *= zoom
-    Viewport.fix()
+
+    const mouseX = event.clientX
+    const mouseY = event.clientY
+
+    const worldXBeforeZoom = Viewport.x - mouseX / Viewport.scale
+    const worldYBeforeZoom = Viewport.y - mouseY / Viewport.scale
+
+    Viewport.scale = result
+
+    const worldXAfterZoom = Viewport.x - mouseX / Viewport.scale
+    const worldYAfterZoom = Viewport.y - mouseY / Viewport.scale
+
+    Viewport.x += worldXBeforeZoom - worldXAfterZoom
+    Viewport.y += worldYBeforeZoom - worldYAfterZoom
   })
 
   useMouseDown((event) => {
@@ -65,18 +76,17 @@ export const mousePlugin = () => {
   useMouseMove((event) => {
     if (mouseDown)
       if (!Viewport.locked) {
-        const x = event.clientX - startX * Viewport.scale
-        const y = event.clientY - startY * Viewport.scale
+        const deltaX = event.movementX
+        const deltaY = event.movementY
+
+        Viewport.x += deltaX / Viewport.scale
+        Viewport.y += deltaY / Viewport.scale
+
         if (
-          Math.abs(startClientX - event.clientX) > 10 ||
-          Math.abs(startClientY - event.clientY) > 10
+          Math.abs(startClientX - event.clientX) > 20 ||
+          Math.abs(startClientY - event.clientY) > 20
         )
           dragged = true
-        if (dragged) {
-          Viewport.x = x
-          Viewport.y = y
-          Viewport.fix()
-        }
       }
 
     const { x, y } = Viewport.transformCoordsWithFloor(

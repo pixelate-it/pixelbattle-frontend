@@ -21,7 +21,7 @@ export const OverlayTransform = () => {
     <div class={styles.wrapper}>
       <div class={styles.image}>
         <p class={styles.imageName}>
-          {overlay.images[overlay.currentId].imageName}
+          {overlay.overlays[overlay.currentOverlay].imageName}
         </p>
         <Button onClick={reuploadImage} type='primary'>
           <Icon icon='open-folder' />
@@ -31,7 +31,7 @@ export const OverlayTransform = () => {
         <Button
           onClick={prevImage}
           type='primary'
-          disabled={!overlay.prevActive}
+          disabled={!overlay.prevOverlayButtonActive}
         >
           <Icon icon='left' />
         </Button>
@@ -46,7 +46,7 @@ export const OverlayTransform = () => {
         <Button
           onClick={nextImage}
           type='primary'
-          disabled={!overlay.nextActive}
+          disabled={!overlay.nextOverlayButtonActive}
         >
           <Icon icon='left' className={styles.rightIcon} />
         </Button>
@@ -56,19 +56,21 @@ export const OverlayTransform = () => {
           <p class={styles.groupTitle}>Координаты</p>
           <div class={styles.coordinates}>
             <TextField
-              min={0}
               max={info.canvas.width}
               type='number'
               placeholder='X координата'
-              defaultValue={overlay.images[overlay.currentId].x.toString()}
+              defaultValue={overlay.overlays[
+                overlay.currentOverlay
+              ].x.toString()}
               onInput={(input) => changeCoords('x', parseInt(input))}
             />
             <TextField
-              min={0}
               max={info.canvas.height}
               type='number'
               placeholder='Y координата'
-              defaultValue={overlay.images[overlay.currentId].y.toString()}
+              defaultValue={overlay.overlays[
+                overlay.currentOverlay
+              ].y.toString()}
               onInput={(input) => changeCoords('y', parseInt(input))}
             />
           </div>
@@ -80,7 +82,9 @@ export const OverlayTransform = () => {
             max={100}
             type='number'
             placeholder='Прозрачность'
-            defaultValue={overlay.images[overlay.currentId].opacity!.toString()}
+            defaultValue={overlay.overlays[
+              overlay.currentOverlay
+            ].opacity!.toString()}
             onInput={changeOpacity}
           />
         </div>

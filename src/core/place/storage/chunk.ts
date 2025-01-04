@@ -49,7 +49,7 @@ export class CanvasChunk {
     data[pos + 2] = color.color[2]
     Object.assign({ data }, this.imageData)
 
-    if (!this.isUpdating) this.updateBitmap()
+    //if (!this.isUpdating) this.updateBitmap()
     this.lastUpdateTime = Date.now()
   }
 

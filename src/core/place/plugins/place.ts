@@ -1,4 +1,3 @@
-import { config } from 'src/config'
 import { Viewport } from '../storage/viewport'
 import { useLoaded, useRender } from '../utils/render/premitive'
 import { CanvasStorage } from '../storage/canvas'
@@ -8,37 +7,36 @@ export const placePlugin = () => {
     let scale = event.canvasWidth / event.placeWidth
     if (scale > event.canvasHeight / event.placeHeight)
       scale = event.canvasHeight / event.placeHeight
-    Viewport.realScale = Viewport.scale = scale
-    Viewport.realX = Viewport.x =
-      event.canvasWidth / 2 - (event.placeWidth / 2) * Viewport.scale
-    Viewport.realY = Viewport.y =
-      event.canvasHeight / 2 - (event.placeHeight / 2) * Viewport.scale
-    Viewport.fix()
+
+    // x: x / Viewport.scale - Viewport.x,
+    Viewport.renderScale = Viewport.scale = scale
+    Viewport.renderX = Viewport.x =
+      event.canvasWidth / Viewport.scale / 2 - event.placeWidth / 2
+    Viewport.renderY = Viewport.y =
+      event.canvasHeight / Viewport.scale / 2 - event.placeHeight / 2
   })
 
-  useRender(({ ctx, canvasWidth, canvasHeight }) => {
-    Viewport.clearTransform(ctx)
+  useRender(({ graphics, delta }) => {
+    // Viewport.clearTransform(ctx)
 
-    ctx.imageSmoothingEnabled = false
+    // // ctx.imageSmoothingEnabled = false
 
-    ctx.beginPath()
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight)
-    ctx.fillStyle = config.defaults.colors.background
-    ctx.fillRect(0, 0, canvasWidth, canvasHeight)
-    ctx.closePath()
+    // // ctx.beginPath()
+    // ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+    // ctx.fillStyle = config.defaults.colors.background
+    // ctx.fillRect(0, 0, canvasWidth, canvasHeight)
+    // ctx.closePath()
 
-    Viewport.applyTransform(ctx)
+    // Viewport.applyTransform(ctx)
+    Viewport.smoothMove(delta)
 
-    const chunk = CanvasStorage.getChunks()
-    ctx.beginPath()
-    ctx.fillRect(0, 0, CanvasStorage.width, CanvasStorage.height)
-    ctx.closePath()
-    for (const i in chunk) {
-      if (chunk[i].renderBitmap) {
-        ctx.beginPath()
-        ctx.drawImage(chunk[i].renderBitmap, chunk[i].x, chunk[i].y)
-        ctx.closePath()
-      }
+    const chunks = CanvasStorage.getChunks()
+    graphics.preRender()
+    // ctx.beginPath()
+    // ctx.fillRect(0, 0, CanvasStorage.width, CanvasStorage.height)
+    // ctx.closePath()
+    for (const chunk of chunks) {
+      graphics.drawImage(chunk.x, chunk.y, chunk.imageData)
     }
   })
 

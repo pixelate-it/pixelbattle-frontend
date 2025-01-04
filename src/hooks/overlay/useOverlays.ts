@@ -5,7 +5,7 @@ export const useOverlays = () => {
   const overlay = useDaemon(OverlaysDaemon)
 
   function nextMode() {
-    OverlaysDaemon.nextMode()
+    OverlaysDaemon.nextViewMode()
   }
 
   return { overlay, nextMode }

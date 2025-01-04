@@ -14,7 +14,7 @@ export const subEvent = <T extends object>(
     }
     if (v) {
       const b = callback(event)
-      return b !== undefined ? b : false
+      return b !== undefined ? b : true
     }
     return false
   })
