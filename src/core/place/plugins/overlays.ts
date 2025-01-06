@@ -153,8 +153,8 @@ const overlaysRenderPlugin = () => {
 }
 
 export const checkPointInsideOverlays = (x: number, y: number): boolean => {
-  if (OverlaysDaemon.state.viewMode === 0)
-    return OverlaysDaemon.currentOverlay!.checkPointInside(x, y)
+  if (OverlaysDaemon.state.viewMode === 0 && OverlaysDaemon.currentOverlay)
+    return OverlaysDaemon.currentOverlay.checkPointInside(x, y)
   else if (OverlaysDaemon.state.viewMode === 1)
     for (let i = 0; i < OverlaysDaemon.state.overlays.length; i++)
       if (

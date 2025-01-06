@@ -16,8 +16,6 @@ export interface BasicRenderEvent {
 }
 
 export interface CanvasLoadedEvent {
-  canvasWidth: number
-  canvasHeight: number
   placeWidth: number
   placeHeight: number
 }

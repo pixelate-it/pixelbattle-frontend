@@ -36,8 +36,6 @@ export class PlaceIntegration {
   private infoLoaded = (state: InfoState) => {
     generateEvent(
       {
-        canvasWidth: this.canvas.width,
-        canvasHeight: this.canvas.height,
         placeWidth: state.canvas.width,
         placeHeight: state.canvas.height
       },

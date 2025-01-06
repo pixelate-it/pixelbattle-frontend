@@ -28,6 +28,6 @@ export class ApiPlace {
       color: PaletteDaemon.state.selected.toHex()
     })
       .then(() => CooldownDaemon.start())
-      .catch(() => CooldownDaemon.stop)
+      .catch(() => CooldownDaemon.stop())
   }
 }

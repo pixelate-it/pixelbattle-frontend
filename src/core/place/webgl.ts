@@ -4,27 +4,27 @@ import Color from '../classes/primitives/Color'
 
 const generalVertexShader = `
   attribute vec2 position;
-attribute vec2 texcoord;
+  attribute vec2 texcoord;
 
-uniform vec2 u_resolution;
-uniform vec2 u_translation;
-uniform vec2 u_scale;
+  uniform vec2 u_resolution;
+  uniform vec2 u_translation;
+  uniform vec2 u_scale;
 
-varying vec2 v_texCoord;
-varying vec2 v_posCoord;
+  varying vec2 v_texCoord;
+  varying vec2 v_posCoord;
 
-void main() {
-  vec2 scaledPosition = (position * u_scale) + u_translation;
+  void main() {
+    vec2 scaledPosition = (position * u_scale) + u_translation;
 
-  vec2 zeroToOne = scaledPosition / u_resolution;
-  vec2 zeroToTwo = zeroToOne * 2.0;
-  vec2 clipSpace = zeroToTwo - 1.0;
+    vec2 zeroToOne = scaledPosition / u_resolution;
+    vec2 zeroToTwo = zeroToOne * 2.0;
+    vec2 clipSpace = zeroToTwo - 1.0;
 
-  gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+    gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
 
-  v_texCoord = texcoord;
-  v_posCoord = position;
-}`
+    v_texCoord = texcoord;
+    v_posCoord = position;
+  }`
 
 const imageFragmentShader = `
   precision mediump float;
@@ -63,7 +63,6 @@ const rectWithOutlineFragmentShader = `
     if (border > 1.0) {
         gl_FragColor = vec4(u_outlineColor.rgb, u_outlineColor.a * u_alpha);
     } else {
-        // Если внутри прямоугольника (не на обводке)
         gl_FragColor = vec4(u_color.rgb, u_color.a * u_alpha);
     }
   }`
@@ -135,14 +134,8 @@ export class WebGlGraphics {
 
     const uniforms = {
       u_resolution: [gl.canvas.width, gl.canvas.height],
-      u_translation: [
-        (x + Viewport.renderX) * Viewport.renderScale,
-        (y + Viewport.renderY) * Viewport.renderScale
-      ],
-      u_scale: [
-        src.width * Viewport.renderScale,
-        src.height * Viewport.renderScale
-      ],
+      u_translation: Viewport.toTranslation(x, y),
+      u_scale: Viewport.toScale(src.width, src.height),
       u_image: texture,
       u_alpha: alpha
     }
@@ -185,11 +178,8 @@ export class WebGlGraphics {
 
     const uniforms = {
       u_resolution: [gl.canvas.width, gl.canvas.height],
-      u_translation: [
-        (x + Viewport.renderX) * Viewport.renderScale,
-        (y + Viewport.renderY) * Viewport.renderScale
-      ],
-      u_scale: [width * Viewport.renderScale, height * Viewport.renderScale],
+      u_translation: Viewport.toTranslation(x, y),
+      u_scale: Viewport.toScale(width, height),
       u_color,
       u_alpha: alpha
     }
@@ -243,11 +233,8 @@ export class WebGlGraphics {
 
     const uniforms = {
       u_resolution: [gl.canvas.width, gl.canvas.height],
-      u_translation: [
-        (x + Viewport.renderX) * Viewport.renderScale,
-        (y + Viewport.renderY) * Viewport.renderScale
-      ],
-      u_scale: [width * Viewport.renderScale, height * Viewport.renderScale],
+      u_translation: Viewport.toTranslation(x, y),
+      u_scale: Viewport.toScale(width, height),
       u_color,
       u_alpha: alpha,
       u_outlineWidth: outlineWidth,

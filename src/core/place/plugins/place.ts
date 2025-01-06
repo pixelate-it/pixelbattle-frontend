@@ -1,19 +1,22 @@
 import { Viewport } from '../storage/viewport'
 import { useLoaded, useRender } from '../utils/render/premitive'
 import { CanvasStorage } from '../storage/canvas'
+import { Vector } from '../util/Vector'
 
 export const placePlugin = () => {
   useLoaded((event) => {
-    let scale = event.canvasWidth / event.placeWidth
-    if (scale > event.canvasHeight / event.placeHeight)
-      scale = event.canvasHeight / event.placeHeight
+    Viewport.screenWidth = window.innerWidth
+    Viewport.screenHeight = window.innerHeight
+    Viewport.worldWidth = window.innerWidth * 2
+    Viewport.worldHeight = window.innerHeight * 2
 
-    // x: x / Viewport.scale - Viewport.x,
-    Viewport.renderScale = Viewport.scale = scale
-    Viewport.renderX = Viewport.x =
-      event.canvasWidth / Viewport.scale / 2 - event.placeWidth / 2
-    Viewport.renderY = Viewport.y =
-      event.canvasHeight / Viewport.scale / 2 - event.placeHeight / 2
+    Viewport.fit(new Vector(event.placeWidth, event.placeHeight))
+    Viewport.zoomPercent(-0.25)
+    Viewport.minWidth = Viewport.worldWidth / 500
+    Viewport.minHeight = Viewport.worldHeight / 500
+    Viewport.maxWidth = event.placeWidth * 5
+    Viewport.maxHeight = event.placeHeight * 5
+    Viewport.moveCenter(new Vector(event.placeWidth / 2, event.placeHeight / 2))
   })
 
   useRender(({ graphics, delta }) => {

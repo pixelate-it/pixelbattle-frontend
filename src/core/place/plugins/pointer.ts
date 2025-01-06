@@ -37,10 +37,10 @@ export const pointerPlugin = () => {
       palette.selected.getReadableColor()
     )
     graphics.drawRect(
-      pointer.coordinates[0],
-      pointer.coordinates[1],
-      1,
-      1,
+      pointer.coordinates[0] - 0.1,
+      pointer.coordinates[1] - 0.1,
+      1.2,
+      1.2,
       palette.selected
     )
   })
