@@ -3,6 +3,7 @@ import { CooldownDaemon } from '../daemons/cooldown'
 import { InfoDaemon } from '../daemons/info'
 import { PaletteDaemon } from '../daemons/palette'
 import { ProfileDaemon } from '../daemons/profile'
+import { Viewport } from './storage/viewport'
 
 export class ApiPlace {
   public static putPixel(x: number, y: number) {
@@ -20,6 +21,7 @@ export class ApiPlace {
     if (ProfileDaemon.state.isBanned) {
       return
     }
+    if (!Viewport.checkPointInside(x, y)) return
 
     CooldownDaemon.preStart()
     ApiRequest.putPixel({

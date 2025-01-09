@@ -1,4 +1,4 @@
-import { Vector } from '../util/Vector'
+import { Vector } from '../../util/Vector'
 import { CanvasStorage } from './canvas'
 
 export class Viewport {
@@ -43,6 +43,16 @@ export class Viewport {
     this.renderScale = this.scale
     this.renderX = this.x
     this.renderY = this.y
+  }
+
+  static boundToCanvas(point: [number, number]): [number, number] {
+    const width = CanvasStorage.width
+    const height = CanvasStorage.height
+    if (point[0] < 0) point[0] = 0
+    if (point[0] > width - 1) point[0] = width - 1
+    if (point[1] < 0) point[1] = 0
+    if (point[1] > height - 1) point[1] = height - 1
+    return point
   }
 
   static clampZoom() {

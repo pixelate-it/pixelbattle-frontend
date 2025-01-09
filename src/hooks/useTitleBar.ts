@@ -18,6 +18,7 @@ export const useTitleBar = () => {
     icon: ({ ended }) => (ended ? '🏁' : '⚔️'),
     show: (s) => s.canvas !== undefined
   })
+
   const [opened, setOpened] = useState<boolean>(false)
 
   const click = () => {

@@ -10,8 +10,13 @@ import Color from 'src/core/classes/primitives/Color'
 
 export const pointerPlugin = () => {
   useMove(({ x, y }) => {
-    const [cX, cY] = PointerDaemon.state.coordinates
-    if (!Viewport.checkPointInside(x, y)) return false
+    let [cX, cY] = PointerDaemon.state.coordinates
+    if (!Viewport.checkPointInside(x, y)) {
+      PointerDaemon.setVisible(false)
+      return false
+    } else {
+      PointerDaemon.setVisible(true)
+    }
     if (cX !== x || cY !== y) PointerDaemon.setCoordinates([x, y])
     return false
   })
@@ -29,20 +34,22 @@ export const pointerPlugin = () => {
     const palette = PaletteDaemon.state
     const pointer = PointerDaemon.state
 
-    graphics.drawRect(
-      pointer.coordinates[0] - 0.15,
-      pointer.coordinates[1] - 0.15,
-      1.3,
-      1.3,
-      palette.selected.getReadableColor()
-    )
-    graphics.drawRect(
-      pointer.coordinates[0] - 0.1,
-      pointer.coordinates[1] - 0.1,
-      1.2,
-      1.2,
-      palette.selected
-    )
+    if (pointer.visible) {
+      graphics.drawRect(
+        pointer.coordinates[0] - 0.15,
+        pointer.coordinates[1] - 0.15,
+        1.3,
+        1.3,
+        palette.selected.getReadableColor()
+      )
+      graphics.drawRect(
+        pointer.coordinates[0] - 0.1,
+        pointer.coordinates[1] - 0.1,
+        1.2,
+        1.2,
+        palette.selected
+      )
+    }
   })
 
   // useRender(

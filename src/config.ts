@@ -14,12 +14,15 @@ export const config = {
       tags: 30000,
       info: 30000
     },
-    ws: 2000,
+    ws: 6000,
     notificationRemoved: 3000,
     pixelInfo: 500,
     palette: {
       deleteButtonPress: 2000
     }
+  },
+  ws: {
+    reconnectAttempts: 10
   },
   defaults: {
     colors: {

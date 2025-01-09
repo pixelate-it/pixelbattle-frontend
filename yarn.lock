@@ -1689,6 +1689,15 @@
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
 
+"@rollup/pluginutils@^5.1.0":
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/@rollup/pluginutils/-/pluginutils-5.1.4.tgz#bb94f1f9eaaac944da237767cdfee6c5b2262d4a"
+  integrity sha512-USm05zrsFxYLPdWWq+K3STlWiT/3ELn3RcV5hJMghpeAIhxfsUIg6mt12CBJBInWMV4VneoV7SfGv8xIwo2qNQ==
+  dependencies:
+    "@types/estree" "^1.0.0"
+    estree-walker "^2.0.2"
+    picomatch "^4.0.2"
+
 "@rollup/rollup-android-arm-eabi@4.20.0":
   version "4.20.0"
   resolved "https://registry.yarnpkg.com/@rollup/rollup-android-arm-eabi/-/rollup-android-arm-eabi-4.20.0.tgz#c3f5660f67030c493a981ac1d34ee9dfe1d8ec0f"
@@ -5168,6 +5177,13 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
+
+vite-plugin-glsl@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-glsl/-/vite-plugin-glsl-1.3.1.tgz#f82167885c8cce06d83a651472985dae611928b3"
+  integrity sha512-iClII8Idb9X0m6nS0YI2cWWXbBuT5EKKw5kXSAuRu4RJsNe4oypxKXE7jx0XMoyqij2s8WL0ZLfou801mpkREg==
+  dependencies:
+    "@rollup/pluginutils" "^5.1.0"
 
 vite-plugin-pwa@^0.20.5:
   version "0.20.5"

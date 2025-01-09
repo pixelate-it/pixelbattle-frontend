@@ -1,12 +1,21 @@
-import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import preact from '@preact/preset-vite'
+import { defineConfig } from 'vite'
+import glsl from 'vite-plugin-glsl'
 import { resolve } from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     preact(),
+    glsl({
+      warnDuplicatedImports: true,
+      defaultExtension: 'glsl',
+      include: ['**/*.glsl'],
+      compress: false,
+      watch: true,
+      root: '/'
+    }),
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {

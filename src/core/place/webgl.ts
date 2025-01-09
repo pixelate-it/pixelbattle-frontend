@@ -1,82 +1,21 @@
 import * as twgl from 'twgl.js'
 import { Viewport } from './storage/viewport'
 import Color from '../classes/primitives/Color'
-
-const generalVertexShader = `
-  attribute vec2 position;
-  attribute vec2 texcoord;
-
-  uniform vec2 u_resolution;
-  uniform vec2 u_translation;
-  uniform vec2 u_scale;
-
-  varying vec2 v_texCoord;
-  varying vec2 v_posCoord;
-
-  void main() {
-    vec2 scaledPosition = (position * u_scale) + u_translation;
-
-    vec2 zeroToOne = scaledPosition / u_resolution;
-    vec2 zeroToTwo = zeroToOne * 2.0;
-    vec2 clipSpace = zeroToTwo - 1.0;
-
-    gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
-
-    v_texCoord = texcoord;
-    v_posCoord = position;
-  }`
-
-const imageFragmentShader = `
-  precision mediump float;
-
-  uniform sampler2D u_image;
-  uniform float u_alpha;
-  varying vec2 v_texCoord;
-
-  void main() {
-    vec4 color = texture2D(u_image, v_texCoord);
-    gl_FragColor = vec4(color.rgb, color.a * u_alpha);
-  }`
-
-const rectFragmentShader = `
-  precision mediump float;
-
-  uniform vec4 u_color;
-  uniform float u_alpha;
-
-  void main() {
-    gl_FragColor = vec4(u_color.rgb, u_color.a * u_alpha);
-  }`
-
-const rectWithOutlineFragmentShader = `
-  precision mediump float;
-
-  uniform vec4 u_color;
-  uniform vec4 u_outlineColor;
-  uniform float u_outlineWidth;
-  uniform float u_alpha;
-  varying vec2 v_posCoord;
-
-  void main() {
-    float border = step(20, v_posCoord.x)
-
-    if (border > 1.0) {
-        gl_FragColor = vec4(u_outlineColor.rgb, u_outlineColor.a * u_alpha);
-    } else {
-        gl_FragColor = vec4(u_color.rgb, u_color.a * u_alpha);
-    }
-  }`
+import shader from './glsl/shader.glsl'
+import { GeneralDaemon } from '../daemons/general'
+import { GlDeprecatedBrowserError, GlShaderBuildError } from '../util/Errors'
 
 export class WebGlGraphics {
   private gl: WebGLRenderingContext
-  private programInfo: twgl.ProgramInfo
-  private pProgramInfo: twgl.ProgramInfo
-  private rwoProgramInfo: twgl.ProgramInfo
+  private imageProgramInfo: twgl.ProgramInfo
+  private rectProgramInfo: twgl.ProgramInfo
+  private buttonProgramInfo: twgl.ProgramInfo
   private buffers: { [key: string]: twgl.BufferInfo } = {}
 
   constructor(canvas: HTMLCanvasElement) {
     const gl = canvas.getContext('webgl')
     if (!gl) {
+      GeneralDaemon.setError(new GlDeprecatedBrowserError())
       throw new Error('Your browser does not support WebGL')
     }
     this.gl = gl
@@ -84,20 +23,27 @@ export class WebGlGraphics {
     gl.enable(gl.BLEND)
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
 
-    this.programInfo = twgl.createProgramInfo(gl, [
-      generalVertexShader,
-      imageFragmentShader
-    ])
+    const errorCallback = (msg: string, lineOffset?: number) => {
+      GeneralDaemon.setError(new GlShaderBuildError(msg, lineOffset))
+    }
 
-    this.pProgramInfo = twgl.createProgramInfo(gl, [
-      generalVertexShader,
-      rectFragmentShader
-    ])
+    this.imageProgramInfo = twgl.createProgramInfo(
+      gl,
+      ['#define VERTEX_SHADER\n' + shader, '#define IMAGE\n' + shader],
+      errorCallback
+    )
 
-    this.rwoProgramInfo = twgl.createProgramInfo(gl, [
-      generalVertexShader,
-      rectWithOutlineFragmentShader
-    ])
+    this.rectProgramInfo = twgl.createProgramInfo(
+      gl,
+      ['#define VERTEX_SHADER\n' + shader, '#define RECT\n' + shader],
+      errorCallback
+    )
+
+    this.buttonProgramInfo = twgl.createProgramInfo(
+      gl,
+      ['#define VERTEX_SHADER\n' + shader, '#define BUTTON\n' + shader],
+      errorCallback
+    )
   }
 
   preRender() {
@@ -122,7 +68,7 @@ export class WebGlGraphics {
       })
     }
 
-    const texture = twgl.createTexture(gl, {
+    let texture = twgl.createTexture(gl, {
       src: src.data,
       width: src.width,
       height: src.height,
@@ -140,9 +86,13 @@ export class WebGlGraphics {
       u_alpha: alpha
     }
 
-    gl.useProgram(this.programInfo.program)
-    twgl.setBuffersAndAttributes(gl, this.programInfo, this.buffers['quad'])
-    twgl.setUniforms(this.programInfo, uniforms)
+    gl.useProgram(this.imageProgramInfo.program)
+    twgl.setBuffersAndAttributes(
+      gl,
+      this.imageProgramInfo,
+      this.buffers['quad']
+    )
+    twgl.setUniforms(this.imageProgramInfo, uniforms)
     twgl.drawBufferInfo(gl, this.buffers['quad'])
   }
 
@@ -169,38 +119,28 @@ export class WebGlGraphics {
       })
     }
 
-    const u_color = [
-      color.color[0] / 255,
-      color.color[1] / 255,
-      color.color[2] / 255,
-      color.color[3] ? color.color[3] : 1.0
-    ]
-
     const uniforms = {
       u_resolution: [gl.canvas.width, gl.canvas.height],
       u_translation: Viewport.toTranslation(x, y),
       u_scale: Viewport.toScale(width, height),
-      u_color,
+      u_color: color.toGl(),
       u_alpha: alpha
     }
 
-    gl.useProgram(this.pProgramInfo.program)
-    twgl.setBuffersAndAttributes(gl, this.pProgramInfo, this.buffers['quad'])
-    twgl.setUniforms(this.pProgramInfo, uniforms)
+    gl.useProgram(this.rectProgramInfo.program)
+    twgl.setBuffersAndAttributes(gl, this.rectProgramInfo, this.buffers['quad'])
+    twgl.setUniforms(this.rectProgramInfo, uniforms)
     twgl.drawBufferInfo(gl, this.buffers['quad'])
   }
 
-  /**
-   * NOT WORKING!
-   */
-  drawRectWithOutline(
+  drawButton(
     x: number,
     y: number,
     width: number,
     height: number,
     color: Color,
-    outlineWidth: number,
-    outlineColor: Color,
+    borderRadius: number,
+    outlineLength: number,
     alpha = 1
   ) {
     const gl = this.gl
@@ -218,32 +158,24 @@ export class WebGlGraphics {
       })
     }
 
-    const u_color = [
-      color.color[0] / 255,
-      color.color[1] / 255,
-      color.color[2] / 255,
-      color.color[3] ? color.color[3] : 1.0
-    ]
-    const u_outlineColor = [
-      outlineColor.color[0] / 255,
-      outlineColor.color[1] / 255,
-      outlineColor.color[2] / 255,
-      outlineColor.color[3] ? color.color[3] : 1.0
-    ]
-
     const uniforms = {
       u_resolution: [gl.canvas.width, gl.canvas.height],
       u_translation: Viewport.toTranslation(x, y),
       u_scale: Viewport.toScale(width, height),
-      u_color,
+      u_color: color.toGl(),
       u_alpha: alpha,
-      u_outlineWidth: outlineWidth,
-      u_outlineColor
+      u_outline_l: outlineLength,
+      u_border_radius: borderRadius,
+      u_size: [width, height]
     }
 
-    gl.useProgram(this.rwoProgramInfo.program)
-    twgl.setBuffersAndAttributes(gl, this.rwoProgramInfo, this.buffers['quad'])
-    twgl.setUniforms(this.rwoProgramInfo, uniforms)
+    gl.useProgram(this.buttonProgramInfo.program)
+    twgl.setBuffersAndAttributes(
+      gl,
+      this.buttonProgramInfo,
+      this.buffers['quad']
+    )
+    twgl.setUniforms(this.buttonProgramInfo, uniforms)
     twgl.drawBufferInfo(gl, this.buffers['quad'])
   }
 }

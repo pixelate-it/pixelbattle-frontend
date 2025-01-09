@@ -7,6 +7,10 @@ export class CanvasStorage {
   static width = 0
   static height = 0
 
+  static clear() {
+    this.chunks = []
+  }
+
   /**
    * Process canvas image into canvas on game
    * @param blob Blob of loaded from api image
@@ -16,9 +20,16 @@ export class CanvasStorage {
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')!
 
+    const needToClear =
+      this.width !== canvas.width || this.height !== canvas.height
+
     this.width = canvas.width = bitmap.width
     this.height = canvas.height = bitmap.height
     ctx.drawImage(bitmap, 0, 0)
+
+    if (needToClear) this.chunks = []
+
+    let index = 0
 
     for (let x = 0; x < canvas.width; x += config.chunks.chunkWidth) {
       for (let y = 0; y < canvas.height; y += config.chunks.chunkHeight) {
@@ -31,15 +42,24 @@ export class CanvasStorage {
             ? Math.abs(y - canvas.height)
             : config.chunks.chunkHeight
 
-        this.chunks.push(
-          new CanvasChunk(
-            x,
-            y,
-            ctx.getImageData(x, y, realWidth, realHeight),
-            realWidth,
-            realHeight
+        if (needToClear)
+          this.chunks.push(
+            new CanvasChunk(
+              x,
+              y,
+              ctx.getImageData(x, y, realWidth, realHeight),
+              realWidth,
+              realHeight
+            )
           )
-        )
+        else
+          Object.assign(
+            {
+              imageData: ctx.getImageData(x, y, realWidth, realHeight)
+            },
+            this.chunks[index].imageData
+          )
+        index++
       }
     }
   }
@@ -53,7 +73,7 @@ export class CanvasStorage {
   static putPixel(x: number, y: number, color: Color) {
     for (const i in this.chunks) {
       if (this.chunks[i].itInside(x, y)) {
-        this.chunks[i].putPixel(x, y, color)
+        this.chunks[i].putPixel.bind(this.chunks[i])(x, y, color)
         return
       }
     }

@@ -59,6 +59,19 @@ export default class Color {
   }
 
   /**
+   * Transforms colors to Gl format
+   * @returns color in array
+   */
+  toGl(): number[] {
+    return [
+      this.color[0] / 255,
+      this.color[1] / 255,
+      this.color[2] / 255,
+      this.color[3] ? this.color[3] : 1.0
+    ]
+  }
+
+  /**
    * gives a color inversion depending on the brightness of the color.
    * @returns Color
    */

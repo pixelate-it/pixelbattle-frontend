@@ -1,5 +1,5 @@
 import { Viewport } from '../../storage/viewport'
-import { Vector } from '../../util/Vector'
+import { Vector } from '../../../util/Vector'
 import {
   useTouchCancel,
   useTouchEnd,

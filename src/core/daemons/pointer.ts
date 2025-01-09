@@ -6,8 +6,14 @@ export class PointerDaemon {
   private static store = createStore<PointerState>({
     coordinates: [NaN, NaN],
     empty: true,
-    info: null
+    info: null,
+    visible: false
   })
+
+  static setVisible(visible: boolean) {
+    if (PointerDaemon.state.visible !== visible)
+      PointerDaemon.setState({ visible })
+  }
 
   static fetchPixel() {
     const state = PointerDaemon.state

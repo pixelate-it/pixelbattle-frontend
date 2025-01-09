@@ -67,6 +67,7 @@ export interface PointerState {
   coordinates: [number, number]
   empty: boolean
   info: PixelInfo | null | 'loading'
+  visible: boolean
 }
 
 export interface TagsState {
@@ -82,6 +83,8 @@ export interface ToolsState {
 }
 
 export interface GeneralState {
-  canvasLoaded: boolean
-  infoLoaded: boolean
+  ready: boolean
+  error?: Error
+  reconnecting?: boolean
+  attempts?: number
 }

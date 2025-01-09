@@ -10,7 +10,8 @@ import {
 import { generateEvent } from '../../utils/generators'
 import { PluginsEvents } from '../../buses/pluginsEvents'
 import { useValerator } from '../../utils/variables'
-import { Vector } from '../../util/Vector'
+import { Vector } from '../../../util/Vector'
+import { PluginBusError } from 'src/core/util/Errors'
 
 export const mousePlugin = () => {
   let mouseDown = false
@@ -18,6 +19,7 @@ export const mousePlugin = () => {
   let dragged = useValerator(false, PluginsEvents.draggedEvents)
 
   useWheel((event) => {
+    if (Viewport.locked) return
     // Just copy of code from Pixi-viewport
     const step = (-event.deltaY * (event.deltaMode ? 20 : 1)) / 500
     const zoom = Math.pow(2, (1 + 0.25) * step)
@@ -38,7 +40,8 @@ export const mousePlugin = () => {
     mouseDown = true
     generateEvent(
       Viewport.toLocalFloor(event.clientX, event.clientY),
-      PluginsEvents.clickStartEvents
+      PluginsEvents.clickStartEvents,
+      PluginBusError
     )
     last = new Vector(event.clientX, event.clientY)
   })
@@ -50,17 +53,19 @@ export const mousePlugin = () => {
     if (!dragged && !Viewport.locked)
       generateEvent(
         { x, y, button: event.button },
-        PluginsEvents.clickEndEvents
+        PluginsEvents.clickEndEvents,
+        PluginBusError
       )
     generateEvent(
       { x, y, button: event.button },
-      PluginsEvents.clickGuarantiedEndEvents
+      PluginsEvents.clickGuarantiedEndEvents,
+      PluginBusError
     )
     dragged = false
   })
 
   useMouseMove((event) => {
-    if (mouseDown)
+    if (mouseDown && !Viewport.locked)
       if (
         dragged ||
         (last &&
@@ -75,7 +80,7 @@ export const mousePlugin = () => {
         }
 
     const { x, y } = Viewport.toLocalFloor(event.clientX, event.clientY)
-    generateEvent({ x, y }, PluginsEvents.pointerMoveEvents)
+    generateEvent({ x, y }, PluginsEvents.pointerMoveEvents, PluginBusError)
   })
 
   useMouseLeave(() => {

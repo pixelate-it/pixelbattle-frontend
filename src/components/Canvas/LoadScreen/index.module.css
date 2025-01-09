@@ -1,10 +1,7 @@
 .wrapper {
   position: relative;
   min-height: 100vh;
-  z-index: 0;
+  z-index: 9999;
   text-align: center;
-}
-
-.wrapper {
-  
+  background-color: var(--window-background);
 }
