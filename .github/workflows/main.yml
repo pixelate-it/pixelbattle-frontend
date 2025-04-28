@@ -32,13 +32,12 @@ jobs:
       - name: Install Dependencies
         run: yarn install
 
-      - name: Install Wrangler CLI
-        run: npm install -g wrangler
-
       - name: Build Project
         run: yarn build
 
       - name: Deploy to Cloudflare Pages
-        run:  wrangler pages deploy ./dist --project-name pixelbattle
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy ./dist --project-name=pixelbattle
