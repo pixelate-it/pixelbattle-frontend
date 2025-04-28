@@ -29,8 +29,11 @@ jobs:
         with: 
           node-version: 18.18
 
-      - name: Install Dependencies
-        run: yarn install
+      - name: Install Project Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Install Wrangler (globally)
+        run: npm install -g wrangler
 
       - name: Build Project
         run: yarn build
