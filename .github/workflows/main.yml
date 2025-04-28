@@ -1,4 +1,4 @@
-name: Build and GH-Page Deploy
+name: Build and CF-Pages Deploy
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
       VITE_BACKEND: "https://api.pixelbattle.fun"
 
     steps:
-      - name: Checkout
+      - name: Checkout Branch
         uses: actions/checkout@v2
         with:
           persist-credentials: false
@@ -29,15 +29,16 @@ jobs:
         with: 
           node-version: 18.18
 
-      - name: Install
+      - name: Install Dependencies
         run: yarn install
 
-      - name: Build
+      - name: Install Wrangler CLI
+        run: npm install -g wrangler
+
+      - name: Build Project
         run: yarn build
 
-      - name: Deploy to GH Page
-        uses: JamesIves/github-pages-deploy-action@4.1.1
-        with:
-          branch: gh-pages
-          folder: dist
-          single-commit: false
+      - name: Deploy to Cloudflare Pages
+        run:  wrangler pages publish ./dist --project-name pixelbattle --compatibility-date 2025-04-28
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
