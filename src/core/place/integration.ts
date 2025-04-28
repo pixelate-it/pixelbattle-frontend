@@ -1,21 +1,24 @@
-import { GeneralDaemon } from '../daemons/general'
 import { InfoDaemon } from '../daemons/info'
 import { InfoState } from '../daemons/types'
-import { clearBuses } from './buses/clear'
-import { DomEvents } from './buses/domEvents'
-import { RenderEvents } from './buses/renderEvents'
-import { guiPlugin } from './plugins/gui'
-import { movementPlugin } from './plugins/movement'
-import { overlaysPlugin } from './plugins/overlays'
-import { pickerPlugin } from './plugins/picker'
-import { placePlugin } from './plugins/place'
-import { pointerPlugin } from './plugins/pointer'
-import { DomEventError, RenderError } from '../util/Errors'
+import { clearBuses } from './buses'
+import { DomEvents } from './buses'
+import { RenderEvents } from './buses'
+import {
+  pickerPlugin,
+  placePlugin,
+  pointerPlugin,
+  movementPlugin,
+  guiPlugin,
+  overlaysPlugin
+} from './plugins'
+import { DomEventError, RenderError } from '../util/errors'
 import { generateEvent } from './utils/generators'
 import { WebGlGraphics } from './webgl'
+import { ErrorDaemon } from '../daemons/error'
 
 export class PlaceIntegration {
   private animationFrameRef = 0
+  private oldTime: number = Date.now()
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -47,16 +50,20 @@ export class PlaceIntegration {
     )
   }
 
-  private render = (delta: number) => {
+  private render = () => {
+    const time = Date.now()
+    const delta = time - this.oldTime
+    this.oldTime = time
     generateEvent(
       {
         graphics: this.graphics,
-        delta: delta
+        delta
       },
       RenderEvents.renderEvent,
       RenderError
     )
-    this.animationFrameRef = requestAnimationFrame(this.render)
+    if (!ErrorDaemon.state.isErrored)
+      this.animationFrameRef = requestAnimationFrame(this.render)
   }
 
   onWheel = (e: WheelEvent) => {

@@ -1,5 +1,5 @@
-import { GeneralDaemon } from 'src/core/daemons/general'
-import { EventBus } from '../buses/types'
+import { EventBus } from '../buses'
+import { ErrorDaemon } from 'src/core/daemons/error'
 
 export const generateEvent = <T extends object>(
   event: T,
@@ -9,6 +9,6 @@ export const generateEvent = <T extends object>(
   try {
     for (const i in eventBus) if (eventBus[i](event)) return
   } catch (e: unknown) {
-    if (error) GeneralDaemon.setError(new error(e as string))
+    if (error) ErrorDaemon.setError(new error(e as string))
   }
 }

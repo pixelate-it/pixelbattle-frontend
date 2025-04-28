@@ -1,7 +1,6 @@
 import { ProfileDaemon } from 'src/core/daemons/profile'
 import { useDaemon } from './util/useDaemon'
-import { UserRole } from 'src/core/classes/api/types'
-import { config } from 'src/config'
+import { UserRole } from 'src/core/daemons/types'
 
 export const useProfile = () => {
   const profile = useDaemon(ProfileDaemon)
@@ -21,12 +20,12 @@ export const useProfile = () => {
   }
 
   const login = () => {
-    const redirectUrl = new URLSearchParams({
-      client_id: config.discord.clientId,
-      redirect_uri: config.discord.redirectUri,
-      response_type: 'code',
-      scope: config.discord.scope.join(' ')
-    })
+    // const redirectUrl = new URLSearchParams({
+    //   client_id: config.discord.clientId,
+    //   redirect_uri: config.discord.redirectUri,
+    //   response_type: 'code',
+    //   scope: config.discord.scope.join(' ')
+    // })
 
     window.location.replace(
       //`https://discord.com/api/oauth2/authorize?${redirectUrl}`

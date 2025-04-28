@@ -1,4 +1,4 @@
-import { NotificationMap } from './types'
+import { NotificationMap } from '../daemons/types'
 
 export const ServerNotificationMap: NotificationMap = {
   UserCooldown: {

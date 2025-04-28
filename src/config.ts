@@ -1,4 +1,4 @@
-import Color from './core/classes/primitives/Color'
+import Color from './core/util/сolor'
 
 export const config = {
   discord: {

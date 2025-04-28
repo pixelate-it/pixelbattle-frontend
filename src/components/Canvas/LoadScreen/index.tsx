@@ -1,39 +1,32 @@
 import { useLoadScreen } from 'src/hooks/useLoadScreen'
 import styles from './index.module.css'
-import { WebSocketError } from 'src/core/util/Errors'
+import { GeneralStatus } from 'src/core/daemons/types'
 
 export const LoadScreen = () => {
-  const { info, all } = useLoadScreen()
+  const { status, info, attempts, error } = useLoadScreen()
 
-  if (info.ready) return <></>
+  if (status === GeneralStatus.CORRECT) return <></>
 
   return (
     <div className={styles.wrapper}>
       <img src='/public/images/meta/favicon.svg' width='64'></img>
-      <h1>{all.title}</h1>
-      {all.isConnectionError && (
-        <ul>
-          {(info.error! as WebSocketError).reasons.map((r) => (
-            <li>{r}</li>
-          ))}
-        </ul>
+      <h1>{info.title}</h1>
+      {attempts !== 0 && <p>Попытка переподключиться: {attempts}</p>}
+      {status === GeneralStatus.CONNECTING && (
+        <>
+          <h2>{info.recommendations[0]}</h2>
+          <ul>
+            {info.recommendations.map((r, index) =>
+              index !== 0 ? <li>{r}</li> : <></>
+            )}
+          </ul>
+        </>
       )}
-      {info.reconnecting && <p>Попытка переподключиться: {info.attempts}</p>}
-      {import.meta.env.VITE_DEV_MODE && all.isCritical && (
-        <details title={'Детальней'}>
-          <p>{all.message}</p>
-        </details>
-      )}
-      {!import.meta.env.VITE_DEV_MODE && all.isCritical && (
-        <details title={'Что делать?'}>
-          <p>
-            Вы можете написать разработчикам об ошибке, и отослать информацию
-            ниже
-          </p>
-          <details title={'Информация об сбое'}>
-            <p>{all.message}</p>
-          </details>
-        </details>
+
+      {status === GeneralStatus.INTERNAL_ERROR && (
+        <div className={styles.errorsWrapper}>
+          <details title={'Информация об сбое'}>{error}</details>
+        </div>
       )}
     </div>
   )

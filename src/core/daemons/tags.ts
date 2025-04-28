@@ -1,7 +1,7 @@
 import createStore, { Listener } from 'unistore'
 import { TagsState } from './types'
 import { ProfileDaemon } from './profile'
-import ApiRequest from '../classes/api/request'
+import RequestsDaemon from './requests'
 
 const initialState = {
   tags: [],
@@ -14,7 +14,7 @@ export class TagsDaemon {
   private static store = createStore<TagsState>(initialState)
 
   static async fetch() {
-    const response = await ApiRequest.tags()
+    const response = await RequestsDaemon.tags()
 
     const tags = response.tags.map((tag, index) => ({
       name: tag[0],
@@ -95,13 +95,13 @@ export class TagsDaemon {
   static selectAndFetch(name: string) {
     TagsDaemon.select(name)
 
-    ApiRequest.changeTag(name).then(() => ProfileDaemon.fetch())
+    RequestsDaemon.changeTag(name).then(() => ProfileDaemon.fetch())
   }
 
   static remove() {
     TagsDaemon.setState({ selectedTag: '' })
     TagsDaemon.purgeFakeTags()
-    ApiRequest.changeTag('').then(() => ProfileDaemon.fetch())
+    RequestsDaemon.changeTag('').then(() => ProfileDaemon.fetch())
   }
 
   static changeTagCreateOpened(isTagCreateOpened: boolean) {

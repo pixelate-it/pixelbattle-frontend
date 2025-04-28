@@ -2,11 +2,9 @@ import { PointerDaemon } from 'src/core/daemons/pointer'
 import { useMove } from '../utils/movement/useMove'
 import { useClick } from '../utils/movement/useClick'
 import { PaletteDaemon } from 'src/core/daemons/palette'
-import { useRender } from '../utils/render/premitive'
+import { useRender } from '../utils/render/primitive'
 import { ApiPlace } from '../api'
-import { CanvasStorage } from '../storage/canvas'
-import { Viewport } from '../storage/viewport'
-import Color from 'src/core/classes/primitives/Color'
+import { Viewport, CanvasStorage } from 'src/core/storage'
 
 export const pointerPlugin = () => {
   useMove(({ x, y }) => {

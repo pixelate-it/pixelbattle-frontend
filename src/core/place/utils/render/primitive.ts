@@ -1,5 +1,5 @@
-import { RenderEvents } from '../../buses/renderEvents'
-import { EventBus } from '../../buses/types'
+import { RenderEvents } from '../../buses'
+import { EventBus } from '../../buses'
 import { subEvent } from '../create'
 import { ClearEvent, DependenciesCallback } from '../types'
 
@@ -17,3 +17,4 @@ const createPrimitive =
 
 export const useRender = createPrimitive(RenderEvents.renderEvent)
 export const useLoaded = createPrimitive(RenderEvents.loadedEvent)
+export const usePostRender = createPrimitive(RenderEvents.postRenderEvent)

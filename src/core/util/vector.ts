@@ -1,4 +1,4 @@
-import { Viewport } from '../place/storage/viewport'
+import { Viewport } from '../storage'
 
 export class Vector {
   x: number

@@ -5,6 +5,7 @@ interface BaseButton {
   children: ComponentChildren
   type?: 'primary' | 'danger'
   disabled?: boolean
+  full?: boolean
 }
 
 interface LinkButton {
@@ -21,7 +22,8 @@ export function Button(props: ButtonProps) {
   const className = [
     styles.button,
     styles[props.type ?? 'primary'],
-    props.disabled ? styles.disabled : null
+    props.disabled ? styles.disabled : null,
+    props.full ? styles.full : null
   ].join(' ')
 
   if ('href' in props) {

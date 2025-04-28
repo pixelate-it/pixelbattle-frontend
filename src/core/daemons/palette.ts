@@ -1,9 +1,12 @@
 import createStore, { Listener } from 'unistore'
 import { PaletteState } from './types'
-import { LocalStorage } from '../classes/storage/local'
 import { config } from 'src/config'
-import Color from '../classes/primitives/Color'
+import Color from '../util/сolor'
+import { LocalStorage } from '../storage/local'
 
+/**
+ * The daemon is responsible palette
+ */
 export class PaletteDaemon {
   private static store = createStore<PaletteState>(
     config.defaults.colors.palette

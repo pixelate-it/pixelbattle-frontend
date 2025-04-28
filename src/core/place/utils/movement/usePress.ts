@@ -1,4 +1,4 @@
-import { BasicPointerEvent } from '../../buses/types'
+import { BasicPointerEvent } from '../../buses'
 import { ClearEvent, DependenciesCallback } from '../types'
 import { useClick, useGuarantiedClick } from './useClick'
 import { useDragged } from './useDragged'

@@ -1,6 +1,6 @@
 import createStore, { Listener } from 'unistore'
 import { PointerState } from './types'
-import ApiRequest from '../classes/api/request'
+import RequestsDaemon from './requests'
 
 export class PointerDaemon {
   private static store = createStore<PointerState>({
@@ -20,7 +20,7 @@ export class PointerDaemon {
     if (!state.coordinates[0] || !state.coordinates[1]) return
     PointerDaemon.setState({ info: 'loading' })
 
-    ApiRequest.getPixel(state.coordinates[0], state.coordinates[1])
+    RequestsDaemon.getPixel(state.coordinates[0], state.coordinates[1])
       .then((info) => PointerDaemon.setState({ info }))
       .catch((e) => console.error(e))
   }

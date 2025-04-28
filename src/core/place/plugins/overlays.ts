@@ -1,13 +1,11 @@
 import { OverlaysDaemon } from 'src/core/daemons/overlays'
 import { PaletteDaemon } from 'src/core/daemons/palette'
-import { ApiPlace } from '../api'
-import { useClick, useGuarantiedClick } from '../utils/movement/useClick'
-import { Overlay } from 'src/core/classes/primitives/Overlay'
+import { useClick } from '../utils/movement/useClick'
 import { ToolsDaemon } from 'src/core/daemons/tools'
-import { useRender } from '../utils/render/premitive'
+import { useRender } from '../utils/render/primitive'
 import { usePress } from '../utils/movement/usePress'
-import { Viewport } from '../storage/viewport'
-import { useMove } from '../utils/movement/useMove'
+import { GuiDaemon } from 'src/core/daemons/gui'
+import { Overlay } from 'src/core/util/overlay'
 
 export const overlaysPlugin = () => {
   overlaysMovementPlugin()
@@ -34,6 +32,31 @@ const overlaysMovementPlugin = () => {
         if (processForImage(x, y, OverlaysDaemon.state.overlays[i])) return true
   }
 
+  usePress(
+    () => {
+      GuiDaemon.setCurrent(0)
+    },
+    1000,
+    ({ x, y }) => [
+      !OverlaysDaemon.empty,
+      checkPointInsideOverlays(x, y),
+      !OverlaysDaemon.state.gui
+    ]
+  )
+
+  // usePressMove(
+  //   ({ x, y }) => {
+  //     const currentOverlay = OverlaysDaemon.currentOverlay
+  //     startPoint.x = x - currentOverlay.x
+  //     startPoint.y = y - currentOverlay.y
+  //   },
+  //   ({ x, y }) => {
+  //     OverlaysDaemon.setOverlayPosition(x - startPoint.x, y - startPoint.y)
+  //   },
+  //   () => {},
+  //   ({ x, y }) => [checkPointInsideSelected(x, y)]
+  // )
+
   useClick(
     'end',
     ({ x, y }) => {
@@ -57,72 +80,6 @@ const overlaysMovementPlugin = () => {
     },
     ({ x, y }) => [!OverlaysDaemon.empty, checkPointInsideOverlays(x, y)]
   )
-
-  // usePress(
-  //   () => {
-  //     OverlaysDaemon.setOverlayEditingMode(true)
-  //   },
-  //   100,
-  //   ({ x, y }) => [
-  //     !OverlaysDaemon.state.editingMode,
-  //     !OverlaysDaemon.empty,
-  //     checkPointInsideOverlays(x, y)
-  //   ]
-  // )
-
-  // let overlayIsDragging = false
-  // let startX = 0
-  // let startY = 0
-  // let overlayStartX = 0
-  // let overlayStartY = 0
-
-  // useClick(
-  //   'start',
-  //   ({ x, y, button }) => {
-  //     if (button === 2) OverlaysDaemon.setOverlayEditingMode(false)
-  //     overlayIsDragging = true
-  //     startX = x
-  //     startY = y
-  //     overlayStartX = OverlaysDaemon.currentOverlay.x
-  //     overlayStartY = OverlaysDaemon.currentOverlay.y
-  //     Viewport.locked = true
-  //   },
-  //   ({ x, y }) => [
-  //     OverlaysDaemon.state.editingMode,
-  //     !OverlaysDaemon.empty,
-  //     checkPointInsideOverlays(x, y)
-  //   ]
-  // )
-  // useGuarantiedClick(
-  //   () => {
-  //     overlayIsDragging = false
-  //     Viewport.locked = false
-  //   },
-  //   () => [OverlaysDaemon.state.editingMode, !OverlaysDaemon.empty]
-  // )
-
-  // useMove(
-  //   ({ x, y }) => {
-  //     OverlaysDaemon.setOverlayPosition(
-  //       x - startX + overlayStartX,
-  //       y - startY + overlayStartY
-  //     )
-  //   },
-  //   ({ x, y }) => [
-  //     OverlaysDaemon.state.editingMode,
-  //     !OverlaysDaemon.empty,
-  //     overlayIsDragging,
-  //     checkPointInsideOverlays(x, y)
-  //   ]
-  // )
-
-  // useClick(
-  //   'end',
-  //   ({ button }) => {
-  //     if (button === 2) OverlaysDaemon.setOverlayEditingMode(false)
-  //   },
-  //   () => [OverlaysDaemon.state.editingMode]
-  // )
 }
 
 const overlaysRenderPlugin = () => {
@@ -152,7 +109,7 @@ const overlaysRenderPlugin = () => {
   )
 }
 
-export const checkPointInsideOverlays = (x: number, y: number): boolean => {
+const checkPointInsideOverlays = (x: number, y: number): boolean => {
   if (OverlaysDaemon.state.viewMode === 0 && OverlaysDaemon.currentOverlay)
     return OverlaysDaemon.currentOverlay.checkPointInside(x, y)
   else if (OverlaysDaemon.state.viewMode === 1)
@@ -164,3 +121,13 @@ export const checkPointInsideOverlays = (x: number, y: number): boolean => {
         return true
   return false
 }
+
+// const checkPointInsideSelected = (x: number, y: number): boolean => {
+//   if (
+//     !OverlaysDaemon.guiEnabled ||
+//     !OverlaysDaemon.empty ||
+//     !OverlaysDaemon.currentOverlay
+//   )
+//     return false
+//   return OverlaysDaemon.currentOverlay.checkPointInside(x, y)
+// }

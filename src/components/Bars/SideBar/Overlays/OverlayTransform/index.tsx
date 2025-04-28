@@ -32,14 +32,15 @@ export const OverlayTransform = () => {
           onClick={prevImage}
           type='primary'
           disabled={!overlay.prevOverlayButtonActive}
+          full={true}
         >
           <Icon icon='left' />
         </Button>
 
-        <Button onClick={addImage} type='primary'>
+        <Button onClick={addImage} type='primary' full={true}>
           <Icon icon='plus' />
         </Button>
-        <Button onClick={unsetImage} type='danger'>
+        <Button onClick={unsetImage} type='danger' full={true}>
           <Icon icon='plus' className={styles.removeIcon} />
         </Button>
 
@@ -47,6 +48,7 @@ export const OverlayTransform = () => {
           onClick={nextImage}
           type='primary'
           disabled={!overlay.nextOverlayButtonActive}
+          full={true}
         >
           <Icon icon='left' className={styles.rightIcon} />
         </Button>

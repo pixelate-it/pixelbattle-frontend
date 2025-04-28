@@ -1,9 +1,9 @@
-import ApiRequest from '../classes/api/request'
 import { CooldownDaemon } from '../daemons/cooldown'
 import { InfoDaemon } from '../daemons/info'
 import { PaletteDaemon } from '../daemons/palette'
 import { ProfileDaemon } from '../daemons/profile'
-import { Viewport } from './storage/viewport'
+import RequestsDaemon from '../daemons/requests'
+import { Viewport } from '../storage'
 
 export class ApiPlace {
   public static putPixel(x: number, y: number) {
@@ -24,7 +24,7 @@ export class ApiPlace {
     if (!Viewport.checkPointInside(x, y)) return
 
     CooldownDaemon.preStart()
-    ApiRequest.putPixel({
+    RequestsDaemon.putPixel({
       x,
       y,
       color: PaletteDaemon.state.selected.toHex()

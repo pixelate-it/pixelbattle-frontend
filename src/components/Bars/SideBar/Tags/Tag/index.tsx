@@ -1,4 +1,4 @@
-import { FormattedTag } from 'src/core/classes/api/types'
+import { FormattedTag } from 'src/core/daemons/types'
 import styles from './index.module.css'
 import { useTag } from 'src/hooks/tag/useTag'
 

@@ -1,8 +1,7 @@
 import { PaletteDaemon } from 'src/core/daemons/palette'
 import { useClick } from '../utils/movement/useClick'
 import { ToolsDaemon } from 'src/core/daemons/tools'
-import { CanvasStorage } from '../storage/canvas'
-import { Viewport } from '../storage/viewport'
+import { Viewport, CanvasStorage } from 'src/core/storage'
 
 export const pickerPlugin = () => {
   const pickHandler = (x: number, y: number) => {

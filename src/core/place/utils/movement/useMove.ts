@@ -1,4 +1,4 @@
-import { PluginsEvents } from '../../buses/pluginsEvents'
+import { PluginsEvents } from '../../buses'
 import { BasicPointerEvent } from '../../buses/types'
 import { subEvent } from '../create'
 import { ClearEvent, DependenciesCallback } from '../types'

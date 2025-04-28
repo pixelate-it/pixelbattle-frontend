@@ -1,7 +1,6 @@
-import { Viewport } from '../storage/viewport'
-import { useLoaded, useRender } from '../utils/render/premitive'
-import { CanvasStorage } from '../storage/canvas'
-import { Vector } from '../../util/Vector'
+import { useLoaded, useRender } from '../utils/render/primitive'
+import { Vector } from '../../util/vector'
+import { Viewport, CanvasStorage } from 'src/core/storage'
 
 export const placePlugin = () => {
   useLoaded((event) => {
@@ -19,8 +18,8 @@ export const placePlugin = () => {
     Viewport.moveCenter(new Vector(event.placeWidth / 2, event.placeHeight / 2))
   })
 
-  useRender(({ graphics, delta }) => {
-    Viewport.smoothMove(delta)
+  useRender(({ graphics }) => {
+    Viewport.smoothMove()
 
     const chunks = CanvasStorage.getChunks()
     graphics.preRender()

@@ -1,6 +1,6 @@
 import { config } from 'src/config'
-import Color from 'src/core/classes/primitives/Color'
 import { CanvasChunk } from './chunk'
+import Color from '../util/сolor'
 
 export class CanvasStorage {
   private static chunks: Array<CanvasChunk> = []

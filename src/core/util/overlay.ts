@@ -1,7 +1,8 @@
-import Color from './Color'
+import { Vector } from 'src/core/util/vector'
+import { CanvasStorage } from '../storage'
 import { OverlayImageInput, OverlayInStorage } from '../storage/types'
-import { blobToString, stringToBlob } from '../storage/util'
-import { CanvasStorage } from 'src/core/place/storage/canvas'
+import { stringToBlob, blobToString } from '../storage/util'
+import Color from './сolor'
 
 const canvas = document.createElement('canvas')
 const context = canvas.getContext('2d')!
@@ -11,6 +12,7 @@ export class Overlay {
   public blob: Blob | null = null
   public x = 0
   public y = 0
+  public size = new Vector()
   public opacity = 0
   public imageName = ''
   private data = ''
@@ -29,6 +31,7 @@ export class Overlay {
     else this.data = await blobToString(this.blob)
     createImageBitmap(this.blob).then((v) => {
       const { width, height } = v
+      this.size = new Vector(width, height)
       canvas.width = width
       canvas.height = height
       context.drawImage(v, 0, 0)
@@ -71,8 +74,6 @@ export class Overlay {
         (base[2] * base[3] * (1 - added[3])) / mix[3]
     )
     mix[3] = 255
-
-    console.log(mix)
 
     return new Color(mix)
   }

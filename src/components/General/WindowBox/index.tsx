@@ -1,6 +1,6 @@
 import { ComponentChildren } from 'preact'
 import styles from './index.module.css'
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useEffect, useState } from 'preact/hooks'
 
 interface WindowProps {
   children: ComponentChildren

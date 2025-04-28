@@ -1,0 +1,7 @@
+.gui-canvas {
+  pointer-events: none;
+  z-index: 1;
+}
+.gl-canvas {
+  z-index: 0;
+}

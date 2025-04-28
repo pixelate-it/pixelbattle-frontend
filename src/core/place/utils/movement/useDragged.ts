@@ -1,4 +1,4 @@
-import { PluginsEvents } from '../../buses/pluginsEvents'
+import { PluginsEvents } from '../../buses'
 import { subEvent } from '../create'
 import { ClearEvent } from '../types'
 

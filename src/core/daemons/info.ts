@@ -1,8 +1,10 @@
 import createStore, { Listener } from 'unistore'
-import { InfoState } from './types'
-import ApiRequest from '../classes/api/request'
-import { ApiInfo } from '../classes/api/types'
+import { ApiInfo, InfoState } from './types'
+import RequestsDaemon from './requests'
 
+/**
+ * The daemon is responsible for storing and receiving information about the game
+ */
 export class InfoDaemon {
   private static store = createStore<InfoState>({
     name: 'Загрузка...',
@@ -15,8 +17,11 @@ export class InfoDaemon {
     }
   })
 
+  /**
+   * Fetches information of current game
+   */
   static async fetch() {
-    ApiRequest.info().then((info: Pick<ApiInfo, keyof ApiInfo>) =>
+    RequestsDaemon.info().then((info: Pick<ApiInfo, keyof ApiInfo>) =>
       InfoDaemon.setState(info)
     )
   }
@@ -25,14 +30,25 @@ export class InfoDaemon {
     InfoDaemon.store.setState(state as Pick<InfoState, keyof InfoState>)
   }
 
+  /**
+   * Contains information of current game
+   */
   static get state(): InfoState {
     return InfoDaemon.store.getState()
   }
 
+  /**
+   * Subscribe to updates of this daemon
+   * @param f Event listener
+   */
   static on(f: Listener<InfoState>) {
     InfoDaemon.store.subscribe(f)
   }
 
+  /**
+   * Unsubscribe to updates of this daemon
+   * @param f Event listener
+   */
   static off(f: Listener<InfoState>) {
     InfoDaemon.store.unsubscribe(f)
   }

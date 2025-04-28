@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 9001",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "vertex": "tsx vertex.ts"
   },
   "dependencies": {
     "js-cookie": "^3.0.5",
@@ -17,6 +18,7 @@
     "vite-plugin-pwa": "^0.20.5"
   },
   "devDependencies": {
+    "@flatten-js/core": "^1.6.2",
     "@inthepocket/eslint-config-preact": "^1.2.13",
     "@preact/preset-vite": "^2.9.0",
     "@types/js-cookie": "^3.0.6",
@@ -24,6 +26,7 @@
     "eslint": "^9.9.0",
     "prettier": "^3.3.3",
     "terser": "^5.31.6",
+    "tsx": "^4.19.3",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.1.0",
     "unplugin-fonts": "^1.1.1",

@@ -1,4 +1,4 @@
-import { PixelInfo } from 'src/core/classes/api/types'
+import { PixelInfo } from 'src/core/daemons/types'
 import styles from './index.module.css'
 
 export function Info({ info }: { info: PixelInfo | null | 'loading' }) {

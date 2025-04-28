@@ -1,4 +1,4 @@
-import { Vector } from '../../util/Vector'
+import { Vector } from '../util/vector'
 import { CanvasStorage } from './canvas'
 
 export class Viewport {
@@ -31,7 +31,13 @@ export class Viewport {
   static minHeight = 0
   static maxHeight = 0
 
-  static smoothMove(delta: number) {
+  static focusOn(point: Vector, size: Vector) {
+    const center = new Vector(point.x + size.x / 2, point.y + size.y / 2)
+    this.fit(new Vector(size.x, size.y + 20))
+    this.moveCenter(center)
+  }
+
+  static smoothMove() {
     // in future
     // const smoothingFactor = 2.5
     // const timeFix = Math.min(delta / 1000 / 30, 1)

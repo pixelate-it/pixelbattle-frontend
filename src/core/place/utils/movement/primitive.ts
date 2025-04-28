@@ -1,5 +1,4 @@
-import { DomEvents } from '../../buses/domEvents'
-import { EventBus } from '../../buses/types'
+import { DomEvents, EventBus } from '../../buses'
 import { subEvent } from '../create'
 import { ClearEvent, DependenciesCallback } from '../types'
 

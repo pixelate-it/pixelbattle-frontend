@@ -1,4 +1,4 @@
-import Color from 'src/core/classes/primitives/Color'
+import Color from '../util/сolor'
 
 export class CanvasChunk {
   x: number
@@ -6,7 +6,6 @@ export class CanvasChunk {
   width: number
   height: number
   imageData: ImageData
-  renderBitmap: ImageBitmap | undefined
   isUpdating = false
   lastUpdateTime = 0
 
@@ -22,13 +21,6 @@ export class CanvasChunk {
     this.width = width
     this.height = height
     this.imageData = image
-    this.updateBitmap()
-  }
-
-  async updateBitmap() {
-    this.isUpdating = true
-    this.renderBitmap = await createImageBitmap(this.imageData)
-    this.isUpdating = false
   }
 
   itInside(x: number, y: number) {

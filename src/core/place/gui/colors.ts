@@ -1,4 +1,4 @@
-import Color from 'src/core/classes/primitives/Color'
+import Color from 'src/core/util/сolor'
 
 export interface GuiColorElement {
   normal: Color

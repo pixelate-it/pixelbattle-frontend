@@ -1,5 +1,5 @@
-import { Viewport } from '../../storage/viewport'
-import { Vector } from '../../../util/Vector'
+import { Viewport } from 'src/core/storage'
+import { Vector } from '../../../util/vector'
 import {
   useTouchCancel,
   useTouchEnd,
@@ -15,9 +15,9 @@ export const touchScreenPlugin = () => {
     last = Viewport.toLocal(event.touches[0].clientX, event.touches[0].clientY)
   })
 
-  useTouchCancel((event) => {})
+  useTouchCancel(() => {})
 
-  useTouchEnd((event) => {})
+  useTouchEnd(() => {})
 
   useTouchMove((event) => {
     const touches = event.touches

@@ -1,4 +1,4 @@
-import Color from 'src/core/classes/primitives/Color'
+import Color from 'src/core/util/сolor'
 import styles from './index.module.css'
 import { PaletteDaemon } from 'src/core/daemons/palette'
 

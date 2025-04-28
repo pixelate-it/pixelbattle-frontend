@@ -1,7 +1,7 @@
-import { FormattedTag } from 'src/core/classes/api/types'
 import { NotificationDaemon } from 'src/core/daemons/notifications'
 import { ProfileDaemon } from 'src/core/daemons/profile'
 import { TagsDaemon } from 'src/core/daemons/tags'
+import { FormattedTag } from 'src/core/daemons/types'
 
 export const useTag = (tag: FormattedTag) => {
   function onClick() {

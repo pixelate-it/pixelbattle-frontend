@@ -1,8 +1,7 @@
 import createStore, { Listener } from 'unistore'
-import { ProfileState } from './types'
-import { Cookie } from '../classes/storage/cookie'
-import ApiRequest from '../classes/api/request'
-import { UserRole } from '../classes/api/types'
+import { ProfileState, UserRole } from './types'
+import { Cookie } from '../storage/cookie'
+import RequestsDaemon from './requests'
 
 const initialState = {
   isAuthenticated: false,
@@ -26,7 +25,7 @@ export class ProfileDaemon {
 
   static fetch() {
     if (Cookie.get('userid') != undefined)
-      ApiRequest.profile().then((user) =>
+      RequestsDaemon.profile().then((user) =>
         ProfileDaemon.setState({
           user,
           isBanned: !!user?.banned,

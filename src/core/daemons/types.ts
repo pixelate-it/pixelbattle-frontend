@@ -1,6 +1,7 @@
-import { ProfileInfo, PixelInfo, FormattedTag } from '../classes/api/types'
-import Color from '../classes/primitives/Color'
-import { Overlay } from '../classes/primitives/Overlay'
+import { GuiContainer } from '../place/gui/container'
+import Color from '../util/сolor'
+import { Overlay } from '../util/overlay'
+import { InternalError } from '../util/errors'
 
 export interface CooldownState {
   startRequestTime: number
@@ -24,7 +25,7 @@ export interface InfoState {
 export interface NotificationInfo {
   message: string
   title: string
-  type: NotificationType
+  type: NotificationType | string
   id: string
 }
 
@@ -44,7 +45,7 @@ export interface OverlaysState {
   prevOverlayButtonActive: boolean
   nextOverlayButtonActive: boolean
   viewMode: OverlayViewMode
-  editingMode: boolean
+  gui: boolean
 }
 
 export type OverlayViewMode = 0 | 1 | 2
@@ -82,9 +83,133 @@ export interface ToolsState {
   lockedPaletteGrowing: boolean
 }
 
-export interface GeneralState {
-  ready: boolean
-  error?: Error
-  reconnecting?: boolean
-  attempts?: number
+export interface GuiState {
+  containers: Array<GuiContainer>
+  current: number | null
 }
+
+export interface GeneralState {
+  status: GeneralStatus
+}
+
+export enum GeneralStatus {
+  CORRECT,
+  CONNECTING,
+  WEBSOCKET_ERROR,
+  INTERNAL_ERROR
+}
+
+export interface ErrorState {
+  isErrored: boolean
+  internalError?: InternalError
+}
+
+export enum WebSocketStatus {
+  CONNECTING,
+  ACTIVE,
+  CLOSED,
+  ERRORED
+}
+
+export enum WebSocketError {
+  NORMALLY,
+  AWAY,
+  CONNECTION,
+  PROTOCOL,
+  INTERNAL
+}
+
+export interface WebSocketState {
+  status: WebSocketStatus
+  error?: WebSocketError
+  attempts: number
+}
+
+// Requests
+
+export interface ApiInfo {
+  name: string
+  ended: boolean
+  cooldown: number
+  online: number
+  canvas: {
+    width: number
+    height: number
+  }
+}
+
+export interface ApiPixel {
+  color: string
+  x: number
+  y: number
+}
+
+export interface PixelInfo {
+  author: string | null
+  tag: string | null
+}
+
+export interface ProfileInfo {
+  userID: string
+  cooldown: number
+  tag: string | null
+  banned: BanInfo | null
+  username: string
+  role: UserRole
+}
+
+export enum UserRole {
+  User = 0,
+  Moderator = 1,
+  Admin = 2
+}
+
+export interface BanInfo {
+  moderatorID: string
+  timeout: number
+  reason: string | null
+}
+
+export interface ApiTags {
+  tags: ApiTag[]
+  pixels: {
+    all: number
+    used: number
+    unused: number
+  }
+}
+
+export type ApiTag = [string, number]
+
+export interface FormattedTag {
+  name: string
+  pixels: number
+  place: number
+}
+
+export interface ApiResponse {
+  error: boolean
+  reason: string
+}
+
+export interface ApiErrorResponse extends ApiResponse {
+  error: true
+}
+
+export type NotificationMap = {
+  [key: string]: Omit<NotificationInfo, 'id' | 'type'>
+}
+
+export interface PlaceMessageData {
+  op: 'PLACE'
+  x: number
+  y: number
+  color: string
+}
+
+export interface EndedMessageData {
+  op: 'ENDED'
+  value: boolean
+}
+
+export type MessageData = PlaceMessageData | EndedMessageData

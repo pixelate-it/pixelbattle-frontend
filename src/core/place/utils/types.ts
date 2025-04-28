@@ -3,3 +3,9 @@ export type DependenciesCallback<T extends object> = (
 ) => Array<boolean>
 
 export type ClearEvent<T extends object> = (event: T) => void
+
+export enum AmbientSeason {
+  Autumn,
+  Winter,
+  Spring
+}

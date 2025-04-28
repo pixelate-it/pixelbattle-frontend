@@ -1,4 +1,4 @@
-import { EventBus } from '../buses/types'
+import { EventBus } from '../buses'
 import { generateEvent } from './generators'
 
 export const useValerator = <T>(val: T, bus: EventBus<{ current: T }>) => {

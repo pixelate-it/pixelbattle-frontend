@@ -1,8 +1,8 @@
-import { Viewport } from '../../storage/viewport'
-import { Vector } from '../../../util/Vector'
-import { WebGlGraphics } from '../../webgl'
+import { Vector } from '../../util/vector'
+import { WebGlGraphics } from '../webgl'
+import { GuiContainer } from './container'
 
-export default abstract class BasicGuiElement {
+export abstract class BasicGuiElement {
   abstract width: number
   abstract height: number
   abstract x: number
@@ -13,11 +13,13 @@ export default abstract class BasicGuiElement {
   pressed: boolean = false
 
   abstract onClick: () => void | null
+  abstract onPressMove: () => void | null
+  abstract onClickEnd: () => void | null
 
-  abstract render(graphics: WebGlGraphics): void
+  abstract render(graphics: WebGlGraphics, parent?: GuiContainer): void
 
-  isPointerInside(pointer: Vector) {
-    const position = new Vector(this.x, this.y)
+  isPointerInside(pointer: Vector, parent: GuiContainer) {
+    const position = new Vector(this.x + parent.x, this.y + parent.y)
     const width = this.width
     const height = this.height
     const inside =

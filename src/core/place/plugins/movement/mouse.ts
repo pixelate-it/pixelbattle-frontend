@@ -1,5 +1,3 @@
-import { config } from 'src/config'
-import { Viewport } from 'src/core/place/storage/viewport'
 import {
   useWheel,
   useMouseDown,
@@ -10,8 +8,9 @@ import {
 import { generateEvent } from '../../utils/generators'
 import { PluginsEvents } from '../../buses/pluginsEvents'
 import { useValerator } from '../../utils/variables'
-import { Vector } from '../../../util/Vector'
-import { PluginBusError } from 'src/core/util/Errors'
+import { Vector } from '../../../util/vector'
+import { PluginBusError } from 'src/core/util/errors'
+import { Viewport } from 'src/core/storage'
 
 export const mousePlugin = () => {
   let mouseDown = false

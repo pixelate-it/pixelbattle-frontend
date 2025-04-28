@@ -55,6 +55,29 @@ void main() {
 
 #endif
 
+#ifdef OUTLINE
+
+uniform vec4 u_color;
+
+varying vec2 v_posCoord;
+
+void main() {
+  float borders = 0.48;
+  float sub_borders = 0.465;
+  vec2 halfSize = vec2(0.5);
+  vec2 pos = v_posCoord;
+  
+  float d1 = abs(pos.x - 0.5);
+  float d2 = abs(pos.y - 0.5);
+  if (d1 >= borders || d2 >= borders) {
+    gl_FragColor = vec4(vec3(1.0), u_color.a);
+  } else {
+    gl_FragColor = vec4(u_color.rgb, u_color.a * u_alpha);
+  }
+}
+
+#endif
+
 #ifdef BUTTON
 
 uniform vec4 u_color;
@@ -65,7 +88,7 @@ uniform vec2 u_size;
 varying vec2 v_posCoord;
 
 void main() {
-  vec2 halfSize = vec2(1.0) * 0.5;
+  vec2 halfSize = vec2(0.5);
   vec2 center = vec2(halfSize.x, halfSize.y);
   vec2 pos = v_posCoord - center;
 

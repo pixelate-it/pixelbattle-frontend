@@ -1,51 +1,64 @@
-import { Viewport } from '../storage/viewport'
-import GuiButton from '../utils/gui/button'
+import { GuiDaemon } from 'src/core/daemons/gui'
 import {
   useMouseDown,
   useMouseUp,
   useMouseMove
 } from '../utils/movement/primitive'
-import { useLoaded, useRender } from '../utils/render/premitive'
+import { useLoaded, useRender } from '../utils/render/primitive'
+import { guiContainers } from 'src/core/constants/gui'
+import { Viewport } from 'src/core/storage'
 
 export const guiPlugin = () => {
-  let button: GuiButton | null
   let mouseDowned = false
 
   useMouseDown(({ clientX, clientY }) => {
-    const pointer = Viewport.toLocal(clientX, clientY)
-    if (button?.isPointerInside(pointer)) {
-      button.handlePointerDown()
-      Viewport.locked = true
+    if (GuiDaemon.state.current !== null) {
+      const container = GuiDaemon.state.containers[GuiDaemon.state.current]
+      const pointer = Viewport.toLocal(clientX, clientY)
+      if (container.isPointerInside(pointer)) {
+        if (container.handlePointerDown(pointer)) Viewport.locked = true
+      }
+      mouseDowned = true
     }
-    mouseDowned = true
   })
 
   useMouseUp(({ clientX, clientY }) => {
-    const pointer = Viewport.toLocal(clientX, clientY)
-    if (button?.isPointerInside(pointer)) {
-      button.handlePointerUp()
+    if (GuiDaemon.state.current !== null) {
+      const container = GuiDaemon.state.containers[GuiDaemon.state.current]
+      const pointer = Viewport.toLocal(clientX, clientY)
+      if (container.isPointerInside(pointer)) {
+        container.handlePointerUp(pointer)
+      }
     }
     Viewport.locked = false
     mouseDowned = false
   })
 
   useMouseMove(({ clientX, clientY }) => {
-    const pointer = Viewport.toLocal(clientX, clientY)
-    if (button?.isPointerInside(pointer)) {
-      button.hover = true
-      if (mouseDowned) button.pressed = true
-    } else if (button?.pressed) {
-      button.pressed = false
+    const container = GuiDaemon.container
+    if (container) {
+      const pointer = Viewport.toLocal(clientX, clientY)
+      if (container?.isPointerInside(pointer)) {
+        let e = container.getElementAt(pointer)
+        if (e) {
+          let [i, element] = e
+          element.hover = true
+          if (mouseDowned) element.pressed = true
+          GuiDaemon.updateElement(i, element)
+        }
+      } else {
+        GuiDaemon.unPressElements()
+      }
     }
   })
 
-  useLoaded(({ placeWidth }) => {
-    button = new GuiButton(placeWidth + 20, 0, 30, 10, () => {
-      console.log("I'm alive!")
-    })
+  useLoaded(() => {
+    GuiDaemon.addContainers(...guiContainers())
+    GuiDaemon.setCurrent(0)
   })
 
   useRender(({ graphics }) => {
-    if (button) button.render(graphics)
+    const container = GuiDaemon.container
+    if (container) container.render(graphics)
   })
 }
