@@ -29,6 +29,7 @@ export class GeneralDaemon {
    */
   static run() {
     ProfileDaemon.load()
+    PaletteDaemon.load()
     OverlaysDaemon.loadOverlays()
     TagsDaemon.fetch()
     WebSocketDaemon.connect()

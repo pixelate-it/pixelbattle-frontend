@@ -9,9 +9,9 @@ export class GuiButton extends BasicGuiElement {
   height: number
   x: number
   y: number
-  onClick: () => void | null
-  onPressMove: () => void | null = () => null
-  onClickEnd: () => void | null = () => null
+  onClick: () => void | null = () => null
+  onMove: () => void | null = () => null
+  onClickEnd: () => void | null
   icon?: IconsType
 
   basicColor: Color
@@ -32,7 +32,7 @@ export class GuiButton extends BasicGuiElement {
     this.y = y
     this.width = width
     this.height = height
-    this.onClick = onClick
+    this.onClickEnd = onClick
     this.basicColor = color.normal
     this.hoverColor = color.hover
     this.pressColor = color.press
@@ -53,8 +53,7 @@ export class GuiButton extends BasicGuiElement {
       this.width,
       this.height,
       currentColor,
-      size / 5,
-      0.05
+      size / 5
     )
     if (this.icon) {
       const scale = 0.5

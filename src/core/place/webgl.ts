@@ -205,7 +205,6 @@ export class WebGlGraphics {
     height: number,
     color: Color,
     borderRadius: number,
-    outlineLength: number,
     alpha = 1
   ) {
     const gl = this.gl
@@ -216,7 +215,6 @@ export class WebGlGraphics {
       u_scale: Viewport.toScale(width, height),
       u_color: color.toGl(),
       u_alpha: alpha,
-      u_outline_l: outlineLength,
       u_border_radius: borderRadius,
       u_size: [width, height]
     }

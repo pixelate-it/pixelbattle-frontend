@@ -6,6 +6,7 @@ import { useRender } from '../utils/render/primitive'
 import { usePress } from '../utils/movement/usePress'
 import { GuiDaemon } from 'src/core/daemons/gui'
 import { Overlay } from 'src/core/util/overlay'
+import { Vector } from 'src/core/util/vector'
 
 export const overlaysPlugin = () => {
   overlaysMovementPlugin()
@@ -33,8 +34,8 @@ const overlaysMovementPlugin = () => {
   }
 
   usePress(
-    () => {
-      GuiDaemon.setCurrent(0)
+    ({ x, y }) => {
+      GuiDaemon.setCurrent(GuiDaemon.getContainerIdAt(new Vector(x, y)))
     },
     1000,
     ({ x, y }) => [

@@ -49,7 +49,7 @@ const triangle = (
   ]
 }
 
-const OverlayTransformRaw = [
+export const OverlayTransformCenter = convertPolygonsToFloat32Array([
   // rect(0, 0, 5, 100),
   // rect(5, 0, 90, 5),
   // rect(95, 0, 5, 100),
@@ -61,7 +61,21 @@ const OverlayTransformRaw = [
   triangle(2, 41, 30, 24, 90),
   triangle(35, 7, 30, 27, 180),
   triangle(35, 75, 30, 24, 0)
-]
+])
+
+export const OverlayTransformCorners = [
+  [rect(0, 0, 5, 17), rect(5, 0, 12, 5)],
+  [rect(0, 0, 12, 5), rect(12, 0, 5, 17)],
+  [rect(0, 0, 5, 17), rect(5, 12, 12, 5)],
+  [rect(0, 12, 12, 5), rect(12, 0, 5, 17)]
+].map((e) => convertPolygonsToFloat32Array(e))
+
+export const ScreenshotTransformArrows = [
+  [triangle(0, 0, 22, 13, 0)],
+  [triangle(0, 0, 22, 13, 180)],
+  [triangle(0, 0, 22, 13, 90)],
+  [triangle(0, 0, 22, 13, 270)]
+].map((e) => convertPolygonsToFloat32Array(e))
 
 function convertPolygonsToFloat32Array(polygons: number[][][]): Float32Array {
   const vertices: number[] = []
@@ -74,6 +88,3 @@ function convertPolygonsToFloat32Array(polygons: number[][][]): Float32Array {
 
   return new Float32Array(vertices)
 }
-
-export const OverlayTransformCenter =
-  convertPolygonsToFloat32Array(OverlayTransformRaw)

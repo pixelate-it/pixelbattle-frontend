@@ -44,6 +44,7 @@ export const guiPlugin = () => {
           let [i, element] = e
           element.hover = true
           if (mouseDowned) element.pressed = true
+          element.onMove(pointer)
           GuiDaemon.updateElement(i, element)
         }
       } else {

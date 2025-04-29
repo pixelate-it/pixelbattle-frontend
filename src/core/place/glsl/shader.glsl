@@ -81,7 +81,6 @@ void main() {
 #ifdef BUTTON
 
 uniform vec4 u_color;
-uniform float u_outline_l;
 uniform float u_border_radius;
 uniform vec2 u_size;
 
@@ -96,8 +95,7 @@ void main() {
 
   if (abs(pos.x) <= halfSize.x - normalizedRadius.x || 
     abs(pos.y) <= halfSize.y - normalizedRadius.y) {
-    float yAxis = float(v_posCoord.y < 1.0 - u_outline_l);
-    gl_FragColor = vec4(yAxis == 1.0 ? u_color.rgb : u_color.rgb * 0.75, u_color.a * u_alpha);
+    gl_FragColor = vec4(u_color.rgb, u_color.a * u_alpha);
     return;
   }
 
@@ -111,13 +109,12 @@ void main() {
   float distance = length(scaledPos - scaledCorner);
 
   if (distance <= u_border_radius) {
-    float yAxis = float(v_posCoord.y < 1.0 - u_outline_l);
-    float xAxis = float(v_posCoord.x < 1.0 - u_outline_l && v_posCoord.x > u_outline_l);
-    gl_FragColor = vec4((yAxis == 1.0 || xAxis == 1.0) ? u_color.rgb : u_color.rgb * 0.75, u_color.a * u_alpha);
+    gl_FragColor = vec4(u_color.rgb, u_color.a * u_alpha);
   } else {
     discard;
   }
 }
+
 
 #endif
 

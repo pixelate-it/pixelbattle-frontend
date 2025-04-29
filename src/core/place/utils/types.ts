@@ -9,3 +9,8 @@ export enum AmbientSeason {
   Winter,
   Spring
 }
+
+export interface MouseEventGui {
+  x: number
+  y: number
+}

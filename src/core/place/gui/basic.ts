@@ -1,4 +1,5 @@
 import { Vector } from '../../util/vector'
+import { MouseEventGui } from '../utils/types'
 import { WebGlGraphics } from '../webgl'
 import { GuiContainer } from './container'
 
@@ -12,9 +13,9 @@ export abstract class BasicGuiElement {
   hover: boolean = false
   pressed: boolean = false
 
-  abstract onClick: () => void | null
-  abstract onPressMove: () => void | null
-  abstract onClickEnd: () => void | null
+  abstract onClick(event: MouseEventGui): void
+  abstract onMove(event: MouseEventGui): void
+  abstract onClickEnd(event: MouseEventGui): void
 
   abstract render(graphics: WebGlGraphics, parent?: GuiContainer): void
 
@@ -33,12 +34,18 @@ export abstract class BasicGuiElement {
     return inside
   }
 
-  handlePointerDown() {
+  handlePointerMove(event: MouseEventGui) {
     this.pressed = true
+    this.onClick(event)
   }
 
-  handlePointerUp() {
+  handlePointerDown(event: MouseEventGui) {
+    this.pressed = true
+    this.onClick(event)
+  }
+
+  handlePointerUp(event: MouseEventGui) {
     this.pressed = false
-    this.onClick()
+    this.onClickEnd(event)
   }
 }

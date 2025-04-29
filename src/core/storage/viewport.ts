@@ -1,3 +1,4 @@
+import { Rect } from '../util/rect'
 import { Vector } from '../util/vector'
 import { CanvasStorage } from './canvas'
 

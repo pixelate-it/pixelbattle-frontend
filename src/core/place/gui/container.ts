@@ -48,10 +48,23 @@ export class GuiContainer {
     return inside
   }
 
+  resize() {
+    let width = 0,
+      height = 0
+    this.elements.forEach((e) => {
+      const sizeX = e.x + e.width
+      const sizeY = e.y + e.height
+      if (width < sizeX) width = sizeX
+      if (height < sizeY) height = sizeY
+    })
+    this.width = width
+    this.height = height
+  }
+
   handlePointerDown(pointer: Vector) {
     for (const i in this.elements)
       if (this.elements[i].isPointerInside(pointer, this)) {
-        this.elements[i].handlePointerDown()
+        this.elements[i].handlePointerDown(pointer)
         return true
       }
     return false
@@ -60,7 +73,7 @@ export class GuiContainer {
   handlePointerUp(pointer: Vector) {
     for (const i in this.elements)
       if (this.elements[i].isPointerInside(pointer, this)) {
-        this.elements[i].handlePointerUp()
+        this.elements[i].handlePointerUp(pointer)
         return true
       }
     return false

@@ -61,12 +61,6 @@ export const guiContainers: () => Array<gui.GuiContainer> = () => [
     ],
     function () {
       const i = () => {
-        if (OverlaysDaemon.empty) {
-          for (const i of this.elements) {
-            if (i instanceof GuiButton) {
-            }
-          }
-        }
         const overlay = OverlaysDaemon.currentOverlay
         this.x = overlay.x
         this.y = overlay.y - overlayButtonSize - 2
@@ -74,6 +68,7 @@ export const guiContainers: () => Array<gui.GuiContainer> = () => [
           overlay.size.x,
           overlay.size.y
         )
+        this.resize()
       }
       OverlaysDaemon.on(i)
       i()
