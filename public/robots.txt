@@ -1,10 +1,2 @@
-User-agent: *
-Disallow: /404
-Disallow: /manifest.webmanifest
-Disallow: /cdn-cgi/
-Disallow: /pwa/
-Disallow: /images/
-Disallow: /fonts/
-
 User-agent: Yandex
 Disallow: /?*server
