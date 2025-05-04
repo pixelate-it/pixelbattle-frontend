@@ -1,99 +1,52 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Pixel Battle</title>
 
-    <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#154CB7" />
-    <meta
-      name="description"
-      content="Место, где вы можете побороться за место на холсте вместе с другими игроками"
-    />
-    <meta
-      name="keywords"
-      content="place, pixels, r/place, пиксель батл, реддит плейс, r/place clone, place clone, pixelbattle, pixel battle"
-    />
-    <meta name="language" content="RU" />
-    <meta name="author" content="elias" />
-    <meta name="url" content="https://pixelbattle.fun" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="UTF-8">
+    <title>Pixel Battle</title>
+    <link rel="icon" href="/images/meta/favicon.ico" type="image/x-icon">
+
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#154CB7">
+    <meta name="description" content="Место, где вы можете побороться за место на холсте вместе с другими игроками">
+    <meta name="keywords"
+          content="place, pixels, r/place, пиксель батл, реддит плейс, r/place clone, place clone, pixelbattle, pixel battle">
+    <meta name="language" content="RU">
+    <meta name="author" content="elias">
+    <meta name="url" content="https://pixelbattle.fun">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
 
     <!-- PWA support -->
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="apple-touch-icon" href="/pwa/favicon_700x700.png" />
-    <link rel="apple-touch-icon" sizes="57x57" href="/pwa/favicon_57x57.png" />
-    <link rel="apple-touch-icon" sizes="72x72" href="/pwa/favicon_72x72.png" />
-    <link rel="apple-touch-icon" sizes="76x76" href="/pwa/favicon_76x76.png" />
-    <link
-      rel="apple-touch-icon"
-      sizes="114x114"
-      href="/pwa/favicon_114x114.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="120x120"
-      href="/pwa/favicon_120x120.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="144x144"
-      href="/pwa/favicon_144x144.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="152x152"
-      href="/pwa/favicon_152x152.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/pwa/favicon_180x180.png"
-    />
-
-    <link rel="icon" href="/images/meta/favicon.svg" type="image/svg+xml" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="apple-touch-icon" href="/pwa/favicon_700x700.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="/pwa/favicon_57x57.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/pwa/favicon_72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/pwa/favicon_76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/pwa/favicon_114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/pwa/favicon_120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/pwa/favicon_144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/pwa/favicon_152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/pwa/favicon_180x180.png">
 
     <!-- Preview support -->
-    <meta property="og:url" content="https://pixelbattle.fun" />
-    <meta property="og:site_name" content="PixelBattle" />
-    <meta property="og:image" content="/images/meta/banner.png" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:url" content="https://pixelbattle.fun">
+    <meta property="og:site_name" content="PixelBattle">
+    <meta property="og:image" content="/images/meta/banner.png">
+    <meta name="twitter:card" content="summary_large_image">
+</head>
 
-    <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      // MIT License
-      // https://github.com/rafgraph/spa-github-pages
+<body>
+<noscript>
+    <strong>
+        PixelBattle не может работать без JavaScript. Пожалуйста, включите JavaScript в настройках вашего
+        браузера
+    </strong>
+</noscript>
 
-      ;(function (l) {
-        if (l.search[1] === '/') {
-          let decoded = l.search
-            .slice(1)
-            .split('&')
-            .map(function (s) {
-              return s.replace(/~and~/g, '&')
-            })
-            .join('?')
-          window.history.replaceState(
-            null,
-            null,
-            l.pathname.slice(0, -1) + decoded + l.hash
-          )
-        }
-      })(window.location)
-    </script>
-  </head>
-
-  <body>
-    <noscript>
-      <strong>
-        PixelBattle не может работать без JavaScript. Пожалуйста, включите
-        JavaScript в настройках вашего браузера
-      </strong>
-    </noscript>
-    <div id="app"></div>
-
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<div id="app"></div>
+<script type="module" src="src/main.tsx"></script>
+</body>
 </html>
