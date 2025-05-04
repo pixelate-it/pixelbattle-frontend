@@ -78,9 +78,12 @@ export class GuiOverlay extends BasicGuiElement {
     this.startPointerPos.y = y
     this.oldPos.x = overlay.x
     this.oldPos.y = overlay.y
+    OverlaysDaemon.setCanSave(false)
   }
 
-  onMove({ x, y }: MouseEventGui) {
+  onMove() {}
+
+  onMinorMove({ x, y }: MouseEventGui) {
     if (this.pressed) {
       const offsetX = this.startPointerPos.x - x
       const offsetY = this.startPointerPos.y - y
@@ -92,14 +95,17 @@ export class GuiOverlay extends BasicGuiElement {
     }
   }
 
-  onClickEnd() {
+  onClickEnd() {}
+
+  onMinorClickEnd() {
     Viewport.locked = false
     this.pressed = false
     const position = OverlaysDaemon.currentOverlay
     OverlaysDaemon.setOverlayPosition(
-      Math.floor(position.x),
-      Math.floor(position.y)
+      Math.round(position.x),
+      Math.round(position.y)
     )
+    OverlaysDaemon.setCanSave(true)
   }
 
   resize(width: number, height: number) {

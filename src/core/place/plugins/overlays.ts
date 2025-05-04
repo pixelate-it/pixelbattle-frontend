@@ -35,7 +35,9 @@ const overlaysMovementPlugin = () => {
 
   usePress(
     ({ x, y }) => {
-      GuiDaemon.setCurrent(GuiDaemon.getContainerIdAt(new Vector(x, y)))
+      GuiDaemon.setCurrent(0)
+      OverlaysDaemon.setOverlayAtPoint(new Vector(x, y))
+      GuiDaemon.container!.elements[0].handlePointerDown({ x, y })
     },
     1000,
     ({ x, y }) => [

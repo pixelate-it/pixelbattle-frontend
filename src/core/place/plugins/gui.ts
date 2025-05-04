@@ -38,6 +38,7 @@ export const guiPlugin = () => {
     const container = GuiDaemon.container
     if (container) {
       const pointer = Viewport.toLocal(clientX, clientY)
+      container.handlePointerMinorMove(pointer)
       if (container?.isPointerInside(pointer)) {
         let e = container.getElementAt(pointer)
         if (e) {
@@ -55,7 +56,7 @@ export const guiPlugin = () => {
 
   useLoaded(() => {
     GuiDaemon.addContainers(...guiContainers())
-    GuiDaemon.setCurrent(0)
+    // GuiDaemon.setCurrent(0)
   })
 
   useRender(({ graphics }) => {

@@ -11,7 +11,9 @@ export class GuiButton extends BasicGuiElement {
   y: number
   onClick: () => void | null = () => null
   onMove: () => void | null = () => null
+  onMinorMove: () => void | null = () => null
   onClickEnd: () => void | null
+  onMinorClickEnd: () => void | null = () => null
   icon?: IconsType
 
   basicColor: Color

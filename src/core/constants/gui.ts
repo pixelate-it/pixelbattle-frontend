@@ -3,7 +3,6 @@ import { gui } from '../place'
 import { IconsType } from '../place/webgl'
 import { Vector } from '../util/vector'
 import { Viewport } from '../storage'
-import { GuiButton } from '../place/gui'
 
 const overlayButtonSize = 5
 
@@ -62,6 +61,7 @@ export const guiContainers: () => Array<gui.GuiContainer> = () => [
     function () {
       const i = () => {
         const overlay = OverlaysDaemon.currentOverlay
+        if (!overlay) return
         this.x = overlay.x
         this.y = overlay.y - overlayButtonSize - 2
         ;(this.elements[0] as gui.GuiOverlay).resize(

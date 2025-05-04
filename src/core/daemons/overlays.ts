@@ -4,6 +4,7 @@ import { config } from 'src/config'
 import { GuiDaemon } from './gui'
 import { LocalStorage } from '../storage/local'
 import { Overlay } from '../util/overlay'
+import { Vector } from '../util/vector'
 
 /**
  * The daemon is responsible overlays (images to paint) on canvas
@@ -15,7 +16,8 @@ export class OverlaysDaemon {
     prevOverlayButtonActive: false,
     nextOverlayButtonActive: false,
     viewMode: 0,
-    gui: false
+    gui: false,
+    save: true
   })
 
   /**
@@ -176,7 +178,7 @@ export class OverlaysDaemon {
     state.overlays[state.currentOverlay].x = x
     state.overlays[state.currentOverlay].y = y
     OverlaysDaemon.state = { overlays: state.overlays }
-    OverlaysDaemon.saveOverlays()
+    if (state.save) OverlaysDaemon.saveOverlays()
   }
 
   /**
@@ -189,6 +191,24 @@ export class OverlaysDaemon {
     state.overlays[state.currentOverlay].opacity = opacity
     OverlaysDaemon.state = { overlays: state.overlays }
     OverlaysDaemon.saveOverlays()
+  }
+
+  static setOverlayAtPoint(point: Vector) {
+    const state = OverlaysDaemon.state
+    for (let i = 0; i < state.overlays.length; i++) {
+      const overlay = state.overlays[i]
+      if (overlay.checkPointInside(point.x, point.y)) {
+        OverlaysDaemon.state = {
+          currentOverlay: i
+        }
+      }
+    }
+    OverlaysDaemon.saveOverlays()
+  }
+
+  static setCanSave(value: boolean) {
+    OverlaysDaemon.state = { save: value }
+    if (value) OverlaysDaemon.saveOverlays()
   }
 
   /**

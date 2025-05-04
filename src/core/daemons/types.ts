@@ -46,6 +46,7 @@ export interface OverlaysState {
   nextOverlayButtonActive: boolean
   viewMode: OverlayViewMode
   gui: boolean
+  save: boolean
 }
 
 export type OverlayViewMode = 0 | 1 | 2

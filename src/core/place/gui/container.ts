@@ -61,6 +61,10 @@ export class GuiContainer {
     this.height = height
   }
 
+  handlePointerMinorMove(pointer: Vector) {
+    for (const i in this.elements) this.elements[i].onMinorMove(pointer)
+  }
+
   handlePointerDown(pointer: Vector) {
     for (const i in this.elements)
       if (this.elements[i].isPointerInside(pointer, this)) {
@@ -71,11 +75,13 @@ export class GuiContainer {
   }
 
   handlePointerUp(pointer: Vector) {
-    for (const i in this.elements)
+    for (const i in this.elements) {
+      this.elements[i].onMinorClickEnd(pointer)
       if (this.elements[i].isPointerInside(pointer, this)) {
         this.elements[i].handlePointerUp(pointer)
         return true
       }
+    }
     return false
   }
 
