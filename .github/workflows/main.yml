@@ -1,0 +1,46 @@
+name: Build and CF-Pages Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      VITE_DISCORD_BOT_ID: "970714810905936022"
+      VITE_DISCORD_BOT_REDIRECT: "https://api.pixelbattle.fun/login"
+      VITE_BACKEND: "https://api.pixelbattle.fun"
+
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.18
+
+      - name: Install Project Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Install Wrangler (globally)
+        run: npm install -g wrangler
+
+      - name: Build Project
+        run: yarn build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy ./dist --project-name=pixelbattle
