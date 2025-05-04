@@ -15,7 +15,9 @@ export abstract class BasicGuiElement {
 
   abstract onClick(event: MouseEventGui): void
   abstract onMove(event: MouseEventGui): void
+  abstract onMinorMove(event: MouseEventGui): void
   abstract onClickEnd(event: MouseEventGui): void
+  abstract onMinorClickEnd(event: MouseEventGui): void
 
   abstract render(graphics: WebGlGraphics, parent?: GuiContainer): void
 

@@ -2,22 +2,12 @@ import createStore, { Listener } from 'unistore'
 import { GuiState } from './types'
 import { GuiContainer } from '../place/gui/container'
 import { BasicGuiElement } from '../place/gui/basic'
-import { Vector } from '../util/vector'
 
 export class GuiDaemon {
   private static store = createStore<GuiState>({
     containers: [],
     current: null
   })
-
-  static getContainerIdAt(pos: Vector) {
-    const state = GuiDaemon.state
-    for (let f = 0; f < state.containers.length; f++) {
-      const i = state.containers[f]
-      if (i.isPointerInside(pos)) return f
-    }
-    return 0
-  }
 
   static unPressElements() {
     if (GuiDaemon.state.current === null) return
