@@ -1,4 +1,4 @@
-.sidebar
+/*.sidebar
   display flex
   flex-direction column
   gap 10px
@@ -12,9 +12,35 @@
 
   @media screen and (max-width 720px)
     flex-direction row-reverse
-    overflow-y hidden
+    overflow-y auto
     overflow-x auto
-    align-items flex-start
+    -webkit-overflow-scrolling touch
     position static
     box-sizing border-box
+    padding 10px*/
+
+.sidebar
+  display flex
+  flex-direction column
+  flex 1 1 auto
+  border-radius 8px
+  box-sizing border-box
+
+.sidebar_container
+  display flex
+  flex-direction column
+  gap 10px
+  align-items flex-end
+
+  @media screen and (max-width 720px)
+    position static
+    flex-direction row-reverse
+    align-items flex-start
     padding 10px
+    -webkit-overflow-scrolling touch
+    overflow-x auto
+    & > *
+      // FUCKING WEBKIT
+      // FUCKING WEBKIT
+      // FUCKING WEBKIT
+      flex 0 0 auto

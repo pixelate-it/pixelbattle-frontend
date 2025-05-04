@@ -7,9 +7,11 @@ import styles from './index.module.styl'
 export function SideBar() {
   return (
     <div className={styles.sidebar}>
-      <Profile />
-      <Tags />
-      <Overlays />
+      <div className={styles.sidebar_container}>
+        <Profile />
+        <Tags />
+        <Overlays />
+      </div>
 
       <Notifications />
     </div>
