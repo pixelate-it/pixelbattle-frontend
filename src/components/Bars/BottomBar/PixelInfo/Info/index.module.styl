@@ -1,0 +1,26 @@
+.wrapper
+  background-color $window-background
+  border-radius 4px
+  padding 5px 10px
+  border-color var(--selected)
+  border-style solid
+  border-width 2px
+  /* animation: appear 0.2s ease-in-out forwards; */
+
+.empty
+  opacity 0
+
+.tag::before
+  content '#'
+  color $grey-text
+  margin-inline: 5px
+
+/* @keyframes appear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+} */

@@ -1,5 +1,5 @@
 import { FormattedTag } from 'src/core/daemons/types'
-import styles from './index.module.css'
+import styles from './index.module.styl'
 import { useTag } from 'src/hooks/tag/useTag'
 
 interface TagProps {

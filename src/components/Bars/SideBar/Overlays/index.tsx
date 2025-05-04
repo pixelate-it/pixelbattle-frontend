@@ -3,7 +3,7 @@ import { ImageSelect } from './ImageSelect'
 import { useOverlays } from 'src/hooks/overlay/useOverlays'
 import { Button } from 'src/components/General/Button'
 import { OverlayTransform } from './OverlayTransform'
-import styles from './index.module.css'
+import styles from './index.module.styl'
 
 export const Overlays = () => {
   const { overlay, nextMode } = useOverlays()

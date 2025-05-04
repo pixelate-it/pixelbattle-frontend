@@ -1,9 +1,9 @@
-import styles from './index.module.css'
-import './index.css'
 import { HexColorInput, HexColorPicker } from 'react-colorful'
 import { Button } from 'src/components/General/Button'
 import { Icon } from 'src/components/General/Icon'
 import { useColorCreate } from 'src/hooks/palette/useColorCreate'
+import styles from './index.module.styl'
+import './index.styl'
 
 export const ColorCreate = () => {
   const { open, color, setColor, toggle, onSelect, openPicker } =

@@ -1,6 +1,6 @@
 import { useImageSelect } from 'src/hooks/overlay/useImageSelect'
-import styles from './index.module.css'
 import { Button } from 'src/components/General/Button'
+import styles from './index.module.styl'
 
 export const ImageSelect = () => {
   const { isHovered, onDrop, hover, unhover, onInput, fileInputRef } =

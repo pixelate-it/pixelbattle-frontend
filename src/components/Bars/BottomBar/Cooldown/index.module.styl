@@ -1,0 +1,31 @@
+.wrapper  
+  /* position absolute 
+    left 0 
+    top 0  */
+  position relative
+
+.progress  
+  display block 
+  background-color $window-background 
+  height 25px 
+  /* width 100%  */
+  border-radius 5px 
+  border none 
+  overflow hidden
+
+.label  
+  position absolute 
+  left 50% 
+  top 50% 
+  transform translate(-50%, -50%) 
+  mix-blend-mode difference 
+  font-weight 500
+
+.progress::-moz-progress-bar  
+  background $white
+
+.progress::-webkit-progress-bar  
+  background $window-background
+
+.progress::-webkit-progress-value  
+  background $white

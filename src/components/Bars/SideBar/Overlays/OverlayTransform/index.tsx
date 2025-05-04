@@ -1,8 +1,8 @@
 import { useImageTransform } from 'src/hooks/overlay/useOverlayTransform'
-import styles from './index.module.css'
 import { Button } from 'src/components/General/Button'
 import { Icon } from 'src/components/General/Icon'
 import { TextField } from 'src/components/General/TextFIeld'
+import styles from './index.module.styl'
 
 export const OverlayTransform = () => {
   const {
