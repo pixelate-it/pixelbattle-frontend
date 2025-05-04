@@ -1,0 +1,83 @@
+.window
+  background-color $window-background
+  border-radius 8px
+  position absolute
+  left 10px
+  top 10px
+  pointer-events auto
+  overflow hidden
+  transition background-color 0.5s ease, max-height 0.5s ease, max-width 0.5s ease, border-color 0.3s linear
+  max-height 50px
+  min-width 200px
+  display inline-flex
+  flex-direction column
+  @media screen and (max-width 720px)
+    width 100vw
+    max-width 100% !important
+
+.content,
+.title
+  padding 12px
+  user-select none
+
+.opened
+  background-color $window-background-selected
+  max-height 400px
+  max-width 400px
+
+.closed
+  background-color $window-background
+  max-height 50px
+  max-width 200px
+
+.content
+  overflow hidden
+  transition transform 0.5s ease, opacity 0.5s ease
+  transform-origin 50% 0
+  transform scaleY(0)
+  opacity 0
+
+.opened .content
+  transform scaleY(1)
+  opacity 1
+
+.params
+  padding-top 0
+  display flex
+  flex-wrap wrap
+  gap 20px
+  justify-content flex-start
+
+.media
+  display flex
+  flex-wrap wrap
+  justify-content flex-start
+  gap 10px
+
+.title
+  cursor pointer
+  font-weight 600
+  font-size 28px
+  transition margin 150ms ease-out
+  display block
+  padding-top 10px
+  padding-bottom 0
+  overflow hidden
+  white-space nowrap
+  text-overflow ellipsis
+  flex-shrink 0
+
+.title::marker
+  content ''
+
+@media screen and (max-width 720px)
+  .window
+    position static
+    width 100%
+    border-radius 0
+
+.icons
+  display flex
+  margin-top 20px
+  justify-content space-between
+  align-items center

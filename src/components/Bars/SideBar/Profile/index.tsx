@@ -1,8 +1,8 @@
 import { Button } from 'src/components/General/Button'
 import { Param } from 'src/components/General/Param'
 import { WindowBox } from 'src/components/General/WindowBox'
-import styles from './index.module.css'
 import { useProfile } from 'src/hooks/useProfile'
+import styles from './index.module.styl'
 
 export const Profile = () => {
   const { params, profile, login } = useProfile()

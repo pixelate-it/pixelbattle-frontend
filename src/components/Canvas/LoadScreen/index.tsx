@@ -1,6 +1,6 @@
-import { useLoadScreen } from 'src/hooks/useLoadScreen'
-import styles from './index.module.css'
-import { GeneralStatus } from 'src/core/daemons/types'
+import styles from './index.module.styl'
+import { GeneralStatus } from '../../../core/daemons/types.ts'
+import { useLoadScreen } from '../../../hooks/useLoadScreen.ts'
 
 export const LoadScreen = () => {
   const { status, info, attempts, error } = useLoadScreen()

@@ -1,8 +1,8 @@
-import styles from './index.module.css'
 import { Param } from 'src/components/General/Param'
 import { config } from 'src/config.ts'
 import { Icon } from '../../General/Icon'
 import { useTitleBar } from 'src/hooks/useTitleBar.ts'
+import styles from './index.module.styl'
 
 export const TitleBar = () => {
   const { opened, click, info, icon, show } = useTitleBar()

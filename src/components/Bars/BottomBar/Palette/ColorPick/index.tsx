@@ -1,6 +1,6 @@
-import styles from './index.module.css'
 import { Icon } from 'src/components/General/Icon'
 import { useColorPick } from 'src/hooks/palette/useColorPick'
+import styles from './index.module.styl'
 
 export const ColorPick = () => {
   const picker = useColorPick()

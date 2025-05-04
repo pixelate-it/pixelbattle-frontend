@@ -1,7 +1,13 @@
 import { PixelInfo } from 'src/core/daemons/types'
-import styles from './index.module.css'
+import styles from './index.module.styl'
 
-export function Info({ info }: { info: PixelInfo | null | 'loading' }) {
+export function Info({
+  info,
+  color
+}: {
+  info: PixelInfo | null | 'loading'
+  color: string
+}) {
   if (info === null) {
     return <div className={[styles.wrapper, styles.empty].join(' ')}>Пусто</div>
   }
@@ -11,10 +17,11 @@ export function Info({ info }: { info: PixelInfo | null | 'loading' }) {
       <div
         className={styles.wrapper}
         style={{
-          animationDelay: '500ms',
-          animationDuration: '500ms',
+          animationDelay: '0.5s',
+          animationDuration: '0.5s',
           opacity: info ? 1 : 0,
-          transition: 'opacity 500ms'
+          transition: 'opacity 0.5s, border-color 0.3s linear',
+          '--selected': color
         }}
       >
         Загрузка...
@@ -25,7 +32,13 @@ export function Info({ info }: { info: PixelInfo | null | 'loading' }) {
   const author = info.author ?? 'Без автора'
 
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={styles.wrapper}
+      style={{
+        transition: 'opacity 0.5s, border-color 0.3s linear',
+        '--selected': color
+      }}
+    >
       <p className={styles.info}>
         <strong className={styles.author}>{author}</strong>
         {info.tag && <span className={styles.tag}>{info.tag}</span>}

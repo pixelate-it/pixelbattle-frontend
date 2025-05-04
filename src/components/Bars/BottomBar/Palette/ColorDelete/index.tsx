@@ -1,6 +1,6 @@
 import { Icon } from 'src/components/General/Icon'
-import styles from './index.module.css'
 import { useColorDelete } from 'src/hooks/palette/useColorDelete'
+import styles from './index.module.styl'
 
 export const ColorDelete = () => {
   const { onClickStart, onClickCancel, onClickEnd, disabled } = useColorDelete()

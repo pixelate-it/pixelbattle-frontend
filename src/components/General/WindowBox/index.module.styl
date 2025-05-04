@@ -1,0 +1,36 @@
+.window
+  background-color $window-background
+  border-radius 8px
+  pointer-events auto
+  transform-origin top right
+  display inline-block
+  transition background-color 0.5s ease
+
+  &.opened
+    background-color $window-background-selected
+    max-width 400px
+
+.title
+  cursor pointer
+  font-weight 500
+  font-size 20px
+  padding 12px
+  display block
+  padding-top 10px
+  padding-bottom 10px
+  text-align left
+
+.content
+  padding 0 12px
+  max-height 0
+  max-width 0
+  opacity 0
+  transition max-height 0.3s ease, padding-bottom 0.3s ease, max-width 0.3s ease 0.3s, opacity 0.3s ease 0.3s
+  overflow hidden
+
+  .opened &
+    max-height 300px
+    max-width 400px
+    opacity 1
+    padding-bottom 12px
+    transition max-width 0.3s ease, max-height 0.3s ease 0.3s, padding-bottom 0.3s ease 0.3s, opacity 0.3s ease

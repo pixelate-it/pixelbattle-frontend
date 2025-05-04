@@ -1,0 +1,47 @@
+$place-size = 25px
+
+.tag
+  display flex
+  justify-content space-between
+  /* min-width 300px; */
+  align-items center
+  padding 4px 8px
+  gap 10px
+  width 100%
+  border-radius 4px
+
+.place
+  display grid
+  place-items center
+  width $place-size
+  height $place-size
+  border-radius 50%
+  font-weight 600
+
+.tag:nth-child(-n + 3)
+  --gradient linear-gradient(135deg, #d3cc20 0%, #d39620 100%)
+
+.tag:nth-child(-n + 3) .place
+  background var(--gradient)
+  color $black
+
+.tag:nth-child(2)
+  --gradient linear-gradient(135deg, #c7c6b9 0%, #585651 100%)
+
+.tag:nth-child(3)
+  --gradient linear-gradient(135deg, #ec5717 0%, #d7811c 100%)
+
+.tag:nth-child(n + 4) .place
+  outline 2px solid $white
+
+.name
+  margin-right auto
+  font-size 18px
+  font-weight 500
+  color $white
+
+.score
+  color $grey-text
+
+.selected
+  background-color rgba(255, 255, 255, 0.2)

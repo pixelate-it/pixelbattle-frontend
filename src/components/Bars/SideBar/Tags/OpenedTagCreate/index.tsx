@@ -1,8 +1,8 @@
-import styles from './index.module.css'
 import { Button } from 'src/components/General/Button'
 import { Icon } from 'src/components/General/Icon'
 import { TextField } from 'src/components/General/TextFIeld'
 import { useOpenedTagCreate } from 'src/hooks/tag/useOpenedTagCreate'
+import styles from './index.module.styl'
 
 export const OpenedTagCreate = () => {
   const { createTag, setInput, closeTagCreate } = useOpenedTagCreate()

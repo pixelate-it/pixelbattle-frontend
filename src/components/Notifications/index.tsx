@@ -1,7 +1,7 @@
 import { NotificationDaemon } from 'src/core/daemons/notifications'
-import styles from './index.module.css'
 import { Notification } from './Notification'
 import { useDaemon } from 'src/hooks/util/useDaemon'
+import styles from './index.module.styl'
 
 export const Notifications = () => {
   const notifications = useDaemon(NotificationDaemon)

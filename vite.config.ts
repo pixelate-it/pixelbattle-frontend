@@ -4,6 +4,8 @@ import { defineConfig } from 'vite'
 import glsl from 'vite-plugin-glsl'
 import { resolve } from 'path'
 
+import variables from './src/styles/variables.ts'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -12,7 +14,6 @@ export default defineConfig({
       warnDuplicatedImports: true,
       defaultExtension: 'glsl',
       include: ['**/*.glsl'],
-      compress: false,
       watch: true,
       root: '/'
     }),
@@ -129,5 +130,14 @@ export default defineConfig({
     minify: 'terser',
     cssCodeSplit: true,
     modulePreload: true
+  },
+  css: {
+    preprocessorOptions: {
+      styl: {
+        additionalData: variables
+          .map(([name, variable]) => `$${name} = ${variable};`)
+          .join('')
+      }
+    }
   }
 })

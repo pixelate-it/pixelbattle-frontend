@@ -1,5 +1,5 @@
 import Color from 'src/core/util/сolor'
-import styles from './index.module.css'
+import styles from './index.module.styl'
 import { PaletteDaemon } from 'src/core/daemons/palette'
 
 interface ColorSelectProps {

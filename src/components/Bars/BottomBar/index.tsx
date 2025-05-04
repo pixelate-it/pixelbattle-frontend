@@ -1,17 +1,17 @@
 import { Cooldown } from './Cooldown'
-import styles from './index.module.css'
 import { Palette } from './Palette'
 import { PixelInfo } from './PixelInfo'
+import styles from './index.module.styl'
 
-export const BottomBar = () => {
+export const BottomBar = ({ color }: { color: string }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.coordinates}>
-        <PixelInfo />
+        <PixelInfo color={color} />
       </div>
 
       <div className={styles.cooldown}>
-        <Cooldown />
+        <Cooldown color={color} />
       </div>
 
       <div className={styles.palette}>

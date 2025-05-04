@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'preact/compat'
-import styles from './Checkbox.module.css'
+import styles from './Checkbox.module.styl'
 
 interface CheckboxProps extends PropsWithChildren {
   name: string

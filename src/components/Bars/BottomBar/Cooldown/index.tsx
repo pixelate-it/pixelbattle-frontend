@@ -1,7 +1,7 @@
-import styles from './index.module.css'
 import { useCooldown } from 'src/hooks/useCooldown'
+import styles from './index.module.styl'
 
-export const Cooldown = () => {
+export const Cooldown = ({ color }: { color: string }) => {
   const cooldown = useCooldown()
 
   if (!cooldown.hasCooldown) return null

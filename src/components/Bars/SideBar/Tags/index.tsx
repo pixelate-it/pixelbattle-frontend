@@ -1,9 +1,9 @@
 import { WindowBox } from 'src/components/General/WindowBox'
-import styles from './index.module.css'
 import { Tag } from './Tag'
 import { ClosedTagCreate } from './ClosedTagCreate'
 import { OpenedTagCreate } from './OpenedTagCreate'
 import { useTags } from 'src/hooks/tag/useTags'
+import styles from './index.module.styl'
 
 export const Tags = () => {
   const { tags, profile } = useTags()
